@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
 
 function nix-packages() {
-		path="$HOME/Documents/Projects/nixpkgs"
-		if [ ! -e $path ] ; then
-				echo "Checking out mikus nixpkgs"
-				git clone -b mikus-stable https://github.com/tesq0/nixpkgs $path
-		else
-				echo "Already checked out local nixpkgs"
-		fi
+		git submodule update --init
+		git submodule update --remote
+
 		for file in $(find $HOME/.nix-defexpr/*); do
 				echo "Removing $file"
 				rm $file
 		done
 
-		echo "Linking $path to $HOME/.nix-defexpr/nixpkgs"
-		ln -s $path ~/.nix-defexpr/nixpkgs
+		pkgs=$(pwd)./nixpkgs
+		echo "Linking $pkgs to $HOME/.nix-defexpr/nixpkgs"
+		ln -s $pkgs ~/.nix-defexpr/nixpkgs
 }
 
 function nix() {
@@ -38,6 +35,12 @@ function dotfiles() {
 		homeshick clone https://github.com/tesq0/dotfiles.git
 }
 
+function all() {
+		nix-packages
+		nix
+		dotfiles
+}
+
 case $1 in
 		nixpkgs)
 				nix-packages
@@ -47,6 +50,9 @@ case $1 in
 				;;
 		dotfiles)
 				dotfiles
+				;;
+		all)
+				all
 				;;
 		*)
 				echo "Pass an argument. Avaliable args: nix, dotfiles"

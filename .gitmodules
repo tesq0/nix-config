@@ -1,0 +1,4 @@
+[submodule "nixpkgs"]
+	path = nixpkgs
+	url = https://github.com/tesq0/nixpkgs
+	branch = stable-mikus

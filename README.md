@@ -2,10 +2,12 @@
 
 Installation :
 
-1. Check the configuration files in the nixos folder and adjust them to your needs
+1. `git clone --recurse-submodules git@github.com:tesq0/nix-config.git ~/.nix-config`
 
-2. Checkout my nixpkgs with `./setup.sh nixpkgs`
+2. Check the configuration files in the nixos folder and adjust them to your needs
 
-3. This will link everything in nixos/* to /etc/nixos/  `sudo ./setup.sh nix`
+3. run `./setup.sh all` or specific components of setup.sh:
 
-4. This will download my dotfiles  `./setup.sh dotfiles`
+* `./setup.sh nixpkgs` sets up my nixpkgs fork
+* `sudo ./setup.sh nix links everything in nixos/* to /etc/nixos/`
+* `./setup.sh dotfiles downloads and links my dotfiles to your home dir`
