@@ -74,7 +74,6 @@
   environment.extraInit = ''
     export PATH="$(du $HOME/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
     export PATH="/home/mikus/.npm-global/bin:$PATH"
-    export NIX_PATH="mypkgs=/home/mikus/Documents/Projects/nixpkgs:$NIX_PATH"
     nvidia-settings --load-config-only --config $HOME/.nvidia-settings-rc
   '';
 
