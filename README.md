@@ -9,5 +9,5 @@ Installation :
 3. run `./setup.sh all` or specific components of setup.sh:
 
 * `./setup.sh nixpkgs` sets up my nixpkgs fork
-* `sudo ./setup.sh nix links everything in nixos/* to /etc/nixos/`
+* `./setup.sh nix links everything in nixos/* to /etc/nixos/`
 * `./setup.sh dotfiles downloads and links my dotfiles to your home dir`
