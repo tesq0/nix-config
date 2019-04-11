@@ -6,6 +6,10 @@ with pkgs; [
 
     man-pages
 
+    numix-cursor-theme
+    numix-icon-theme
+    numix-gtk-theme
+
     # x11 utils
     xsel
     xclip
@@ -51,6 +55,9 @@ with pkgs; [
     scrot
     imagemagick
     poppler_utils
+    dos2unix
+    maim
+    slop
 
 		# Tags
     python36Packages.pygments

@@ -3,7 +3,8 @@
 function nix() {
 		echo "Link nix config"
 		mkdir -p /etc/nixos
-		for file in ./nixos/* ; do
+		dir=$(pwd)
+		for file in $(find $dir/nixos/*) ; do
 				echo "Link $file to /etc/nixos/"
 				ln -sf $file /etc/nixos/
 		done;
