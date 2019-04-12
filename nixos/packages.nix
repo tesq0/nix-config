@@ -58,6 +58,7 @@ with pkgs; [
     dos2unix
     maim
     slop
+    nox
 
 		# Tags
     python36Packages.pygments
