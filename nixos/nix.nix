@@ -7,7 +7,7 @@
       gc-keep-outputs = true
     '';
     nixPath = [
-      "nixpkgs=$HOME/.nix/nixpkgs"
+      "nixpkgs=/home/mikus/.nix-config/nixpkgs"
       "nixos-config=/etc/nixos/configuration.nix"
     ];
     useSandbox = true;
