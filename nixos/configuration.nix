@@ -12,7 +12,7 @@
     ./mount-drives.nix
     ./environment.nix
     ./vpn.nix
-    ./music.nix
+    # ./music.nix
     ./remote-desktop.nix
     ];
 
