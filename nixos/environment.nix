@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 
+let home = "/home/mikus";
+in
 {
 
   # List packages installed in system profile. To search, run:
@@ -15,8 +17,8 @@
     MPD_HOST="localhost";
     XCURSOR_PATH = [
       "${config.system.path}/share/icons"
-      "$HOME/.icons"
-      "$HOME/.nix-profile/share/icons/"
+      "${home}/.icons"
+      "${home}/.nix-profile/share/icons/"
     ];
   };
 
@@ -72,9 +74,9 @@
   };
 
   environment.extraInit = ''
-    export PATH="$(du $HOME/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
-    export PATH="/home/mikus/.npm-global/bin:$PATH"
-    nvidia-settings --load-config-only --config $HOME/.nvidia-settings-rc
+    export PATH="$(du ${home}/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
+    export PATH="${home}/.npm-global/bin:$PATH"
+    nvidia-settings --load-config-only --config ${home}/.nvidia-settings-rc
   '';
 
   # Fish Shell
