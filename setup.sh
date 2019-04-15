@@ -18,27 +18,7 @@ function nix() {
 		echo "Link nix config"
 		[ ! -e "/etc/nixos" ] && sudo mkdir -p /etc/nixos
 		dir=$(pwd)
-		for file in $(find nixos/*) ; do
-
-				if [ -e "/etc/$file" ] && [ ! -L "/etc/$file" ] ; then
-						echo -e "/etc/$file already exits. Do you wish to override (y/n)?\nPS: I wouldn't do that with hardware-configuration.nix"
-						read yn
-						case $yn in
-								[Yy]* )
-										break
-										;;
-								[Nn]* )
-										continue
-										;;
-								* )
-										echo "Please answer yes or no."
-										;;
-						esac
-				fi
-
-				sudo ln -svf "$dir/$file" /etc/nixos/
-
-		done
+		sudo ln -svf "$dir/nixos/configuration.nix" /etc/nixos/
 }
 
 function dotfiles() {
