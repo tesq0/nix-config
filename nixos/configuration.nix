@@ -125,6 +125,8 @@
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "add Control = Control_R"
 
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
+
+      nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
 
 

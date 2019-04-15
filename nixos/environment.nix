@@ -76,7 +76,6 @@ in
   environment.extraInit = ''
     export PATH="$(du ${home}/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
     export PATH="${home}/.npm-global/bin:$PATH"
-    nvidia-settings --load-config-only --config ${home}/.nvidia-settings-rc
   '';
 
   # Fish Shell
