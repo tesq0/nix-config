@@ -12,6 +12,7 @@
     ./mount-drives.nix
     ./environment.nix
     ./vpn.nix
+    ./ssh.nix
     # ./music.nix
     ./remote-desktop.nix
     ];
@@ -62,9 +63,10 @@
     # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
     # List services that you want to enable:
-
-    # Enable the OpenSSH daemon.
-    services.openssh.enable = true;
+    
+    services.synergy.server.enable = true;
+    services.synergy.server.screenName = "mikus";
+    services.synergy.server.configFile = "/home/mikus/.synergy.conf";
 
     # for adaptive screen blue light
     services.redshift = {
@@ -83,8 +85,8 @@
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 3389 ];
-    networking.firewall.allowedUDPPorts = [ 3389 ];
+    networking.firewall.allowedTCPPorts = [ 3389 24800 ];
+    networking.firewall.allowedUDPPorts = [ 3389 24800 ];
     
     # Enable CUPS to print documents.
     # services.printing.enable = true;
