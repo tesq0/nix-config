@@ -4,6 +4,9 @@
 
 { config, pkgs, ... }:
 
+let
+  kill-high-mem-processes = ../cron/kill-high-mem-processes.pl;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -90,6 +93,14 @@
     
     # Enable CUPS to print documents.
     # services.printing.enable = true;
+
+    # Enable cron service
+    services.cron = {
+      enable = true;
+      systemCronJobs = [
+        "*/1 * * * *      mikus    ${pkgs.perl} ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log"
+      ];
+    };
 
     # Enable sound.
     sound.enable = true;
