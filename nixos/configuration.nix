@@ -16,6 +16,7 @@ in
     ./environment.nix
     ./vpn.nix
     ./ssh.nix
+    # ./wacom-one-tablet.nix
     # ./music.nix
     ./remote-desktop.nix
     ];
@@ -35,6 +36,12 @@ in
     };
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
+
+    # Apple keyboard
+    boot.extraModprobeConfig = ''
+      options hid_apple swap_opt_cmd=1
+      options hid_apple fnmode=2
+    '';
 
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
@@ -66,6 +73,9 @@ in
     # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
     # List services that you want to enable:
+
+    hardware.bluetooth.enable = true;
+    hardware.bluetooth.powerOnBoot = true;
     
     services.synergy.server.enable = true;
     services.synergy.server.screenName = "mikus";
@@ -88,8 +98,8 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 3389 24800 ];
-    networking.firewall.allowedUDPPorts = [ 3389 24800 ];
+    networking.firewall.allowedTCPPorts = [ 3389 24800 0 ];
+    networking.firewall.allowedUDPPorts = [ 3389 24800 0 ];
     
     # Enable CUPS to print documents.
     # services.printing.enable = true;
@@ -115,17 +125,13 @@ in
     services.xserver.displayManager.lightdm.enable = true;
     services.xserver.layout = "us";
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
+
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30
 
       #Tab
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 23 = Super_L Super_L"
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 255 = Tab"
-
-      #Bracketleft
-      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 34 = Super_R Super_R"
-      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 254 = bracketleft braceleft"
-      # ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=bracketleft" 
 
       #Backslash
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
@@ -145,13 +151,28 @@ in
 
     services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
     services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = false; } { output = "HDMI-0"; primary = true; } ];
+    services.xserver.exportConfiguration = true;
     services.xserver.screenSection = ''
-      Option "metamodes" "DVI-D-0: nvidia-auto-select +1920+0 {ForceCompositionPipeline=On}, HDMI-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
+      Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}, HDMI-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
 
     services.xserver.deviceSection = ''
       Option "HardDPMS" "true"    
       Option "TripleBuffer" "false"    
+    '';
+
+    services.xserver.extraConfig = ''
+      Section "Monitor"
+      Identifier "HDMI-0"
+      Option "PreferredMode" "1920x1080"
+      Option "Position" "0 0"
+      EndSection
+      Section "Monitor"
+      Identifier "DVI-D-0"
+      Option "PreferedMode" "1920x1080"
+      Option "Position" "0 0"
+      Option "SameAs" "HDMI-0"
+      EndSection
     '';
 
     services.xserver.inputClassSections = [ ''
@@ -200,6 +221,7 @@ in
     programs.qt5ct.enable = true;
 
     virtualisation.docker.enable = true;
+    virtualisation.docker.enableOnBoot = false;
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
     # virtualisation.docker.enableNvidia = true;
 
@@ -231,7 +253,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" ];
 
 			# For docker namespaces
       subUidRanges = [

@@ -8,6 +8,8 @@ in
   # $ nix search wgt
 
   environment.systemPackages = (import ./packages.nix pkgs);
+
+  programs.wireshark.enable = true;
   
   environment.variables = {
     TERMINAL="konsole";
