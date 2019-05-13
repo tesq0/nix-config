@@ -1,9 +1,7 @@
 pkgs:
 
 with pkgs; [
-
-  	docker-compose
-
+  
     man-pages
 
     numix-cursor-theme
