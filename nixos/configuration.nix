@@ -16,6 +16,7 @@ in
     ./environment.nix
     ./vpn.nix
     ./ssh.nix
+    ./xboxdrv.nix
     # ./wacom-one-tablet.nix
     # ./music.nix
     ./remote-desktop.nix
@@ -115,10 +116,11 @@ in
     # Enable sound.
     sound.enable = true;
     hardware.pulseaudio.enable = true;
+    hardware.pulseaudio.support32Bit = true;
+
     hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
     hardware.opengl.driSupport32Bit = true;
-    hardware.pulseaudio.support32Bit = true;
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
