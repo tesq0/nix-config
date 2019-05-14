@@ -46,6 +46,7 @@ in
 
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
+    programs.nm-applet.enable = true;
 
     # Configure network proxy if necessary
     # networking.proxy.default = "http://user:password@proxy:port/";
