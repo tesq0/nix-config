@@ -226,6 +226,8 @@ in
     
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
+    virtualisation.virtualbox.host.enable = true;
+    users.extraGroups.vboxusers.members = [ "mikus" ];
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
     # virtualisation.docker.enableNvidia = true;
 
