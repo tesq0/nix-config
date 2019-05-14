@@ -12,7 +12,7 @@ in
   programs.wireshark.enable = true;
   
   environment.variables = {
-    TERMINAL="konsole";
+    TERMINAL="st";
     TERM="xterm-256color";
     BROWSER="pcmanfm";
     MAIL="chromium";
