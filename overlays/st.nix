@@ -2,10 +2,10 @@ self: super: {
   st = with super; stdenv.mkDerivation rec {
     name = "st";
     src = fetchFromGitHub {
-      owner = "LukeSmithxyz";
+      owner = "tesq0";
       repo = "st";
       rev = "master";
-      sha256 = "1zw4f4skjys7c9yhhrhvfxjccjdj43vb631fapbvblafq9hxq3sg";
+      sha256 = "1xqqakq7j6hzmcacv7gldahczj2r2by8sip54mx1c3zndmxc0q1h";
     };
 
     nativeBuildInputs = [ pkgconfig ncurses ];
