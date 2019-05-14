@@ -80,7 +80,7 @@ with pkgs; [
     firefox
     tor-browser-bundle-bin
     qbittorrent
-    zathura
     slack
+    llpp
 
 ]
