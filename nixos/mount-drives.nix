@@ -3,7 +3,7 @@
 {
 	  # Mount drives
 
-		fileSystems."/media/WINDOWS_DATA" = {
+		fileSystems."/media/STORAGE" = {
       device = "/dev/sda2";
       fsType = "ntfs";
       options = [ "rw" "data=ordered" "relatime" ];

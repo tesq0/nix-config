@@ -75,7 +75,6 @@ with pkgs; [
     htop
     keepassx-community
     emacs
-    dolphin
     remmina
     chromium
     firefox

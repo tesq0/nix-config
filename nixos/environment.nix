@@ -14,7 +14,7 @@ in
   environment.variables = {
     TERMINAL="konsole";
     TERM="xterm-256color";
-    BROWSER="dolphin";
+    BROWSER="pcmanfm";
     MAIL="chromium";
     MPD_HOST="localhost";
     XCURSOR_PATH = [

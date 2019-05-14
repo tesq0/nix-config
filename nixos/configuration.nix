@@ -17,7 +17,7 @@ in
     ./vpn.nix
     ./ssh.nix
     ./xboxdrv.nix
-    # ./wacom-one-tablet.nix
+    ./wacom-one-tablet.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -125,8 +125,14 @@ in
     # Enable the X11 windowing system.
     services.xserver.enable = true;
     services.xserver.displayManager.lightdm.enable = true;
-    services.xserver.layout = "us";
+    services.xserver.displayManager.lightdm.greeters.mini.enable = true;
+    services.xserver.displayManager.lightdm.greeters.mini.user = "mikus";
+    services.xserver.layout = "en_US";
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
+
+    services.xserver.windowManager.i3.enable = true;
+    services.xserver.windowManager.default = "i3";
+    programs.qt5ct.enable = true;
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30
@@ -149,7 +155,6 @@ in
 
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
-
 
     services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
     services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = false; } { output = "HDMI-0"; primary = true; } ];
@@ -218,10 +223,7 @@ in
 
     programs.xss-lock.enable = true;
     programs.xss-lock.lockerCommand = "/home/mikus/.scripts/i3cmds/lock";
-
-    services.xserver.windowManager.i3.enable = true;
-    programs.qt5ct.enable = true;
-
+    
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
