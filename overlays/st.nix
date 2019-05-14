@@ -5,7 +5,7 @@ self: super: {
       owner = "tesq0";
       repo = "st";
       rev = "master";
-      sha256 = "1dq3lgyv1mgn6k42a7bfwgwnz3whz6h69r1gvp4wpn5s6kbmzgvl";
+      sha256 = "04faa8sz3sgkmxck64qkm0gd4ad5xw7h17nrw9gw9hsfw4nbi2j7";
     };
 
     nativeBuildInputs = [ pkgconfig ncurses ];
