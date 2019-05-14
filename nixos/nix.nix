@@ -7,7 +7,8 @@
       gc-keep-outputs = true
     '';
     nixPath = [
-      "nixpkgs=/home/mikus/.nix-config/nixpkgs"
+      "nixpkgs=/etc/nixos/nixpkgs"
+      "nixpkgs-overlays=/etc/nixos/overlays"
       "nixos-config=/etc/nixos/configuration.nix"
     ];
     useSandbox = true;

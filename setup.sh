@@ -19,6 +19,8 @@ function nix() {
 		[ ! -e "/etc/nixos" ] && sudo mkdir -p /etc/nixos
 		dir=$(pwd)
 		sudo ln -svf "$dir/nixos/configuration.nix" /etc/nixos/
+		sudo ln -svf "$dir/overlays" /etc/nixos/overlays
+		sudo ln -svf "$dir/nixpkgs" /etc/nixos/nixpkgs
 }
 
 function dotfiles() {
