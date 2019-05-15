@@ -5,7 +5,7 @@
   services.mpd = {
     enable = true;
     startWhenNeeded = true;
-    musicDirectory = /media/WINDOWS_DATA/Stuff/Music;
+    musicDirectory = "/media/STORAGE/Audio";
     extraConfig = ''
         audio_output {
           type    "alsa"
