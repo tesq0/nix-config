@@ -15,7 +15,7 @@ in
     TERMINAL="st";
     TERM="xterm-256color";
     BROWSER="pcmanfm";
-    MAIL="chromium";
+    MAIL="firefox";
     MPD_HOST="localhost";
     XCURSOR_PATH = [
       "${config.system.path}/share/icons"

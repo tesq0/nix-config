@@ -76,7 +76,6 @@ with pkgs; [
     keepassx-community
     emacs
     remmina
-    chromium
     firefox
     tor-browser-bundle-bin
     qbittorrent
