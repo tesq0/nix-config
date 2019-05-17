@@ -145,14 +145,8 @@ in
       #Backslash
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-
-      #Enter to ctrl
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "remove Control = Control_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 0x69 = Return"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 0x24 = Control_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "add Control = Control_R"
-
-      ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
+      
+      ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash"
 
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
