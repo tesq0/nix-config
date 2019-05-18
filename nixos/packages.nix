@@ -65,6 +65,7 @@ with pkgs; [
 
     # Multimedia
     feh
+    qrencode
     mpv
     vlc
 
