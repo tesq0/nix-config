@@ -65,6 +65,7 @@ in
     nixpkgs.config = {
       allowUnfree = true;
       firefox.enableAdobeFlash = true;
+      wine.build = "wineWow";
     };
 
     programs.chromium.enable = true;
