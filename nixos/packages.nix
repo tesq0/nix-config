@@ -71,11 +71,12 @@ with pkgs; [
     vlc
 
     # Applications
-    rxvt_unicode
+    st
+    mu
     rofi-unwrapped
     mypaint
     htop
-    keepassx-community
+    pass
     emacs
     remmina
     firefox
