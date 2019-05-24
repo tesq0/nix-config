@@ -56,6 +56,7 @@ in
     i18n = {
       consoleFont = "Lat2-Terminus16";
       consoleUseXkbConfig = true;
+      supportedLocales = [ "pl_PL.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
       defaultLocale = "en_US.UTF-8";
     };
 
@@ -101,8 +102,8 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 3389 24800 0 ];
-    networking.firewall.allowedUDPPorts = [ 3389 24800 0 ];
+    networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } ];
+    networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } ];
     
     # Enable CUPS to print documents.
     services.printing.enable = true;
@@ -129,7 +130,7 @@ in
     services.xserver.displayManager.lightdm.enable = true;
     services.xserver.displayManager.lightdm.greeters.mini.enable = true;
     services.xserver.displayManager.lightdm.greeters.mini.user = "mikus";
-    services.xserver.layout = "en_US";
+    services.xserver.layout = "en_US,pl";
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
     services.xserver.windowManager.i3.enable = true;
