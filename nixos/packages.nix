@@ -57,6 +57,7 @@ with pkgs; [
     maim
     slop
     nox
+    isync
 
 		# Tags
     python36Packages.pygments
