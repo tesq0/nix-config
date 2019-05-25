@@ -19,8 +19,7 @@
 
   systemd.services.xboxdrv = {
     description = "Xbox/Xbox360 USB Gamepad Driver for Userspace";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = ''
         ${pkgs.xboxdrv}/bin/xboxdrv --daemon --config /etc/default/xboxdrv
