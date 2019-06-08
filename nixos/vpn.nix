@@ -13,7 +13,7 @@ in
   services.openvpn.servers = {
     jazajuk = {
       config = ''
-        config /root/nixos/openvpn/vpn-jazajuk.ovpn
+        config /root/nixos/openvpn/mikus.ovpn
         route-up ${pkgs.writeScript "openvpn-jazajuk-route-up" routeScript}
       '';
       autoStart = true;
