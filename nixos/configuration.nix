@@ -14,7 +14,7 @@ in
     ./hardware-configuration.nix
     ./mount-drives.nix
     ./environment.nix
-    ./vpn.nix
+    # ./vpn.nix
     ./ssh.nix
     ./xboxdrv.nix
     ./wacom-one-tablet.nix
@@ -160,10 +160,10 @@ in
     '';
 
     services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
-    services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = false; } { output = "HDMI-0"; primary = true; } ];
+    services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = true; } { output = "HDMI-0"; primary = false; } ];
     services.xserver.exportConfiguration = true;
     services.xserver.screenSection = ''
-      Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}, HDMI-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
+      Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}, HDMI-0: nvidia-auto-select +1920+27 {ForceCompositionPipeline=On}"
     '';
 
     services.xserver.deviceSection = ''
@@ -173,15 +173,14 @@ in
 
     services.xserver.extraConfig = ''
       Section "Monitor"
-      Identifier "HDMI-0"
-      Option "PreferredMode" "1920x1080"
-      Option "Position" "0 0"
-      EndSection
-      Section "Monitor"
       Identifier "DVI-D-0"
       Option "PreferedMode" "1920x1080"
       Option "Position" "0 0"
-      Option "SameAs" "HDMI-0"
+      EndSection
+      Section "Monitor"
+      Identifier "HDMI-0"
+      Option "PreferredMode" "1280x1024"
+      Option "Position" "1920 26"
       EndSection
     '';
 
