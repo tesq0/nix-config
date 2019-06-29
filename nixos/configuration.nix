@@ -18,6 +18,7 @@ in
     ./ssh.nix
     ./xboxdrv.nix
     ./wacom-one-tablet.nix
+    ./syncthing.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -119,6 +120,7 @@ in
     # Enable sound.
     sound.enable = true;
     hardware.pulseaudio.enable = true;
+    hardware.pulseaudio.package = pkgs.pulseaudioFull;
     hardware.pulseaudio.support32Bit = true;
 
     hardware.opengl.enable = true;
@@ -217,7 +219,7 @@ in
     virtualisation.virtualbox.host.enable = true;
     users.extraGroups.vboxusers.members = [ "mikus" ];
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
-    # virtualisation.docker.enableNvidia = true;
+    virtualisation.docker.enableNvidia = true;
 
     programs.adb.enable = true;
 
@@ -239,6 +241,7 @@ in
 
     users.groups = [
 		  { gid = 1000; name = "mikus"; }
+		  { name = "realtime"; }
     ];
 
     users.users.mikus = {
@@ -247,7 +250,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" ];
 
 			# For docker namespaces
       subUidRanges = [

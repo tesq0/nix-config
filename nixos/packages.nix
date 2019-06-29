@@ -81,8 +81,12 @@ with pkgs; [
     remmina
     firefox
     tor-browser-bundle-bin
-    qbittorrent
     slack
     llpp
+
+    # Music
+    guitarix
+    qjackctl
+    jack2Full
 
 ]
