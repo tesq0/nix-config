@@ -80,6 +80,8 @@ in
     export PATH="${home}/.npm-global/bin:$PATH"
   '';
 
+  services.transmission.enable = true;
+
   # Fish Shell
   programs.fish = {
     enable = true;

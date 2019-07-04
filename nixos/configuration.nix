@@ -47,6 +47,7 @@ in
 
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
+    networking.extraHosts = builtins.readFile ../networking/bad-hosts;
     programs.nm-applet.enable = true;
 
     # Configure network proxy if necessary
@@ -250,7 +251,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" ];
 
 			# For docker namespaces
       subUidRanges = [
