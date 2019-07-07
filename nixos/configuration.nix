@@ -45,6 +45,11 @@ in
       options hid_apple fnmode=2
     '';
 
+    services.vsftpd.enable = true;
+    services.vsftpd.anonymousUser = true;
+    services.vsftpd.localUsers = true;
+    services.vsftpd.anonymousUserNoPassword = true;
+
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
     networking.extraHosts = builtins.readFile ../networking/bad-hosts;
@@ -104,6 +109,8 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
+    networking.firewall.allowedTCPPorts = [ 20 21 ]; 
+    networking.firewall.allowedUDPPorts = [ 20 21 ]; 
     networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } ];
     
@@ -251,7 +258,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" "ftp" ];
 
 			# For docker namespaces
       subUidRanges = [
