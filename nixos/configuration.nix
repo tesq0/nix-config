@@ -45,14 +45,21 @@ in
       options hid_apple fnmode=2
     '';
 
-    services.vsftpd.enable = true;
-    services.vsftpd.anonymousUser = true;
-    services.vsftpd.localUsers = true;
-    services.vsftpd.anonymousUserNoPassword = true;
-
+    services.vsftpd = {
+      enable = true;
+      anonymousUser = true;
+      anonymousUserNoPassword = true;
+      rsaCertFile = "/var/vsftpd/vsftpd.pem";
+      extraConfig = ''
+        pasv_min_port=5000
+        pasv_max_port=5003
+      '';
+    };
+    
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
     networking.extraHosts = builtins.readFile ../networking/bad-hosts;
+    
     programs.nm-applet.enable = true;
 
     # Configure network proxy if necessary
@@ -111,8 +118,8 @@ in
     # networking.firewall.enable = false;
     networking.firewall.allowedTCPPorts = [ 20 21 ]; 
     networking.firewall.allowedUDPPorts = [ 20 21 ]; 
-    networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } ];
-    networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } ];
+    networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
+    networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     
     # Enable CUPS to print documents.
     services.printing.enable = true;
@@ -258,7 +265,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" "ftp" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" ];
 
 			# For docker namespaces
       subUidRanges = [
