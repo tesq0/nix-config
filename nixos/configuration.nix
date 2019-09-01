@@ -189,7 +189,8 @@ in
     '';
     
     services.xserver.inputClassSections = [ ''
-      Identifier "Logitech USB Optical Mouse"
+      Identifier "Mouse"
+      MatchIsPointer "yes"
       Option "ConstantDeceleration" "1.5"
     ''
     ];
