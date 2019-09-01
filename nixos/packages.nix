@@ -83,10 +83,4 @@ with pkgs; [
     tor-browser-bundle-bin
     slack
     llpp
-
-    # Music
-    guitarix
-    qjackctl
-    jack2Full
-
 ]
