@@ -116,13 +116,16 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 20 21 ]; 
-    networking.firewall.allowedUDPPorts = [ 20 21 ]; 
+    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 24800 ]; 
+    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 24800 ]; 
     networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     
     # Enable CUPS to print documents.
     services.printing.enable = true;
+    services.printing.drivers = [ pkgs.brgenml1lpr ];
+    services.avahi.enable = true;
+    services.avahi.nssmdns = true;
 
     # Enable cron service
     services.cron = {
