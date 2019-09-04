@@ -12,13 +12,13 @@ in
     [ # Include the results of the hardware scan.
     ./nix.nix
     ./hardware-configuration.nix
-    ./mount-drives.nix
+    #./mount-drives.nix
     ./environment.nix
-    ./vpn.nix
-    ./ssh.nix
-    ./xboxdrv.nix
-    ./wacom-one-tablet.nix
-    ./syncthing.nix
+    #./vpn.nix
+    #./ssh.nix
+    #./xboxdrv.nix
+    #./wacom-one-tablet.nix
+    #./syncthing.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -79,7 +79,7 @@ in
 
     nixpkgs.config = {
       allowUnfree = true;
-      firefox.enableAdobeFlash = true;
+      # firefox.enableAdobeFlash = true;
       wine.build = "wineWow";
     };
 
@@ -95,9 +95,9 @@ in
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
     
-    services.synergy.server.enable = true;
-    services.synergy.server.screenName = "mikus";
-    services.synergy.server.configFile = "/home/mikus/.synergy.conf";
+    #services.synergy.server.enable = true;
+    #services.synergy.server.screenName = "mikus";
+    #services.synergy.server.configFile = "/home/mikus/.synergy.conf";
 
     # for adaptive screen blue light
     services.redshift = {
@@ -116,10 +116,10 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 24800 ]; 
-    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 24800 ]; 
-    networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
-    networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
+    #networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 24800 ]; 
+    #networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 24800 ]; 
+    #networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
+    #networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     
     # Enable CUPS to print documents.
     services.printing.enable = true;
@@ -179,12 +179,12 @@ in
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
 
-    services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
-    services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = true; } { output = "HDMI-0"; primary = false; } ];
+    # services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
+    # services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = true; } { output = "HDMI-0"; primary = false; } ];
     services.xserver.exportConfiguration = true;
-    services.xserver.screenSection = ''
-      Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}, HDMI-0: nvidia-auto-select +1920+27 {ForceFullCompositionPipeline=On}"
-    '';
+    # services.xserver.screenSection = ''
+    #  Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}, HDMI-0: nvidia-auto-select +1920+27 {ForceFullCompositionPipeline=On}"
+    # '';
 
     services.xserver.deviceSection = ''
       Option "HardDPMS" "true"    
@@ -235,10 +235,10 @@ in
     
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
-    virtualisation.virtualbox.host.enable = true;
-    users.extraGroups.vboxusers.members = [ "mikus" ];
+    # virtualisation.virtualbox.host.enable = true;
+    # users.extraGroups.vboxusers.members = [ "mikus" ];
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
-    virtualisation.docker.enableNvidia = true;
+    # virtualisation.docker.enableNvidia = true;
 
     programs.adb.enable = true;
 
@@ -269,18 +269,18 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" ];
 
 			# For docker namespaces
-      subUidRanges = [
-        { startUid = 1000; count = 1; }
-        { startUid = 100001; count = 65534; }
-      ];
+      #subUidRanges = [
+      #  { startUid = 1000; count = 1; }
+      #  { startUid = 100001; count = 65534; }
+      #];
 
-      subGidRanges = [
-        { startGid = 1000; count = 1; }
-        { startGid = 10001; count = 65534; }
-      ];
+      #subGidRanges = [
+      #  { startGid = 1000; count = 1; }
+      #  { startGid = 10001; count = 65534; }
+      #];
 
     };
 
