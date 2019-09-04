@@ -17,11 +17,11 @@ in
     BROWSER="pcmanfm";
     MAIL="firefox";
     MPD_HOST="localhost";
-    XCURSOR_PATH = [
-      "${config.system.path}/share/icons"
-      "${home}/.icons"
-      "${home}/.nix-profile/share/icons/"
-    ];
+    # XCURSOR_PATH = [
+    #   "${config.system.path}/share/icons"
+    #   "${home}/.icons"
+    #   "${home}/.nix-profile/share/icons/"
+    # ];
   };
 
   # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load SVG files (important for icons)
