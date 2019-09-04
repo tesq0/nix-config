@@ -78,9 +78,6 @@ with pkgs; [
     htop
     pass
     emacs
-  #  remmina
     firefox
-   # tor-browser-bundle-bin
-   # slack
     llpp
 ]
