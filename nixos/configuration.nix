@@ -63,10 +63,6 @@ in
     
     programs.nm-applet.enable = true;
 
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
     #Select internationalisation properties.
     i18n = {
       consoleFont = "Lat2-Terminus16";
@@ -95,10 +91,6 @@ in
 
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
-    
-    #services.synergy.server.enable = true;
-    #services.synergy.server.screenName = "mikus";
-    #services.synergy.server.configFile = "/home/mikus/.synergy.conf";
 
     # for adaptive screen blue light
     services.redshift = {
@@ -236,10 +228,6 @@ in
     
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
-    # virtualisation.virtualbox.host.enable = true;
-    # users.extraGroups.vboxusers.members = [ "mikus" ];
-    # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
-    # virtualisation.docker.enableNvidia = true;
 
     programs.adb.enable = true;
 
@@ -271,17 +259,6 @@ in
       # comment out for now...
       shell = pkgs.fish;
       extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" ];
-
-			# For docker namespaces
-      #subUidRanges = [
-      #  { startUid = 1000; count = 1; }
-      #  { startUid = 100001; count = 65534; }
-      #];
-
-      #subGidRanges = [
-      #  { startGid = 1000; count = 1; }
-      #  { startGid = 10001; count = 65534; }
-      #];
 
     };
 
