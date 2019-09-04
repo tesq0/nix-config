@@ -168,21 +168,28 @@ in
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
       
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
-
-      nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
 
-    # services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
-    # services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = true; } { output = "HDMI-0"; primary = false; } ];
-    services.xserver.exportConfiguration = true;
-    # services.xserver.screenSection = ''
-    #  Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}, HDMI-0: nvidia-auto-select +1920+27 {ForceFullCompositionPipeline=On}"
-    # '';
+    services.xserver.videoDrivers = [ "intel" ];
 
     services.xserver.deviceSection = ''
-      Option "HardDPMS" "true"    
-      Option "TripleBuffer" "false"    
+      Option "TearFree" "true"
     '';
+
+    services.xserver.extraConfig = ''
+      Section "Monitor"
+      Identifier  "HDMI1"
+      Option			"PreferredMode" "1920x1080"
+      Option			"Position" "0 0"
+      EndSection
+      Section "Monitor"
+      Identifier  "eDP1"
+      Option			"PreferredMode" "1920x1080"
+      Option			"Position" "0 1080"
+      EndSection
+    '';
+    
+    services.xserver.exportConfiguration = true;
     
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
