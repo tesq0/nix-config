@@ -12,8 +12,9 @@ in
     [ # Include the results of the hardware scan.
     ./nix.nix
     ./hardware-configuration.nix
-    #./mount-drives.nix
     ./environment.nix
+    ./laptop.nix
+    #./mount-drives.nix
     #./vpn.nix
     #./ssh.nix
     #./xboxdrv.nix
