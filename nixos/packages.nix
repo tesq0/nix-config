@@ -2,6 +2,7 @@ pkgs:
 
 with pkgs; [
   
+  	direnv
     man-pages
 
     numix-cursor-theme
