@@ -39,13 +39,7 @@ in
     };
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-
-    # Apple keyboard
-    boot.extraModprobeConfig = ''
-      options hid_apple swap_opt_cmd=1
-      options hid_apple fnmode=2
-    '';
-
+    
     services.vsftpd = {
       enable = true;
       anonymousUser = true;
