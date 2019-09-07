@@ -174,6 +174,10 @@ in
 
     services.xserver.videoDrivers = [ "intel" ];
 
+    services.xserver.monitorSection = ''
+      Option "DPMS" "true"
+    '';
+
     services.xserver.deviceSection = ''
       Option "TearFree" "true"
     '';
