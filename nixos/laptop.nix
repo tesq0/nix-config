@@ -9,6 +9,7 @@
 
 
   programs.light.enable = true; # Needed for the /run/wrappers/bin/light SUID wrapper.
+
   services.actkbd = {
     enable = true;
     bindings = [

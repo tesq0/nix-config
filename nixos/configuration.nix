@@ -271,7 +271,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" ];
 
     };
 
