@@ -131,7 +131,7 @@ in
     services.cron = {
       enable = true;
       systemCronJobs = [
-        "*/1 * * * *      mikus    ${pkgs.perl} ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log"
+        "*/1 * * * *      mikus  ${pkgs.perl}/bin/perl -I${pkgs.perlPackages.ProcProcessTable}/lib/perl5/site_perl/5.28.2/x86_64-linux-thread-multi/ ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log 2>&1"
       ];
     };
 
