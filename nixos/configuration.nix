@@ -100,10 +100,14 @@ in
     services.synergy.server.configFile = "/home/mikus/.synergy.conf";
 
     # for adaptive screen blue light
+
+    location = {
+      latitude = 53.4275432;
+      longitude = 14.4744383;
+    };
+
     services.redshift = {
       enable = true;
-      latitude = "53.4275432";
-      longitude = "14.4744383";
       temperature.day = 5500;
       temperature.night = 2700;
     };
