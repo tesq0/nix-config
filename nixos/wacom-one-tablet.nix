@@ -18,7 +18,7 @@
   Driver "wacom"
   Option        "tilt"         "on"  # add this if your tablet supports tilt
   Option        "Threshold"    "5"   # the official linuxwacom howto advises this line
-  Option        "TransformationMatrix" "0.6 0 0 0 1 0 0 0 1"
+  Option        "TransformationMatrix" "1 0 0 0.5 0 0 0 1"
   EndSection
 
 '';

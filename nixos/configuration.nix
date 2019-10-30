@@ -14,11 +14,11 @@ in
     ./hardware-configuration.nix
     ./environment.nix
     ./laptop.nix
+    ./vpn.nix
+    ./wacom-one-tablet.nix
     #./mount-drives.nix
-    #./vpn.nix
     #./ssh.nix
     #./xboxdrv.nix
-    #./wacom-one-tablet.nix
     #./syncthing.nix
     # ./music.nix
     # ./remote-desktop.nix
@@ -104,17 +104,22 @@ in
     # Open ports in the firewall.
     # networking.firewall.enable = false;
     # 8100 - Ionic
+    # 8000 - Laravel
+    # 6001 - Websocket
     # 20, 21, 5000 - 5003 - ftp
-    networking.firewall.allowedTCPPorts = [ 8100 20 21 ]; 
-    networking.firewall.allowedUDPPorts = [ 8100 20 21 ]; 
+    networking.firewall.allowedTCPPorts = [ 3000 6001 8000 8100 20 21 ]; 
+    networking.firewall.allowedUDPPorts = [ 3000 6001 8000 8100 20 21 ]; 
     networking.firewall.allowedTCPPortRanges = [ { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 5000; to = 5003; } ];
     
     # Enable CUPS to print documents.
     services.printing.enable = true;
-    services.printing.drivers = [ pkgs.brgenml1lpr ];
+    services.printing.drivers = [ pkgs.brgenml1lpr pkgs.hplip ];
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
+
+    hardware.sane.enable = true;
+    hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
 
     # Enable cron service
     services.cron = {
@@ -236,6 +241,8 @@ in
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
 
+    # virtualisation.anbox.enable = true;
+
     programs.adb.enable = true;
 
     fonts.fonts = with pkgs; [
@@ -265,7 +272,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" "lp" "scanner" ];
 
     };
 
