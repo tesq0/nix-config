@@ -11,12 +11,18 @@ in
 {
   
   services.openvpn.servers = {
-    jazajuk = {
+    office = {
       config = ''
-        config /root/nixos/openvpn/mikus.ovpn
-        route-up ${pkgs.writeScript "openvpn-jazajuk-route-up" routeScript}
+        config /root/nixos/openvpn/mikolaj.ovpn
       '';
       autoStart = true;
+    };
+    jazajuk = {
+      config = ''
+        config /root/nixos/openvpn/mikolaj.ovpn
+        route-up ${pkgs.writeScript "openvpn-route-up" routeScript}
+      '';
+      autoStart = false;
       updateResolvConf = true;
     };
   };
