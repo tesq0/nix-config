@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+
+  boot.supportedFilesystems = [ "ntfs" ];
 	  # Mount drives
 
 		fileSystems."/media/STORAGE" = {

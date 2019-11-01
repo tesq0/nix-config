@@ -19,6 +19,7 @@ in
     ./xboxdrv.nix
     ./wacom-one-tablet.nix
     ./syncthing.nix
+    ./dj.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -142,7 +143,6 @@ in
     # Enable sound.
     sound.enable = true;
     hardware.pulseaudio.enable = true;
-    hardware.pulseaudio.package = pkgs.pulseaudioFull;
     hardware.pulseaudio.support32Bit = true;
 
     hardware.opengl.enable = true;
@@ -278,7 +278,7 @@ in
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "transmission" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" ];
 
 			# For docker namespaces
       subUidRanges = [
