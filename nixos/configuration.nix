@@ -87,10 +87,14 @@ in
     hardware.bluetooth.powerOnBoot = true;
 
     # for adaptive screen blue light
+
+    location = {
+      latitude = 53.4275432;
+      longitude = 14.4744383;
+    };
+
     services.redshift = {
       enable = true;
-      latitude = "53.4275432";
-      longitude = "14.4744383";
       temperature.day = 5500;
       temperature.night = 2700;
     };
@@ -125,14 +129,13 @@ in
     services.cron = {
       enable = true;
       systemCronJobs = [
-        "*/1 * * * *      mikus    ${pkgs.perl} ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log"
+        "*/1 * * * *      mikus  ${pkgs.perl}/bin/perl -I$(${pkgs.findutils}/bin/find ${pkgs.perlPackages.ProcProcessTable} -name x86_64-linux-thread-multi) ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log 2>&1"
       ];
     };
 
     # Enable sound.
     sound.enable = true;
     hardware.pulseaudio.enable = true;
-    hardware.pulseaudio.package = pkgs.pulseaudioFull;
     hardware.pulseaudio.support32Bit = true;
 
     hardware.opengl.enable = true;
@@ -242,6 +245,7 @@ in
     virtualisation.docker.enableOnBoot = false;
 
     virtualisation.anbox.enable = true;
+    
 
     programs.adb.enable = true;
 
