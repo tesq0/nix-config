@@ -44,7 +44,7 @@ in
       enable = true;
       anonymousUser = true;
       anonymousUserNoPassword = true;
-      rsaCertFile = "/var/vsftpd/vsftpd.pem";
+      # rsaCertFile = "/var/vsftpd/vsftpd.pem";
       extraConfig = ''
         pasv_min_port=5000
         pasv_max_port=5003
