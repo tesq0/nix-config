@@ -241,7 +241,7 @@ in
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
 
-    # virtualisation.anbox.enable = true;
+    virtualisation.anbox.enable = true;
 
     programs.adb.enable = true;
 
