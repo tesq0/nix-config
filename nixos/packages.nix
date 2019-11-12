@@ -15,6 +15,7 @@ with pkgs; [
     xorg.xwininfo
     xorg.xdpyinfo
     xorg.xev
+    wmctrl
     xorg.xmodmap
     xcape
     dunst

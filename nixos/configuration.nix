@@ -244,22 +244,15 @@ in
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
 
-    virtualisation.anbox.enable = true;
+   # virtualisation.anbox.enable = true;
     
 
     programs.adb.enable = true;
 
     fonts.fonts = with pkgs; [
-      nerdfonts
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-      mplus-outline-fonts
-      dina-font
-      proggyfonts
       hack-font
     ];
     
