@@ -2,14 +2,16 @@
 
 {
 
-  /*
   # JACK
+
+  /*
   services.jack = {
     jackd.enable = true;
-    jackd.extraOptions = [ "-dalsa" "--device" "hw:PCH" ];
+    jackd.extraOptions = [ "-P10" "-p2048" "-dalsa" "-r48000" "-p128" "-n2" "-D" "-Chw:Device" "-Phw:PCH" ];
 
     # support ALSA only programs via ALSA JACK PCM plugin
     alsa.enable = false;
+
 
     # support ALSA only programs via loopback device (supports programs like Steam)
     loopback = {
@@ -19,11 +21,26 @@
         period_size 2048
       '';
     };
+
   };
   */
   
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
+  systemd.services.resume-fix-pulseaudio = {
+    description = "Fix PulseAudio after resume from suspend";
+    after = [ "suspend.target" ];
+    serviceConfig = {
+      User = "mikus";
+      Type = "oneshot";
+      ExecStart = ''
+        ${pkgs.xboxdrv}/bin/xboxdrv --daemon --config /etc/default/xboxdrv
+      '';
+    };
+  };
+  
   systemd.user.services.pulseaudio.environment = {
     JACK_PROMISCUOUS_SERVER = "jackaudio";
   };
