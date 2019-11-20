@@ -36,7 +36,7 @@
       User = "mikus";
       Type = "oneshot";
       ExecStart = ''
-        ${pkgs.xboxdrv}/bin/xboxdrv --daemon --config /etc/default/xboxdrv
+        ${pkgs.pajackconnect}/bin/pajackconnect restart
       '';
     };
   };
