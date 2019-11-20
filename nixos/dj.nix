@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  pajackconnect = pkgs.callPackage ../overlays/pkgs/pajackconnect { };
+in
 {
 
   # JACK
@@ -36,7 +39,7 @@
       User = "mikus";
       Type = "oneshot";
       ExecStart = ''
-        ${pkgs.pajackconnect}/bin/pajackconnect restart
+        ${pajackconnect}/bin/pajackconnect restart
       '';
     };
   };
