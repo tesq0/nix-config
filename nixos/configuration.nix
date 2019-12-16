@@ -50,6 +50,13 @@ in
         pasv_max_port=5003
       '';
     };
+
+    services.synergy.client = {
+      enable = true;
+      autoStart = true;
+      screenName = "laptop";
+      serverAddress = "192.168.0.2";
+    };
     
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
@@ -244,8 +251,10 @@ in
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
 
-   # virtualisation.anbox.enable = true;
-    
+    virtualisation.virtualbox.host.enable = true;
+    users.extraGroups.vboxusers.members = [ "mikus" ];
+
+    # virtualisation.anbox.enable = true;
 
     programs.adb.enable = true;
 
