@@ -20,6 +20,7 @@ with pkgs; [
     xcape
     dunst
     gksu
+    xdotool
 
     glxinfo
 
