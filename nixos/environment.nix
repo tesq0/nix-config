@@ -72,6 +72,8 @@ in
 
     gpl="git pull";
     gpu="git push";
+
+    r=''ranger --choosedir=$HOME/.rangerdir; cd (cat $HOME/.rangerdir)'';
     
   };
 
