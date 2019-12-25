@@ -82,6 +82,8 @@ in
 
   services.transmission.enable = true;
 
+  services.gnome3.gnome-keyring.enable = true;
+
   # Fish Shell
   programs.fish = {
     enable = true;
