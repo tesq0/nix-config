@@ -21,5 +21,4 @@ self: super:
 
   pykeepass-cache = super.python3Packages.callPackage ./pkgs/python-modules/pykeepass-cache { };
   passhole = super.python3Packages.callPackage ./pkgs/python-modules/passhole { };
-
 }
