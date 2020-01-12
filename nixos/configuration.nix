@@ -17,7 +17,7 @@ in
     ./vpn.nix
     ./wacom-one-tablet.nix
     #./mount-drives.nix
-    #./ssh.nix
+    ./ssh.nix
     #./xboxdrv.nix
     #./syncthing.nix
     # ./music.nix
@@ -245,8 +245,8 @@ in
       IdleAction=lock
     '';
 
-    programs.xss-lock.enable = true;
-    programs.xss-lock.lockerCommand = "/home/mikus/.scripts/i3cmds/lock";
+    # programs.xss-lock.enable = true;
+    # programs.xss-lock.lockerCommand = "/home/mikus/.scripts/i3cmds/lock";
     
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
