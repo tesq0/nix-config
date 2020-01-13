@@ -14,8 +14,8 @@ in
   environment.variables = {
     TERMINAL="st";
     TERM="xterm-256color";
-    BROWSER="pcmanfm";
-    MAIL="firefox";
+    BROWSER="firefox";
+    MAIL="thunderbird";
     MPD_HOST="localhost";
     # XCURSOR_PATH = [
     #   "${config.system.path}/share/icons"
