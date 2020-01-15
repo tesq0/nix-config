@@ -6,4 +6,6 @@ self: super:
     gtk2 = super.gtk2-x11;
   };
   pajackconnect = super.callPackage ./pkgs/pajackconnect { };
+  mpv = super.mpv.override { jackaudioSupport = true; };
+  vlc = super.vlc.override { jackSupport = true; };
 }
