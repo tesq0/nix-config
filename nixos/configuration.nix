@@ -179,6 +179,7 @@ in
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
       
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
+      ${pkgs.numlockx}/bin/numlockx on
     '';
 
     services.xserver.videoDrivers = [ "intel" ];
