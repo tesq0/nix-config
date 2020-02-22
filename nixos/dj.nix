@@ -1,16 +1,20 @@
 { config, pkgs, ... }:
 
+let
+  pajackconnect = pkgs.callPackage ../overlays/pkgs/pajackconnect { };
+in
 {
 
-  /*
   # JACK
+
+  /*
   services.jack = {
     jackd.enable = true;
-    jackd.extraOptions = [ "-dalsa" "--device" "hw:PCH" ];
+    jackd.extraOptions = [ "-P10" "-p2048" "-dalsa" "-r48000" "-p128" "-n2" "-D" "-Chw:Device" "-Phw:CODEC" ];
 
     # support ALSA only programs via ALSA JACK PCM plugin
     alsa.enable = false;
-
+    
     # support ALSA only programs via loopback device (supports programs like Steam)
     loopback = {
       enable = true;
@@ -19,17 +23,30 @@
         period_size 2048
       '';
     };
+
   };
   */
   
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-
-  systemd.user.services.pulseaudio.environment = {
-    JACK_PROMISCUOUS_SERVER = "jackaudio";
+  /*
+  systemd.services.resume-fix-pulseaudio = {
+    description = "Fix PulseAudio after resume from suspend";
+    after = [ "suspend.target" ];
+    serviceConfig = {
+      User = "mikus";
+      Type = "oneshot";
+      ExecStart = ''
+        ${pajackconnect}/bin/pajackconnect restart
+      '';
+    };
   };
-
+  */
+  
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  
   boot = {
-    kernelModules = [ "snd-seq" "snd-rawmidi" ];
+    kernelModules = [ "snd-seq" "snd-rawmidi" "snd-seq-midi" ];
     kernel.sysctl = { "vm.swappiness" = 10; "fs.inotify.max_user_watches" = 524288; };
     kernelParams = [ "threadirq" ];
     

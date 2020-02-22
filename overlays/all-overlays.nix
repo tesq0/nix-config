@@ -21,4 +21,7 @@ self: super:
 
   pykeepass-cache = super.python3Packages.callPackage ./pkgs/python-modules/pykeepass-cache { };
   passhole = super.python3Packages.callPackage ./pkgs/python-modules/passhole { };
+  pajackconnect = super.callPackage ./pkgs/pajackconnect { };
+  mpv = super.mpv.override { jackaudioSupport = true; };
+  vlc = super.vlc.override { jackSupport = true; };
 }
