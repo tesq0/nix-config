@@ -33,7 +33,7 @@ in
         config /root/nixos/openvpn/legalink.ovpn
         route-up ${pkgs.writeScript "openvpn-jazajuk-route-up" routeScript}
       '';
-      autoStart = false;
+      autoStart = true;
     };
     
   };
