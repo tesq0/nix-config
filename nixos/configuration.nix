@@ -177,6 +177,7 @@ in
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
       
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
+      ${pkgs.numlockx}/bin/numlockx on
 
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
