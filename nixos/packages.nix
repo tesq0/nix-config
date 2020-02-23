@@ -18,6 +18,7 @@ with pkgs; [
     xcape
     dunst
     gksu
+    dragon-drop
 
     glxinfo
 
@@ -83,4 +84,6 @@ with pkgs; [
     tor-browser-bundle-bin
     slack
     llpp
+    w3m
+
 ]
