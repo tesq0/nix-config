@@ -84,7 +84,7 @@ with pkgs; [
     tor-browser-bundle-bin
     slack
     llpp
-    ueberzug
+    # ueberzug
     w3m
 
 ]

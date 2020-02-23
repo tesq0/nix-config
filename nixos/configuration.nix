@@ -56,6 +56,10 @@ in
         pasv_max_port=5003
       '';
     };
+
+    services.locate = {
+      enable = true;
+    };
     
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
