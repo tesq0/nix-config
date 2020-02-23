@@ -2,6 +2,7 @@ pkgs:
 
 with pkgs; [
   
+  	direnv
     man-pages
 
     numix-cursor-theme
@@ -14,10 +15,12 @@ with pkgs; [
     xorg.xwininfo
     xorg.xdpyinfo
     xorg.xev
+    wmctrl
     xorg.xmodmap
     xcape
     dunst
     gksu
+    xdotool
     dragon-drop
 
     glxinfo
@@ -79,12 +82,10 @@ with pkgs; [
     htop
     pass
     emacs
-    remmina
     firefox
-    tor-browser-bundle-bin
-    slack
     llpp
     # ueberzug
     w3m
+    atool
 
 ]
