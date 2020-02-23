@@ -21,6 +21,7 @@ with pkgs; [
     dunst
     gksu
     xdotool
+    dragon-drop
 
     glxinfo
 
@@ -83,4 +84,7 @@ with pkgs; [
     emacs
     firefox
     llpp
+    # ueberzug
+    w3m
+
 ]

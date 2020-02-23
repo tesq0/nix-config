@@ -17,6 +17,7 @@ in
     BROWSER="firefox";
     MAIL="thunderbird";
     MPD_HOST="localhost";
+    SUDO_ASKPASS="dmenupass";
     # XCURSOR_PATH = [
     #   "${config.system.path}/share/icons"
     #   "${home}/.icons"

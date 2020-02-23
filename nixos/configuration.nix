@@ -39,7 +39,7 @@ in
     };
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-    
+
     services.vsftpd = {
       enable = true;
       anonymousUser = true;
@@ -57,11 +57,15 @@ in
       screenName = "laptop";
       serverAddress = "192.168.0.2";
     };
-    
+
+    services.locate = {
+      enable = true;
+    };
+
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
     networking.extraHosts = builtins.readFile ../networking/bad-hosts;
-    
+
     programs.nm-applet.enable = true;
 
     #Select internationalisation properties.
@@ -82,7 +86,7 @@ in
     };
 
     programs.chromium.enable = true;
-    
+
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
@@ -118,11 +122,11 @@ in
     # 8000 - Laravel
     # 6001 - Websocket
     # 20, 21, 5000 - 5003 - ftp
-    networking.firewall.allowedTCPPorts = [ 3000 6001 8000 8100 20 21 ]; 
-    networking.firewall.allowedUDPPorts = [ 3000 6001 8000 8100 20 21 ]; 
+    networking.firewall.allowedTCPPorts = [ 3000 6001 8000 8100 20 21 ];
+    networking.firewall.allowedUDPPorts = [ 3000 6001 8000 8100 20 21 ];
     networking.firewall.allowedTCPPortRanges = [ { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 5000; to = 5003; } ];
-    
+
     # Enable CUPS to print documents.
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.brgenml1lpr pkgs.hplip ];
@@ -177,7 +181,7 @@ in
       #Backslash
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-      
+
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
       ${pkgs.numlockx}/bin/numlockx on
     '';
@@ -204,9 +208,9 @@ in
       Option			"Position" "0 1080"
       EndSection
     '';
-    
+
     services.xserver.exportConfiguration = true;
-    
+
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
       MatchIsPointer "yes"
@@ -217,14 +221,14 @@ in
     # Make auto mounting work.
     security.wrappers = {
       udevil = {
-        source = "${pkgs.udevil}/bin/udevil"; 
+        source = "${pkgs.udevil}/bin/udevil";
         owner = "root";
       };
     };
 
     # automatic mounting service. Included in udevil package
     services.devmon = {
-      enable = true; 
+      enable = true;
     };
 
     # Window manager
@@ -241,14 +245,14 @@ in
       shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
     };
 
-		services.logind.extraConfig = ''
+    services.logind.extraConfig = ''
       HandlePowerKey=ignore
       IdleAction=lock
     '';
 
     # programs.xss-lock.enable = true;
     # programs.xss-lock.lockerCommand = "/home/mikus/.scripts/i3cmds/lock";
-    
+
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
 
@@ -265,12 +269,12 @@ in
       noto-fonts-emoji
       hack-font
     ];
-    
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
 
     users.groups = [
-		  { gid = 1000; name = "mikus"; }
-		  { name = "realtime"; }
+      { gid = 1000; name = "mikus"; }
+      { name = "realtime"; }
     ];
 
     users.users.mikus = {
