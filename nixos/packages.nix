@@ -86,5 +86,6 @@ with pkgs; [
     llpp
     # ueberzug
     w3m
+    atool
 
 ]
