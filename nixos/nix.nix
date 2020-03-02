@@ -5,6 +5,8 @@
     extraOptions = ''
       auto-optimise-store = true
       gc-keep-outputs = true
+      binary-caches-parallel-connections = 3
+      connect-timeout = 5
     '';
     nixPath = [
       "nixpkgs=/etc/nixos/nixpkgs"
