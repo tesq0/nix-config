@@ -25,6 +25,7 @@ self: super:
   mpv = super.mpv.override { jackaudioSupport = true; };
   vlc = super.vlc.override { jackSupport = true; };
 
-  ueberzug = super.python3Packages.callPackage ./pkgs/ueberzug {
-  };
+  ueberzug = super.python3Packages.callPackage ./pkgs/ueberzug {};
+
+
 }
