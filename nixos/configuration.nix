@@ -60,11 +60,11 @@ in
     services.locate = {
       enable = true;
     };
-    
+
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
     networking.extraHosts = builtins.readFile ../networking/bad-hosts;
-    
+
     programs.nm-applet.enable = true;
 
     # Configure network proxy if necessary
@@ -89,7 +89,7 @@ in
     };
 
     programs.chromium.enable = true;
-    
+
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
@@ -99,7 +99,7 @@ in
 
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
-    
+
     services.synergy.server.enable = true;
     services.synergy.server.screenName = "mikus";
     services.synergy.server.configFile = "/home/mikus/.synergy.conf";
@@ -125,11 +125,11 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 8100 24800 ]; 
-    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 8100 24800 ]; 
+    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 8100 24800 ];
+    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 8100 24800 ];
     networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
-    
+
     # Enable CUPS to print documents.
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.brgenml1lpr ];
@@ -179,7 +179,7 @@ in
       #Backslash
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-      
+
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
       ${pkgs.numlockx}/bin/numlockx on
 
@@ -194,10 +194,10 @@ in
     '';
 
     services.xserver.deviceSection = ''
-      Option "HardDPMS" "true"    
-      Option "TripleBuffer" "false"    
+      Option "HardDPMS" "true"
+      Option "TripleBuffer" "false"
     '';
-    
+
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
       MatchIsPointer "yes"
@@ -208,14 +208,14 @@ in
     # Make auto mounting work.
     security.wrappers = {
       udevil = {
-        source = "${pkgs.udevil}/bin/udevil"; 
+        source = "${pkgs.udevil}/bin/udevil";
         owner = "root";
       };
     };
 
     # automatic mounting service. Included in udevil package
     services.devmon = {
-      enable = true; 
+      enable = true;
     };
 
     # Window manager
@@ -232,25 +232,27 @@ in
       shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
     };
 
-		services.logind.extraConfig = ''
+    services.logind.extraConfig = ''
       HandlePowerKey=ignore
       IdleAction=lock
     '';
 
     programs.xss-lock.enable = true;
     programs.xss-lock.lockerCommand = "/home/mikus/.scripts/i3cmds/lock";
-    
+
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
+
     virtualisation.virtualbox.host.enable = true;
-    
+    virtualisation.virtualbox.host.enableExtensionPack = true;
+
     users.extraGroups.vboxusers.members = [ "mikus" ];
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
     virtualisation.docker.enableNvidia = true;
 
 
     virtualisation.anbox.enable = true;
-    
+
 
     programs.adb.enable = true;
 
@@ -267,12 +269,12 @@ in
       proggyfonts
       hack-font
     ];
-    
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
 
     users.groups = [
-		  { gid = 1000; name = "mikus"; }
-		  { name = "realtime"; }
+      { gid = 1000; name = "mikus"; }
+      { name = "realtime"; }
     ];
 
     users.users.mikus = {
@@ -283,7 +285,7 @@ in
       shell = pkgs.fish;
       extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" ];
 
-			# For docker namespaces
+      # For docker namespaces
       subUidRanges = [
         { startUid = 1000; count = 1; }
         { startUid = 100001; count = 65534; }
