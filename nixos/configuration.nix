@@ -159,8 +159,6 @@ in
     services.xserver.layout = "en_US,pl";
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
-    services.xserver.windowManager.i3.enable = true;
-    services.xserver.windowManager.default = "i3";
     programs.qt5ct.enable = true;
 
     services.xserver.displayManager.sessionCommands = ''
@@ -219,9 +217,10 @@ in
     };
 
     # Window manager
-    services.xserver.desktopManager = {
-      default = "none";
-      xterm.enable = false;
+    services.xserver.windowManager.i3.enable = true;
+
+    services.xserver.displayManager = {
+      defaultSession = "none+i3";
     };
 
     services.compton = {
@@ -272,10 +271,10 @@ in
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
 
-    users.groups = [
-      { gid = 1000; name = "mikus"; }
-      { name = "realtime"; }
-    ];
+    users.groups = {
+      mikus = { gid = 1000; }; 
+      realtime = {};
+    };
 
     users.users.mikus = {
       isNormalUser = true;
