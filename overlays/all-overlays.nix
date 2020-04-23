@@ -27,5 +27,16 @@ self: super:
 
   ueberzug = super.python3Packages.callPackage ./pkgs/ueberzug {};
 
+  udpt = super.callPackage ./pkgs/udpt {};
+
+  xournalpp = super.xournalpp.overrideAttrs (old: rec {
+    version = "5ded1c04971607eaa41690ea0425adccf90feddb";
+    src = super.fetchFromGitHub {
+      owner = "xournalpp";
+      repo = old.pname;
+      rev = version;
+      sha256 = "1sfa31jk5sfhwbjrlbb6viyrn9inhng1hf629r5lcxfp7j6imsmn";
+    };
+  });
 
 }
