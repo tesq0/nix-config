@@ -39,4 +39,6 @@ self: super:
     };
   });
 
+  waveform = super.callPackage ./pkgs/waveform {};
+
 }
