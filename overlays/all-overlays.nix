@@ -9,6 +9,9 @@ self: super:
   setuptools-lint = super.python3Packages.callPackage ./pkgs/python-modules/setuptools-lint { };
   pynput = super.python3Packages.callPackage ./pkgs/python-modules/pynput { };
 
+  SwSpotify = super.python3Packages.callPackage ./pkgs/python-modules/SwSpotify { };
+  swaglyrics = super.python3Packages.callPackage ./pkgs/python-modules/swaglyrics { };
+
   # This version is bugged out
   # pykeepass = super.python3Packages.pykeepass.overrideAttrs (old: rec {
   #   pname = old.pname;
