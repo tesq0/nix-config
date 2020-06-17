@@ -19,6 +19,7 @@ in
 {
   
   services.openvpn.servers = {
+    /*
     jazajuk = {
       config = ''
         config /root/nixos/openvpn/mikus.ovpn
@@ -27,6 +28,7 @@ in
       autoStart = true;
       updateResolvConf = true;
     };
+    */
 
     legalink = {
       config = ''
