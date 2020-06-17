@@ -22,6 +22,21 @@ self: super:
   #   };
   # });
 
+  godot = super.godot.overrideAttrs (old: rec {
+    pname = "godot";
+    version = "3.2.2-RC-1";
+    src = super.fetchFromGitHub {
+      owner  = "godotengine";
+      repo   = "godot";
+      rev    = "5ee9553591ebb7926a238f2d5b5fb154db602b95";
+      sha256 = "09vz3rkc1p5hm09fzgh88z8v0798bnn1gxhxwlblhhmrbsm2rw6f";
+    };
+    patches = [
+      ./pkgs/godot/pkg_config_additions.patch
+      ./pkgs/godot/dont_clobber_environment.patch
+    ];
+  });
+
   pykeepass-cache = super.python3Packages.callPackage ./pkgs/python-modules/pykeepass-cache { };
   passhole = super.python3Packages.callPackage ./pkgs/python-modules/passhole { };
   pajackconnect = super.callPackage ./pkgs/pajackconnect { };
