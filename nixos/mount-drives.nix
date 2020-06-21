@@ -11,6 +11,11 @@
       options = [ "rw" "data=ordered" "relatime" ];
     };
 
+		fileSystems."/media/STORAGE-SSD" = {
+      device = "/dev/disk/by-uuid/8fbfd501-9d3c-4d06-a563-616f794028ff";
+      fsType = "ext4";
+    };
+
     /*
 		fileSystems."/media/SYN01" = {
       device = "//10.42.0.8/homes/mikus";
