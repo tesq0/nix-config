@@ -144,6 +144,10 @@ in
       ];
     };
 
+    systemd.extraConfig = "DefaultLimitNOFILE=524288";
+    systemd.user.extraConfig = "DefaultLimitNOFILE=524288";
+    environment.etc."security/limits.conf".text = "*           hard    nofile     524288";
+
     # Enable sound.
     sound.enable = true;
 

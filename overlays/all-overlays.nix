@@ -59,4 +59,6 @@ self: super:
 
   waveform = super.callPackage ./pkgs/waveform {};
 
+  droidcam = super.callPackage ./pkgs/droidcam { };
+
 }
