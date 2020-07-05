@@ -59,6 +59,8 @@ self: super:
 
   waveform = super.callPackage ./pkgs/waveform {};
 
-  droidcam = super.callPackage ./pkgs/droidcam { };
+  droidcam = super.callPackage ./pkgs/droidcam {};
+
+  v4l2loopback-droidcam = super.callPackage ./pkgs/droidcam/v4l2oopback.nix { kernel = super.linux; };
 
 }

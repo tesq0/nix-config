@@ -1,27 +1,30 @@
-{ stdenv, fetchurl }:
+{ stdenv, fetchFromGitHub,
 
-let
-  arch = "64";
-in
+libjpeg_turbo, pkg-config,
+
+alsaLib, speex, libav, glib, gtk3, gdk-pixbuf, atk, pango, cairo, freetype, fontconfig }:
+
 stdenv.mkDerivation rec {
 
   name = "droidcam";
   
-  src = fetchurl {
-    url = "https://www.dev47apps.com/files/linux/droidcam_081219_${arch}bit.tar.bz2";
-    sha256 = "0xd765cc6g4vha0g1wfzhdnjlkhdxmy0w5ln5j4vqbz48wz2a5ps";
+  src = fetchFromGitHub {
+    owner = "aramg";
+    repo = "droidcam";
+    rev = "d887a3aeb3b158825878005c802136ff849c70ec";
+    sha256 = "1qxfw6j21f686daqf72z0y16p7vlbg4vff58hv0i59pqk5qw3sfx";
   };
+  
+  nativeBuildInputs = [ pkg-config libjpeg_turbo.dev alsaLib speex libav glib gtk3 gdk-pixbuf atk pango cairo freetype fontconfig ];
 
-  unpackPhase = ''
-    tar xjf $src
+  buildPhase = ''
+    cd linux
+    make JPEG="`pkg-config --libs --cflags libturbojpeg`" all
   '';
-
+  
   installPhase = ''
-    mkdir -p $out
-    cp -r droidcam-${arch}bit/* $out
-    cd $out
-    patchShebangs . 
-    ./install
+    mkdir -p $out/bin
+    cp droidcam* $out/bin
   '';
   
 }

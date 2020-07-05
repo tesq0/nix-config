@@ -38,7 +38,7 @@ in
       };
     };
 
-    boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
+    boot.extraModulePackages = with config.boot.kernelPackages; [ exfat-nofuse ];
 
     # Apple keyboard
     boot.extraModprobeConfig = ''
@@ -73,10 +73,13 @@ in
 
     #Select internationalisation properties.
     i18n = {
-      consoleFont = "Lat2-Terminus16";
-      consoleUseXkbConfig = true;
       supportedLocales = [ "pl_PL.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
       defaultLocale = "en_US.UTF-8";
+    };
+
+    console = {
+      font = "Lat2-Terminus16";
+      useXkbConfig = true;
     };
 
     # Set your time zone.

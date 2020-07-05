@@ -1,8 +1,11 @@
 { config, pkgs, ... }:
 
-let home = "/home/mikus";
+let
+  home = "/home/mikus";
 in
 {
+
+  imports = [ ./modules/programs/v4l2loopback-droidcam.nix ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wgt
@@ -91,5 +94,7 @@ in
   programs.fish = {
     enable = true;
   };
+
+  programs.droidcam.enable = true;
 
 }
