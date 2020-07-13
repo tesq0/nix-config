@@ -63,4 +63,21 @@ self: super:
 
   v4l2loopback-droidcam = super.callPackage ./pkgs/droidcam/v4l2oopback.nix { kernel = super.linux; };
 
+
+  obs-studio = super.obs-studio.overrideAttrs (old: rec {
+
+    version = "c21fd6f275df65c8cd861428655268263e0f5a8a";
+
+    src = super.fetchFromGitHub {
+      owner = "obsproject";
+      repo = "obs-studio";
+      rev = version;
+      sha256 = "0xydb0ryqnh3z7dc9r3zlas3y96amd5jgdjdicwzgzj9dz85kjnn";
+      fetchSubmodules = true;
+    };
+    
+  });
+
+  acquisition = super.libsForQt5.callPackage ./pkgs/acquisition { };
+  
 }
