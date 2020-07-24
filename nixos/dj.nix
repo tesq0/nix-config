@@ -44,6 +44,9 @@ in
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  hardware.pulseaudio.extraConfig = ''
+    load-module module-echo-cancel
+  '';
   
   boot = {
     kernelModules = [ "snd-seq" "snd-rawmidi" "snd-seq-midi" ];
