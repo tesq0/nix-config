@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Cadmus
+Exec=AppRun
+Terminal=false
+Type=Application
+Icon=cadmus
+StartupWMClass=Cadmus
+X-AppImage-Version=2.3.1
+Comment=Cadmus
+MimeType=x-scheme-handler/cadmus;
+Categories=Development;

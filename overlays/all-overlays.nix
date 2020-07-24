@@ -79,5 +79,9 @@ self: super:
   });
 
   acquisition = super.libsForQt5.callPackage ./pkgs/acquisition { };
+
+  synthpod = super.callPackage ./pkgs/synthpod { }; 
+
+  cadmus = super.libsForQt5.callPackage ./pkgs/cadmus { };
   
 }
