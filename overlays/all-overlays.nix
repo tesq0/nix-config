@@ -6,12 +6,25 @@ self: super:
 
   # Python
   PyUserInput = super.python3Packages.callPackage ./pkgs/python-modules/PyUserInput { };
+
   setuptools-lint = super.python3Packages.callPackage ./pkgs/python-modules/setuptools-lint { };
+
   pynput = super.python3Packages.callPackage ./pkgs/python-modules/pynput { };
 
-  SwSpotify = super.python3Packages.callPackage ./pkgs/python-modules/SwSpotify { };
   swaglyrics = super.python3Packages.callPackage ./pkgs/python-modules/swaglyrics { };
 
+  pykeepass-cache = super.python3Packages.callPackage ./pkgs/python-modules/pykeepass-cache { };
+  
+  SwSpotify = super.python3Packages.callPackage ./pkgs/python-applications/SwSpotify { };
+
+  i3-swallow = super.python3Packages.callPackage ./pkgs/python-applications/i3-swallow { };
+
+  i3-unity-fix = super.python3Packages.callPackage ./pkgs/python-applications/i3-unity-fix { };
+
+  passhole = super.python3Packages.callPackage ./pkgs/python-applications/passhole { };
+
+  ueberzug = super.python3Packages.callPackage ./pkgs/python-applications/ueberzug {};
+  
   # This version is bugged out
   # pykeepass = super.python3Packages.pykeepass.overrideAttrs (old: rec {
   #   pname = old.pname;
@@ -37,13 +50,9 @@ self: super:
     ];
   });
 
-  pykeepass-cache = super.python3Packages.callPackage ./pkgs/python-modules/pykeepass-cache { };
-  passhole = super.python3Packages.callPackage ./pkgs/python-modules/passhole { };
   pajackconnect = super.callPackage ./pkgs/pajackconnect { };
   mpv = super.mpv.override { jackaudioSupport = true; };
   vlc = super.vlc.override { jackSupport = true; };
-
-  ueberzug = super.python3Packages.callPackage ./pkgs/ueberzug {};
 
   udpt = super.callPackage ./pkgs/udpt {};
 
@@ -83,5 +92,7 @@ self: super:
   synthpod = super.callPackage ./pkgs/synthpod { }; 
 
   cadmus = super.libsForQt5.callPackage ./pkgs/cadmus { };
+
+  tibia = super.libsForQt5.callPackage ./games/tibia { };
   
 }
