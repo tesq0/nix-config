@@ -9,7 +9,7 @@ buildPythonApplication rec {
       owner = "tesq0";
       repo = "i3-unity-fix";
       rev = "v${version}";
-      sha256 = "1kysbvvf1i6l0lhj3bvch7mccah41mwaiq7f3h8dbm8d95qwm86z";
+      sha256 = "1x0sr6frzlmv77hv54a5m8s9rz9lavlwyjnhhm5imsszliaz13jl";
   };
 
   propagatedBuildInputs = [ i3ipc pynput ];
