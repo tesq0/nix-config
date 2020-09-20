@@ -82,7 +82,7 @@ in
 
     nixpkgs.config = {
       allowUnfree = true;
-      firefox.enableAdobeFlash = true;
+      # firefox.enableAdobeFlash = true;
       wine.build = "wineWow";
     };
 

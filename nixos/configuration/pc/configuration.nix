@@ -13,7 +13,7 @@ in
     ./hardware-configuration.nix
     ../../nix.nix
     ../../mount-drives.nix
-    ../../environment.nix
+    ./environment.nix
     ../../vpn.nix
     ../../ssh.nix
     ../../xboxdrv.nix
