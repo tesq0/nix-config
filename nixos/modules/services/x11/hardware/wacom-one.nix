@@ -2,15 +2,25 @@
 
 with lib;
 
-let cfg = config.services.xserver.wacomOne;
+let
+
+  cfg = config.services.xserver.wacomOne;
 
 in
 
 {
 
   options = {
+
     services.xserver.wacomOne = {
-      enable = mkEnableOption "Wacom one tablet support";
+
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Whether to enable the Wacom One tablet.
+        '';
+      };
 
       transformationMatrix = mkOption {
         type = types.str;
@@ -22,8 +32,9 @@ in
       };
 
     };
-  };
 
+  };
+  
   config = mkIf cfg.enable {
 
     environment.systemPackages = [ pkgs.xf86_input_wacom ]; # provides xsetwacom
@@ -42,7 +53,7 @@ in
     Driver "wacom"
     Option        "tilt"         "on"  # add this if your tablet supports tilt
     Option        "Threshold"    "5"   # the official linuxwacom howto advises this line
-    Option        "TransformationMatrix" ${cfg.transformationMatrix}
+    Option        "TransformationMatrix" "${cfg.transformationMatrix}"
     EndSection
 
   '';

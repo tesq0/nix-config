@@ -13,7 +13,7 @@
     ../../nix.nix
     ../../mount-drives.nix
     ../../ssh.nix
-    ../../syncthing.nix
+    # ../../syncthing.nix
     # ../../vpn.nix
     # ./music.nix
     # ./remote-desktop.nix
@@ -61,10 +61,11 @@
     # networking.proxy.default = "http://user:password@proxy:port/";
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+    console.font = "Lat2-Terminus16";
+    console.useXkbConfig = true;
+    
     #Select internationalisation properties.
     i18n = {
-      consoleFont = "Lat2-Terminus16";
-      consoleUseXkbConfig = true;
       supportedLocales = [ "pl_PL.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
       defaultLocale = "en_US.UTF-8";
     };
@@ -145,7 +146,7 @@
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
     services.xserver.windowManager.i3.enable = true;
-    services.xserver.windowManager.default = "i3";
+    services.xserver.displayManager.defaultSession = "none+i3";
     programs.qt5ct.enable = true;
 
     services.xserver.wacomOne = {
@@ -211,7 +212,6 @@
 
     # Window manager
     services.xserver.desktopManager = {
-      default = "none";
       xterm.enable = false;
     };
 
@@ -262,10 +262,10 @@
     
     # Define a user account. Don't forget to set a password with ‘passwd’.
 
-    users.groups = [
-		  { gid = 1000; name = "mikus"; }
-		  { name = "realtime"; }
-    ];
+    users.groups = {
+      mikus = { gid = 1000; }; 
+      realtime = {};
+    };
 
     users.users.mikus = {
       isNormalUser = true;
