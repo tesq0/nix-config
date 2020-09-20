@@ -5,21 +5,21 @@
 { config, pkgs, ... }:
 
 let
-  kill-high-mem-processes = ../cron/kill-high-mem-processes.pl;
+  kill-high-mem-processes = ../../../cron/kill-high-mem-processes.pl;
 in
 {
   imports =
     [ # Include the results of the hardware scan.
-    ../nix.nix
-    ../hardware-configuration.nix
-    ../mount-drives.nix
-    ../environment.nix
-    ../vpn.nix
-    ../ssh.nix
-    ../xboxdrv.nix
-    ../wacom-one-tablet.nix
-    ../syncthing.nix
-    ../dj.nix
+    ./hardware-configuration.nix
+    ../../nix.nix
+    ../../mount-drives.nix
+    ../../environment.nix
+    ../../vpn.nix
+    ../../ssh.nix
+    ../../xboxdrv.nix
+    ../../wacom-one-tablet.nix
+    ../../syncthing.nix
+    ../../dj.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -59,7 +59,7 @@ in
     
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
-    networking.extraHosts = builtins.readFile ../networking/bad-hosts;
+    networking.extraHosts = builtins.readFile ../../../networking/bad-hosts;
     
     programs.nm-applet.enable = true;
 
