@@ -4,22 +4,17 @@
 
 { config, pkgs, ... }:
 
-let
-  kill-high-mem-processes = ../../../cron/kill-high-mem-processes.pl;
-in
 {
   imports =
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./environment.nix
+    ../../base.nix
     ../../nix.nix
     ../../mount-drives.nix
-    ./environment.nix
     ../../vpn.nix
     ../../ssh.nix
-    ../../xboxdrv.nix
-    ../../wacom-one-tablet.nix
     ../../syncthing.nix
-    ../../dj.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -59,7 +54,6 @@ in
     
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
-    networking.extraHosts = builtins.readFile ../../../networking/bad-hosts;
     
     programs.nm-applet.enable = true;
 
@@ -131,17 +125,10 @@ in
     services.printing.drivers = [ pkgs.brgenml1lpr ];
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
-
-    # Enable cron service
-    services.cron = {
-      enable = true;
-      systemCronJobs = [
-        "*/1 * * * *      mikus  ${pkgs.perl}/bin/perl -I$(${pkgs.findutils}/bin/find ${pkgs.perlPackages.ProcProcessTable} -name x86_64-linux-thread-multi) ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log 2>&1"
-      ];
-    };
-
+    
     # Enable sound.
     sound.enable = true;
+    dj.enable = true;
     hardware.pulseaudio.enable = true;
     hardware.pulseaudio.support32Bit = true;
 
@@ -160,6 +147,13 @@ in
     services.xserver.windowManager.i3.enable = true;
     services.xserver.windowManager.default = "i3";
     programs.qt5ct.enable = true;
+
+    services.xserver.wacom-one = {
+
+      enable = true; 
+      transformationMatrix = "0.6 0 0 0 1 0 0 0 1";
+      
+    };
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30

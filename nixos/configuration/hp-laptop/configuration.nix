@@ -4,21 +4,17 @@
 
 { config, pkgs, ... }:
 
-let
-  kill-high-mem-processes = ../../../cron/kill-high-mem-processes.pl;
-in
 {
   imports =
     [ # Include the results of the hardware scan.
-    ../../nix.nix
     ./hardware-configuration.nix
     ./environment.nix
+    ../../base.nix
+    ../../nix.nix
     ../../laptop.nix
-    # ../vpn.nix
-    ../../wacom-one-tablet.nix
-    # ../mount-drives.nix
     ../../ssh.nix
-    # ../xboxdrv.nix
+    # ../vpn.nix
+    # ../mount-drives.nix
     # ../syncthing.nix
     # ../music.nix
     # ../remote-desktop.nix
@@ -39,7 +35,7 @@ in
     };
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-
+    
     services.vsftpd = {
       enable = true;
       anonymousUser = true;
@@ -62,9 +58,8 @@ in
       enable = true;
     };
 
-    networking.hostName = "mikusNix"; # Define your hostname.
+    networking.hostName = "mikusNixLaptop"; # Define your hostname.
     networking.networkmanager.enable = true;
-    networking.extraHosts = builtins.readFile ../../../networking/bad-hosts;
 
     programs.nm-applet.enable = true;
 
@@ -83,7 +78,7 @@ in
     nixpkgs.config = {
       allowUnfree = true;
       # firefox.enableAdobeFlash = true;
-      wine.build = "wineWow";
+      # wine.build = "wineWow";
     };
 
     programs.chromium.enable = true;
@@ -134,16 +129,10 @@ in
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
 
+    services.xboxdrv.enable = true;
+
     hardware.sane.enable = true;
     hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
-
-    # Enable cron service
-    services.cron = {
-      enable = true;
-      systemCronJobs = [
-        "*/1 * * * *      mikus  ${pkgs.perl}/bin/perl -I$(${pkgs.findutils}/bin/find ${pkgs.perlPackages.ProcProcessTable} -name x86_64-linux-thread-multi) ${kill-high-mem-processes} >> /tmp/kill-high-mem-processes.log 2>&1"
-      ];
-    };
 
     # Enable sound.
     sound.enable = true;
@@ -163,6 +152,8 @@ in
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
     programs.qt5ct.enable = true;
+
+    services.xserver.wacom-one.enable = true;
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30

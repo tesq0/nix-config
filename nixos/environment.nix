@@ -5,8 +5,6 @@ let
 in
 {
 
-  imports = [ ./modules/programs/v4l2loopback-droidcam.nix ];
-
   # List packages installed in system profile. To search, run:
   # $ nix search wgt
 
