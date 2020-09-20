@@ -29,17 +29,7 @@ in
       updateResolvConf = true;
     };
     */
-
-    legalink = {
-      config = ''
-        config /root/nixos/openvpn/legalink.ovpn
-        route-up ${pkgs.writeScript "openvpn-jazajuk-route-up" routeScript}
-      '';
-      autoStart = true;
-    };
-    
   };
-
   
   systemd.services.rovpnd = {
     description = "Auto restart openvpn service";
