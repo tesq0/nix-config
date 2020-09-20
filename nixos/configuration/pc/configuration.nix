@@ -10,16 +10,16 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-    ./nix.nix
-    ./hardware-configuration.nix
-    ./mount-drives.nix
-    ./environment.nix
-    ./vpn.nix
-    ./ssh.nix
-    ./xboxdrv.nix
-    ./wacom-one-tablet.nix
-    ./syncthing.nix
-    ./dj.nix
+    ../nix.nix
+    ../hardware-configuration.nix
+    ../mount-drives.nix
+    ../environment.nix
+    ../vpn.nix
+    ../ssh.nix
+    ../xboxdrv.nix
+    ../wacom-one-tablet.nix
+    ../syncthing.nix
+    ../dj.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -38,7 +38,7 @@ in
       };
     };
 
-    boot.extraModulePackages = with config.boot.kernelPackages; [ exfat-nofuse ];
+    boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
 
     # Apple keyboard
     boot.extraModprobeConfig = ''
@@ -56,15 +56,11 @@ in
         pasv_max_port=5003
       '';
     };
-
-    services.locate = {
-      enable = true;
-    };
-
+    
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
     networking.extraHosts = builtins.readFile ../networking/bad-hosts;
-
+    
     programs.nm-applet.enable = true;
 
     # Configure network proxy if necessary
@@ -73,13 +69,10 @@ in
 
     #Select internationalisation properties.
     i18n = {
+      consoleFont = "Lat2-Terminus16";
+      consoleUseXkbConfig = true;
       supportedLocales = [ "pl_PL.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
       defaultLocale = "en_US.UTF-8";
-    };
-
-    console = {
-      font = "Lat2-Terminus16";
-      useXkbConfig = true;
     };
 
     # Set your time zone.
@@ -92,7 +85,7 @@ in
     };
 
     programs.chromium.enable = true;
-
+    
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
@@ -102,7 +95,7 @@ in
 
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
-
+    
     services.synergy.server.enable = true;
     services.synergy.server.screenName = "mikus";
     services.synergy.server.configFile = "/home/mikus/.synergy.conf";
@@ -128,11 +121,11 @@ in
 
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 8100 24800 1337 ];
-    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 8100 24800 1337 ];
+    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 24800 ]; 
+    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 24800 ]; 
     networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
-
+    
     # Enable CUPS to print documents.
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.brgenml1lpr ];
@@ -147,12 +140,10 @@ in
       ];
     };
 
-    systemd.extraConfig = "DefaultLimitNOFILE=524288";
-    systemd.user.extraConfig = "DefaultLimitNOFILE=524288";
-    environment.etc."security/limits.conf".text = "*           hard    nofile     524288";
-
     # Enable sound.
     sound.enable = true;
+    hardware.pulseaudio.enable = true;
+    hardware.pulseaudio.support32Bit = true;
 
     hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
@@ -166,6 +157,8 @@ in
     services.xserver.layout = "en_US,pl";
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
+    services.xserver.windowManager.i3.enable = true;
+    services.xserver.windowManager.default = "i3";
     programs.qt5ct.enable = true;
 
     services.xserver.displayManager.sessionCommands = ''
@@ -184,9 +177,8 @@ in
       #Backslash
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
       ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-
+      
       ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
-      ${pkgs.numlockx}/bin/numlockx on
 
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
@@ -199,10 +191,10 @@ in
     '';
 
     services.xserver.deviceSection = ''
-      Option "HardDPMS" "true"
-      Option "TripleBuffer" "false"
+      Option "HardDPMS" "true"    
+      Option "TripleBuffer" "false"    
     '';
-
+    
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
       MatchIsPointer "yes"
@@ -213,21 +205,20 @@ in
     # Make auto mounting work.
     security.wrappers = {
       udevil = {
-        source = "${pkgs.udevil}/bin/udevil";
+        source = "${pkgs.udevil}/bin/udevil"; 
         owner = "root";
       };
     };
 
     # automatic mounting service. Included in udevil package
     services.devmon = {
-      enable = true;
+      enable = true; 
     };
 
     # Window manager
-    services.xserver.windowManager.i3.enable = true;
-
-    services.xserver.displayManager = {
-      defaultSession = "none+i3";
+    services.xserver.desktopManager = {
+      default = "none";
+      xterm.enable = false;
     };
 
     services.compton = {
@@ -238,27 +229,25 @@ in
       shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
     };
 
-    services.logind.extraConfig = ''
+		services.logind.extraConfig = ''
       HandlePowerKey=ignore
       IdleAction=lock
     '';
 
     programs.xss-lock.enable = true;
     programs.xss-lock.lockerCommand = "/home/mikus/.scripts/i3cmds/lock";
-
+    
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;
-
     virtualisation.virtualbox.host.enable = true;
-    virtualisation.virtualbox.host.enableExtensionPack = true;
-
+    
     users.extraGroups.vboxusers.members = [ "mikus" ];
     # virtualisation.docker.extraOptions = "--userns-remap=mikus:mikus"; # extra safety docker
     virtualisation.docker.enableNvidia = true;
 
 
     virtualisation.anbox.enable = true;
-
+    
 
     programs.adb.enable = true;
 
@@ -275,13 +264,13 @@ in
       proggyfonts
       hack-font
     ];
-
+    
     # Define a user account. Don't forget to set a password with ‘passwd’.
 
-    users.groups = {
-      mikus = { gid = 1000; }; 
-      realtime = {};
-    };
+    users.groups = [
+		  { gid = 1000; name = "mikus"; }
+		  { name = "realtime"; }
+    ];
 
     users.users.mikus = {
       isNormalUser = true;
@@ -291,7 +280,7 @@ in
       shell = pkgs.fish;
       extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" ];
 
-      # For docker namespaces
+			# For docker namespaces
       subUidRanges = [
         { startUid = 1000; count = 1; }
         { startUid = 100001; count = 65534; }
