@@ -87,7 +87,7 @@ in
 
     nixpkgs.config = {
       allowUnfree = true;
-      firefox.enableAdobeFlash = true;
+      # firefox.enableAdobeFlash = true;
       wine.build = "wineWow";
     };
 
@@ -135,7 +135,7 @@ in
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
-    services.printing.drivers = [ pkgs.brgenml1lpr ];
+    services.printing.drivers = [ pkgs.brgenml1lpr pkgs.cnijfilter2 ];
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
 
@@ -235,7 +235,7 @@ in
       fade            = true;
       shadow          = true;
       fadeDelta       = 3;
-      shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
+      shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'" "name = 'cpt_frame_window'"];
     };
 
     services.logind.extraConfig = ''
@@ -274,6 +274,7 @@ in
       dina-font
       proggyfonts
       hack-font
+      montserrat
     ];
 
     # Define a user account. Don't forget to set a password with ‘passwd’.

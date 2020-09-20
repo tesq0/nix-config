@@ -94,5 +94,11 @@ self: super:
   cadmus = super.libsForQt5.callPackage ./pkgs/cadmus { };
 
   tibia = super.libsForQt5.callPackage ./games/tibia { };
+
+  unityhub = super.callPackage ./pkgs/unityhub { };
+
+  serenata = super.callPackage ./pkgs/php-packages/serenata { };
+
+  razor-server = super.callPackage ./pkgs/razor-server { };
   
 }
