@@ -2,14 +2,14 @@
 
 with lib;
 
-let cfg = config.services.xserver.wacom-one;
+let cfg = config.services.xserver.wacomOne;
 
 in
 
 {
 
   options = {
-    services.xserver.wacom-one = {
+    services.xserver.wacomOne = {
       enable = mkEnableOption "Wacom one tablet support";
 
       transformationMatrix = mkOption {

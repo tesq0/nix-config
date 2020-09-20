@@ -151,9 +151,9 @@
     services.xserver.layout = "en_US,pl,it";
     services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
-    programs.qt5ct.enable = true;
+    # services.xserver.wacomOne.enable = true;
 
-    services.xserver.wacom-one.enable = true;
+    programs.qt5ct.enable = true;
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30
