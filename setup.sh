@@ -16,11 +16,36 @@ function nix-packages() {
 
 function nix() {
 		echo "Link nix config"
+
 		[ ! -e "/etc/nixos" ] && sudo mkdir -p /etc/nixos
+
 		dir=$(pwd)
-		sudo ln -svf "$dir/nixos/configuration.nix" /etc/nixos/
-		sudo ln -svf "$dir/overlays" /etc/nixos/overlays
-		sudo ln -svf "$dir/nixpkgs" /etc/nixos/nixpkgs
+		
+		PS3='Please choose the configuration: '
+		configurations=$(ls $dir/nixos/configuration)
+		options=($configurations "Quit")
+		str_options="${options[@]}"
+
+		select opt in $str_options
+		do
+				if [ -z "${opt}" ] ; then
+						echo "invalid option $REPLY";
+						break;
+				fi;
+				case $opt in
+						"Quit")
+								break
+								;;
+						*)
+								sudo ln -svf "$dir/nixos/configuration/${opt}/configuration.nix" /etc/nixos/;
+								break;
+								;;
+				esac
+		done
+		
+		sudo ln -svf "$dir/overlays" /etc/nixos/
+		sudo ln -svf "$dir/nixpkgs" /etc/nixos/
+
 }
 
 function dotfiles() {

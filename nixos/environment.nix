@@ -5,8 +5,6 @@ let
 in
 {
 
-  imports = [ ./modules/programs/v4l2loopback-droidcam.nix ];
-
   # List packages installed in system profile. To search, run:
   # $ nix search wgt
 
@@ -17,15 +15,9 @@ in
   environment.variables = {
     TERMINAL="st";
     TERM="xterm-256color";
-    BROWSER="firefox";
     MAIL="thunderbird";
     MPD_HOST="localhost";
     SUDO_ASKPASS="dmenupass";
-    # XCURSOR_PATH = [
-    #   "${config.system.path}/share/icons"
-    #   "${home}/.icons"
-    #   "${home}/.nix-profile/share/icons/"
-    # ];
   };
 
   # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load SVG files (important for icons)
