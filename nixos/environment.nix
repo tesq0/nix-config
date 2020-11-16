@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  home = "/home/mikus";
-in
 {
 
   # List packages installed in system profile. To search, run:
@@ -20,9 +17,7 @@ in
     SUDO_ASKPASS="dmenupass";
   };
 
-  # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load SVG files (important for icons)
   environment.sessionVariables = {
-    GDK_PIXBUF_MODULE_FILE = "$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)";
     XDG_CURRENT_DESKTOP="GNOME";
     QT_SELECT="5";
     GTK_IM_MODULE="";
@@ -74,8 +69,10 @@ in
   };
 
   environment.extraInit = ''
-    export PATH="$(du ${home}/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
-    export PATH="${home}/.npm-global/bin:$PATH"
+    # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load SVG files (important for icons)
+    export GDK_PIXBUF_MODULE_FILE="$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)"
+    export PATH="$(du $HOME/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
+    export PATH="$HOME/.npm-global/bin:$PATH"
   '';
 
   services.transmission.enable = true;

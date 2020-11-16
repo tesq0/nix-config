@@ -52,9 +52,11 @@ in
     hardware.pulseaudio.enable = true;
     hardware.pulseaudio.support32Bit = true;
     hardware.pulseaudio.package = pkgs.pulseaudioFull;
-    hardware.pulseaudio.extraConfig = ''
-      load-module module-echo-cancel
-    '';
+
+    # hardware.pulseaudio.extraConfig = ''
+    #   load-module module-echo-cancel
+    # '';
+
     
     boot = {
       kernelModules = [ "snd-seq" "snd-rawmidi" "snd-seq-midi" ];
@@ -71,7 +73,7 @@ in
       # $ lspci ¦ grep -i audio
     };
 
-    powerManagement.cpuFreqGovernor = "performance";
+    # powerManagement.cpuFreqGovernor = "performance";
 
     fileSystems."/" = { options = ["noatime" "errors=remount-ro"]; };
 
