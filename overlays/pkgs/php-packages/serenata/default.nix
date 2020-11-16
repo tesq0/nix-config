@@ -1,12 +1,12 @@
 { stdenv, pkgs, php }:
 
 stdenv.mkDerivation rec {
-  version = "5.2.0";
+  version = "5.4.0";
   pname = "serenata";
 
   src = pkgs.fetchurl {
-    url = "https://gitlab.com/Serenata/Serenata/uploads/a173bbfc7d3d7026a45bf7158533ded6/distribution-7.3.phar";
-    sha256 = "04dv8j5dl5gbgrml929sn8w421xz3cr7w5dqcazj31mnix64pnaf";
+    url = "https://gitlab.com/Serenata/Serenata/-/jobs/735379567/artifacts/raw/bin/distribution.phar";
+    sha256 = "1k8sf3f3lppnfsij7y3kqkfww1lhyafqf01vg3gc7mrsi05almq8";
   };
 
   phases = [ "installPhase" ];

@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
     owner = "brummer10";
     repo = "pajackconnect";
     rev = "master";
-    sha256 = "0x6qmwdm6ijqm2djp6mb85j09pr5iqnir15mb2xmf38nkp9xkjvi";
+    sha256 = "0y5sm1jd3a9nmbdjabvin6gxw9vfrzkgxfnskngw0912npz5cvz7";
   };
 
   dontBuild = true;
