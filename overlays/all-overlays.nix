@@ -65,7 +65,7 @@ self: super:
   });
 
   pajackconnect = super.callPackage ./pkgs/pajackconnect { };
-  mpv = super.mpv.override { jackaudioSupport = true; };
+  # mpv = super.mpv.override { jackSupport = true; };
   vlc = super.vlc.override { jackSupport = true; };
 
   udpt = super.callPackage ./pkgs/udpt {};

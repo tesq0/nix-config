@@ -174,6 +174,8 @@ in
       };
 
       boot.initrd.kernelModules = [ "i965" ];
+
+      kernel.v4l2loopback.enable = true;
       
       hardware.opengl.extraPackages = with pkgs; [
          vaapiIntel
