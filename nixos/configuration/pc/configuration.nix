@@ -193,7 +193,7 @@
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
       MatchIsPointer "yes"
-      Option "ConstantDeceleration" "1.5"
+      Option "ConstantDeceleration" "1.55"
     ''
     ];
 
