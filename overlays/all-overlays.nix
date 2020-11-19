@@ -5,8 +5,22 @@ self: super:
   milton = super.callPackage ./pkgs/milton { };
 
   # Python
-  PyUserInput = super.python3Packages.callPackage ./pkgs/python-modules/PyUserInput { };
+  # locust = super.python3Packages.callPackage ./pkgs/python-modules/locust { };
 
+  # python3Packages.flask = super.python3Packages.flask.overrideAttrs (oldAttrs: {
+  #   version = "1.1.2";
+  #   pname = "flask";
+  #   src = super.python3Packages.fetchPypi {
+  #     version = "1.1.2";
+  #     pname = "Flask";
+  #     sha256 = "0q3h295izcil7lswkzfnyg3k5gq4hpmqmpl6i7s5m1n9szi1myjf";
+  #   };
+  # });
+
+  # flask-basicauth = super.python3Packages.callPackage ./pkgs/python-modules/flask-basicauth { };
+
+  PyUserInput = super.python3Packages.callPackage ./pkgs/python-modules/PyUserInput { };
+  
   setuptools-lint = super.python3Packages.callPackage ./pkgs/python-modules/setuptools-lint { };
 
   pynput = super.python3Packages.callPackage ./pkgs/python-modules/pynput { };
@@ -51,7 +65,7 @@ self: super:
   });
 
   pajackconnect = super.callPackage ./pkgs/pajackconnect { };
-  mpv = super.mpv.override { jackaudioSupport = true; };
+  # mpv = super.mpv.override { jackSupport = true; };
   vlc = super.vlc.override { jackSupport = true; };
 
   udpt = super.callPackage ./pkgs/udpt {};
@@ -93,12 +107,28 @@ self: super:
 
   cadmus = super.libsForQt5.callPackage ./pkgs/cadmus { };
 
-  tibia = super.libsForQt5.callPackage ./games/tibia { };
 
   unityhub = super.callPackage ./pkgs/unityhub { };
 
   serenata = super.callPackage ./pkgs/php-packages/serenata { };
 
   razor-server = super.callPackage ./pkgs/razor-server { };
+
+  openfortivpn = super.openfortivpn.overrideAttrs (old: rec {
+
+    repo = "openfortivpn";
+    version = "1.12.0";
+    name = "${repo}-${version}";
+
+    src = super.fetchFromGitHub {
+      owner = "adrienverge";
+      inherit repo;
+      rev = "v${version}";
+      sha256 = "1ndyiw4c2s8m0xds4ff87rdpixhbma5v2g420w3gfc1p7alhqz66";
+    };
+
+  });
+
+  openfortigui = super.libsForQt5.callPackage ./pkgs/openfortigui { };
   
 }

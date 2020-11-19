@@ -53,7 +53,7 @@ function dotfiles() {
 				echo "Installing homehsick"
 				git clone --depth=1 https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
 				homeshick="$HOME/.homesick/repos/homeshick/bin/homeshick"
-				$homeshick clone https://github.com/tesq0/dotfiles.git
+				$homeshick clone git@github.com:tesq0/dotfiles.git
 		else
 				echo "Homeshick already installed, skipping..."
 		fi
