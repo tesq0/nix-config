@@ -145,10 +145,16 @@ in
       # 8080 - usually some nginx instance
       # 6001 - Websocket
       # 20, 21, 5000 - 5003 - ftp
-      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 ];
-      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 ];
+      # 9000 xdebug
+      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9000 ];
+      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9000 ];
       networking.firewall.allowedTCPPortRanges = [ { from = 5000; to = 5003; } ];
       networking.firewall.allowedUDPPortRanges = [ { from = 5000; to = 5003; } ];
+
+      networking.firewall.interfaces."docker0" = {
+        allowedTCPPorts = [ 3306 9000 ];
+        allowedUDPPorts = [ 3306 9000 ];
+      };
 
       # Enable CUPS to print documents.
       services.printing.enable = true;
@@ -337,6 +343,6 @@ in
       # compatible, in order to avoid breaking some software such as database
       # servers. You should change this only after NixOS release notes say you
       # should.
-      system.stateVersion = "20.03"; # Did you read the comment?
+      system.stateVersion = "20.09"; # Did you read the comment?
 
 }

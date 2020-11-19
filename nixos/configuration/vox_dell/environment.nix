@@ -18,7 +18,7 @@
       Type = "simple";
       ExecStart = "${pkgs.openfortivpn}/bin/openfortivpn --use-syslog --persistent=3 -c /home/vox_miki/.vpn/vox.conf";
       RestartSec = 6;
-      Restart = "always";
+      Restart = "on-failure";
     };
   };
 
