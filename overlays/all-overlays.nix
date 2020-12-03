@@ -117,14 +117,14 @@ self: super:
   openfortivpn = super.openfortivpn.overrideAttrs (old: rec {
 
     repo = "openfortivpn";
-    version = "1.12.0";
+    version = "1.15.0";
     name = "${repo}-${version}";
 
     src = super.fetchFromGitHub {
       owner = "adrienverge";
       inherit repo;
       rev = "v${version}";
-      sha256 = "1ndyiw4c2s8m0xds4ff87rdpixhbma5v2g420w3gfc1p7alhqz66";
+      sha256 = "1qsfgpxg553s8rc9cyrc4k96z0pislxsdxb9wyhp8fdprkak2mw2";
     };
 
   });
