@@ -132,10 +132,10 @@ self: super:
   openfortigui = super.libsForQt5.callPackage ./pkgs/openfortigui { };
 
   dbeaver = super.dbeaver.overrideAttrs (old: rec {
-    version = "7.2.5";
+    version = "7.3.0";
     src = super.fetchurl {
       url = "https://dbeaver.io/files/${version}/dbeaver-ce-${version}-linux.gtk.x86_64.tar.gz";
-      sha256 = "sha256-CRyAeizhaSDmVFGRhrYIW0Ofli9HnkgItiAGRJAETQM=";
+      sha256 = "0ynnaj0fdkl58my7aa53vabqnmnzki5ichishf2qvgkvzzdha496";
     };
   });
   
