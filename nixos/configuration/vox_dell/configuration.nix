@@ -12,6 +12,7 @@ in
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./environment.nix
+    ./server-hosts.nix
     ../../base.nix
     ../../nix.nix
     ../../laptop.nix
@@ -64,12 +65,12 @@ in
     };
 
 
-    # services.synergy.client = {
-      #  enable = true;
-      #   autoStart = true;
-      #   screenName = "laptop";
-      #   serverAddress = "192.168.0.3";
-      # };
+      services.synergy.client = {
+       enable = true;
+        autoStart = true;
+        screenName = "laptop";
+        serverAddress = "10.0.0.4";
+      };
 
       services.locate = {
         enable = true;
@@ -257,7 +258,7 @@ in
       services.xserver.inputClassSections = [ ''
         Identifier "Mouse"
         MatchIsPointer "yes"
-        Option "ConstantDeceleration" "1.5"
+        Option "ConstantDeceleration" "1.55"
       ''
       ];
 
@@ -300,6 +301,7 @@ in
       # programs.xss-lock.lockerCommand = "/home/vox_miki/.scripts/i3cmds/lock";
 
       virtualisation.docker.enable = true;
+      virtualisation.docker.liveRestore = false;
       virtualisation.docker.enableOnBoot = false;
 
       virtualisation.virtualbox.host.enable = true;
