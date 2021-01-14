@@ -4,7 +4,7 @@ function nix-packages() {
 		git submodule update --init
 		git submodule update --remote
 
-		for file in $(find $HOME/.nix-defexpr/); do
+		for file in $(find $HOME/.nix-defexpr/ -type f); do
 				echo "Removing $file"
 				rm $file
 		done

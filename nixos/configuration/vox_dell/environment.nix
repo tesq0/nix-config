@@ -1,8 +1,12 @@
 { config, pkgs, ... }:
 
+let
+  overlays = (import ../../../overlays/all-overlays.nix { }) pkgs;
+in
 {
   
   imports = [ ../../environment.nix ];
+
 
   environment.variables = {
     BROWSER="firefox";
@@ -16,7 +20,7 @@
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.openfortivpn}/bin/openfortivpn --use-syslog --persistent=3 -c /home/vox_miki/.vpn/vox.conf";
+      ExecStart = "${overlays.openfortivpn}/bin/openfortivpn --use-syslog --persistent=3 -c /home/vox_miki/.vpn/vox.conf";
       RestartSec = 6;
       Restart = "on-failure";
     };
