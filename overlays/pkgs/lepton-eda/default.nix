@@ -1,12 +1,14 @@
 { stdenv,
 lib,
 pkgconfig,
+makeWrapper,
 texinfo,
 fetchurl,
 autoreconfHook,
 guile,
 flex,
 gtk2,
+glib,
 gtkextra,
 gettext,
 gawk,
@@ -32,7 +34,9 @@ stdenv.mkDerivation rec {
     sha256 = "17z1r9mdc8b4q6k8x7xv8ixkbkzhrlnw4l53wn64srd72labf5zl";
   };
 
-  nativeBuildInputs = [ pkgconfig texinfo autoreconfHook ];
+  nativeBuildInputs = [ pkgconfig makeWrapper texinfo autoreconfHook ];
+
+  propagatedBuildInputs = [ guile flex gtk2 glib gtkextra gettext gawk shared-mime-info groff libstroke ];
 
   configureFlags = [
     "--disable-update-xdg-database"
@@ -42,7 +46,16 @@ stdenv.mkDerivation rec {
     "-DSCM_DEBUG_TYPING_STRICTNESS=2"
   ];
 
-  buildInputs = [ guile flex gtk2 gtkextra gettext gawk shared-mime-info groff libstroke ];
+  postInstall = ''
+
+    libs="${lib.makeLibraryPath propagatedBuildInputs}" 
+  	for program in $out/bin/*
+    do
+        wrapProgram "$program" \
+        --prefix LD_LIBRARY_PATH : "$libs" \
+        --prefix GUILE_SYSTEM_EXTENSIONS_PATH : "$out/lib"
+    done
+  '';
   
 }
 
