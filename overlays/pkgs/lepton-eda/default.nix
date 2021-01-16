@@ -12,10 +12,8 @@ glib,
 gtkextra,
 gettext,
 gawk,
-# Recommended libs
 shared-mime-info,
 groff,
-# Optional libs
 libstroke
 }:
 
