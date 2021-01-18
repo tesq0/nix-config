@@ -108,7 +108,7 @@ self: super:
   cadmus = super.libsForQt5.callPackage ./pkgs/cadmus { };
 
 
-  unityhub = super.callPackage ./pkgs/unityhub { };
+  # unityhub = super.callPackage ./pkgs/unityhub { };
 
   serenata = super.callPackage ./pkgs/php-packages/serenata { };
 
@@ -138,5 +138,9 @@ self: super:
       sha256 = "0ynnaj0fdkl58my7aa53vabqnmnzki5ichishf2qvgkvzzdha496";
     };
   });
+
+  gtkextra = super.callPackage ./pkgs/gtkextra { };
+
+  lepton-eda = super.callPackage ./pkgs/lepton-eda { };
   
 }

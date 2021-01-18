@@ -35,6 +35,8 @@
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
 
+    kernel.v4l2loopback.enable = true;
+
     # Apple keyboard
     boot.extraModprobeConfig = ''
       options hid_apple swap_opt_cmd=1
@@ -126,6 +128,9 @@
     services.printing.drivers = [ pkgs.brgenml1lpr pkgs.cnijfilter2 ];
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
+
+    hardware.sane.enable = true;
+    hardware.sane.extraBackends = [ pkgs.cnijfilter2 ];
     
     # Enable sound.
     sound.enable = true;
@@ -193,7 +198,7 @@
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
       MatchIsPointer "yes"
-      Option "ConstantDeceleration" "1.5"
+      Option "ConstantDeceleration" "1.55"
     ''
     ];
 
@@ -273,7 +278,7 @@
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" "scanner" "lp" ];
 
 			# For docker namespaces
       subUidRanges = [
@@ -297,6 +302,6 @@
     # compatible, in order to avoid breaking some software such as database
     # servers. You should change this only after NixOS release notes say you
     # should.
-    system.stateVersion = "19.03"; # Did you read the comment?
+    system.stateVersion = "20.09"; # Did you read the comment?
 
 }
