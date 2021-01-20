@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./environment.nix
+    ./hosts.nix
     ../../base.nix
     ../../nix.nix
     ../../mount-drives.nix
