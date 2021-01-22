@@ -240,7 +240,10 @@ in
       services.xserver.layout = "en_US,pl,it";
       services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
-      # services.xserver.wacomOne.enable = true;
+      services.xserver.wacomOne = {
+        enable = true;
+        transformationMatrix = "0.375 0 0.375 0 1 0 0 0 1";
+      };
 
       programs.qt5ct.enable = true;
 
