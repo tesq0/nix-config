@@ -86,4 +86,8 @@
 
   programs.droidcam.enable = true;
 
+  environment.pathsToLink = [
+    "/share/nix-direnv"
+  ];
+
 }
