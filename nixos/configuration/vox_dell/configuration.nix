@@ -49,6 +49,8 @@ in
       
     };
 
+    hardware.enableAllFirmware = true;
+
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
 
     boot.kernelParams = [ "snd_hda_intel.dmic_detect=0" "snd-intel-dspcfg.dsp_driver=1" ];
@@ -76,7 +78,7 @@ in
         enable = true;
       };
 
-      networking.hostName = "${user}"; # Define your hostname.
+      networking.hostName = "VOXMIKI"; # Define your hostname.
 
       networking.networkmanager.enable = true;
       networking.networkmanager.dhcp = "dhclient";
@@ -85,6 +87,34 @@ in
       # VPN
       services.strongswan = {
         enable = true;
+      };
+
+      # MUNIN
+
+      services.munin-cron = {
+        enable = true;
+        hosts = ''
+          [${config.networking.hostName}]
+          address localhost
+        '';
+      };
+
+      services.munin-node.enable = true;
+      
+      services.nginx = {
+        enable = true;
+        virtualHosts = {
+          "munin" = {
+            root = "/var/www/munin";
+            listen = [
+              { addr = "*";
+              port = 8888; }
+            ];
+            locations."/" = {
+             index = "index.html";
+            };
+          };
+        };
       };
 
       # networking.networkmanager.dns = "systemd-resolved";
@@ -121,6 +151,12 @@ in
 
       hardware.bluetooth.enable = true;
       hardware.bluetooth.powerOnBoot = true;
+      hardware.bluetooth.config = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+      services.blueman.enable = true;
 
       # for adaptive screen blue light
 
@@ -169,8 +205,13 @@ in
       # Enable sound.
       sound.enable = true;
       # dj.enable = true;
-      hardware.pulseaudio.enable = true;
-      hardware.pulseaudio.support32Bit = true;
+
+      hardware.pulseaudio = {
+        enable = true;
+        support32Bit = true;
+        extraModules = [ pkgs.pulseaudio-modules-bt ];
+        package = pkgs.pulseaudioFull;
+      };
 
       nixpkgs.config.packageOverrides = pkgs: {
         vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
@@ -199,7 +240,10 @@ in
       services.xserver.layout = "en_US,pl,it";
       services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
-      # services.xserver.wacomOne.enable = true;
+      services.xserver.wacomOne = {
+        enable = true;
+        transformationMatrix = "0.375 0 0.375 0 1 0 0 0 1";
+      };
 
       programs.qt5ct.enable = true;
 

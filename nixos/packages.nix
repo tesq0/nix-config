@@ -2,7 +2,6 @@ pkgs:
 
 with pkgs; [
   
-  	direnv
     man-pages
 
     numix-cursor-theme
@@ -87,5 +86,8 @@ with pkgs; [
     # ueberzug
     w3m
     atool
+
+  	direnv
+    nix-direnv
 
 ]
