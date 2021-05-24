@@ -260,8 +260,7 @@ in
       services.xserver.displayManager.lightdm.enable = true;
       services.xserver.displayManager.lightdm.greeters.mini.enable = true;
       services.xserver.displayManager.lightdm.greeters.mini.user = "${user}";
-      services.xserver.layout = "en_US,pl,it";
-      # services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
+      services.xserver.layout = "pl,en_US";
 
       services.xserver.wacomOne = {
         enable = true;

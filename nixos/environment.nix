@@ -14,7 +14,6 @@
     TERM="xterm-256color";
     MAIL="thunderbird";
     MPD_HOST="localhost";
-    SUDO_ASKPASS="dmenupass";
   };
 
   environment.sessionVariables = {

@@ -142,5 +142,15 @@ self: super:
   gtkextra = super.callPackage ./pkgs/gtkextra { };
 
   lepton-eda = super.callPackage ./pkgs/lepton-eda { };
+
+  
+  ardour = super.ardour.overrideAttrs (old: rec {
+    version = "6.7";
+    src = super.fetchgit {
+      url = "git://git.ardour.org/ardour/ardour.git";
+      rev = version;
+      sha256 = "19jc29fjwgvqbg3gnmy50mrz8mh5x4nwddglasvwx83nc87qwllx";
+    };
+  });
   
 }

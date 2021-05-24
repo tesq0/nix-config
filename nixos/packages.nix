@@ -27,10 +27,7 @@ with pkgs; [
     # Disk
     ntfs3g
     gparted
-
-    # Framework
-    nodejs
-
+    
     # Utils
     p7zip
     fzf
@@ -80,14 +77,12 @@ with pkgs; [
     mypaint
     htop
     pass
-    emacs
-    firefox
     llpp
     # ueberzug
     w3m
     atool
 
-  	direnv
+    direnv
     nix-direnv
 
 ]
