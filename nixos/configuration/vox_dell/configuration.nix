@@ -17,6 +17,7 @@ in
     ../../nix.nix
     ../../laptop.nix
     ../../ssh.nix
+    ./dns.nix
     # ../vpn.nix
     # ../mount-drives.nix
     # ../syncthing.nix
@@ -52,8 +53,6 @@ in
     hardware.enableAllFirmware = true;
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-
-    boot.kernelParams = [ "snd_hda_intel.dmic_detect=0" "snd-intel-dspcfg.dsp_driver=1" ];
     
     services.vsftpd = {
       enable = true;
@@ -66,12 +65,15 @@ in
       '';
     };
 
-
+    services.synergy.server = {
+      enable = true;
+      configFile = "/home/vox_miki/.synergy-server";
+    };
       services.synergy.client = {
        enable = true;
         autoStart = true;
         screenName = "laptop";
-        serverAddress = "10.0.0.4";
+        serverAddress = "192.168.50.165";
       };
 
       services.locate = {
@@ -85,9 +87,9 @@ in
       networking.networkmanager.packages = with pkgs; [ networkmanager_strongswan networkmanager-fortisslvpn ];
 
       # VPN
-      services.strongswan = {
-        enable = true;
-      };
+      # services.strongswan = {
+      #   enable = true;
+      # };
 
       # MUNIN
 
@@ -122,7 +124,7 @@ in
 
       programs.nm-applet.enable = true;
 
-      services.teamviewer.enable = true;
+      # services.teamviewer.enable = true;
 
       #Select internationalisation properties.
       i18n = {
@@ -151,7 +153,7 @@ in
 
       hardware.bluetooth.enable = true;
       hardware.bluetooth.powerOnBoot = true;
-      hardware.bluetooth.config = {
+      hardware.bluetooth.settings = {
         General = {
           Enable = "Source,Sink,Media,Socket";
         };
@@ -183,8 +185,8 @@ in
       # 6001 - Websocket
       # 20, 21, 5000 - 5003 - ftp
       # 9000 xdebug
-      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9000 ];
-      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9000 ];
+      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9003 9000 ];
+      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9003 9000 ];
       networking.firewall.allowedTCPPortRanges = [ { from = 5000; to = 5003; } ];
       networking.firewall.allowedUDPPortRanges = [ { from = 5000; to = 5003; } ];
 
@@ -204,7 +206,6 @@ in
 
       # Enable sound.
       sound.enable = true;
-      # dj.enable = true;
 
       hardware.pulseaudio = {
         enable = true;
@@ -213,23 +214,45 @@ in
         package = pkgs.pulseaudioFull;
       };
 
-      nixpkgs.config.packageOverrides = pkgs: {
-        vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+      # hardware.pulseaudio.enable = false;
+
+      # services.pipewire = {
+      #   enable = true;
+      #   pulse.enable = true;
+        # media-session = {
+        #   config.bluez-monitor = {
+        #     properties = "{bluez5.codecs = [sbc]}";
+        #   };
+        # };
+
+      # };
+
+      # environment.etc."pipewire/media-session.d/bluez-monitor.conf".text = (builtins.readFile ./bluez-monitor.conf);
+
+      # services.ofono = {
+      #   enable = true;
+      # };
+
+      nixpkgs.config = {
+        packageOverrides = pkgs: {
+          vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+        };
+        permittedInsecurePackages = [
+          "libav-11.12"
+        ];
       };
 
       hardware.opengl = {
         enable = true;
+        driSupport = true;
       };
 
-      boot.initrd.kernelModules = [ "i965" ];
+      # boot.initrd.kernelModules = [ "i965" ];
 
-      kernel.v4l2loopback.enable = true;
+      # kernel.v4l2loopback.enable = true;
       
       hardware.opengl.extraPackages = with pkgs; [
-         vaapiIntel
-         vaapiVdpau
-         libvdpau-va-gl
-         intel-media-driver
+         intel-compute-runtime
       ];
 
       # Enable the X11 windowing system.
@@ -238,7 +261,7 @@ in
       services.xserver.displayManager.lightdm.greeters.mini.enable = true;
       services.xserver.displayManager.lightdm.greeters.mini.user = "${user}";
       services.xserver.layout = "en_US,pl,it";
-      services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
+      # services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
       services.xserver.wacomOne = {
         enable = true;
@@ -249,22 +272,6 @@ in
 
       services.xserver.displayManager.sessionCommands = ''
         ${pkgs.xlibs.xset}/bin/xset r rate 300 30
-
-        #Tab
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 23 = Super_L Super_L"
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 255 = Tab"
-
-        #Enter to ctrl
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "remove Control = Control_R"
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 254 = Return"
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 36 = Control_R"
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "add Control = Control_R"
-
-        #Backslash
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
-        ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-
-        ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
         ${pkgs.numlockx}/bin/numlockx on
       '';
 

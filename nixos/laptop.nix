@@ -4,7 +4,9 @@
   # Enable touchpad support.
   services.xserver.libinput = {
     enable = true;
-    scrollMethod = "twofinger"; 
+    touchpad = {
+      scrollMethod = "twofinger"; 
+    };
   };
 
 
