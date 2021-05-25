@@ -2,7 +2,6 @@ pkgs:
 
 with pkgs; [
   
-  	direnv
     man-pages
 
     numix-cursor-theme
@@ -28,10 +27,7 @@ with pkgs; [
     # Disk
     ntfs3g
     gparted
-
-    # Framework
-    nodejs
-
+    
     # Utils
     p7zip
     fzf
@@ -81,11 +77,12 @@ with pkgs; [
     mypaint
     htop
     pass
-    emacs
-    firefox
     llpp
     # ueberzug
     w3m
     atool
+
+    direnv
+    nix-direnv
 
 ]

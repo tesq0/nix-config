@@ -14,7 +14,6 @@
     TERM="xterm-256color";
     MAIL="thunderbird";
     MPD_HOST="localhost";
-    SUDO_ASKPASS="dmenupass";
   };
 
   environment.sessionVariables = {
@@ -85,5 +84,9 @@
   };
 
   programs.droidcam.enable = true;
+
+  environment.pathsToLink = [
+    "/share/nix-direnv"
+  ];
 
 }

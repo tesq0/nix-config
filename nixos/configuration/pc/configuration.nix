@@ -9,12 +9,13 @@
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./environment.nix
+    ./hosts.nix
     ../../base.nix
     ../../nix.nix
     ../../mount-drives.nix
     ../../ssh.nix
     # ../../syncthing.nix
-    # ../../vpn.nix
+    ../../vpn.nix
     # ./music.nix
     # ./remote-desktop.nix
     ];
@@ -34,6 +35,8 @@
     };
 
     boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
+
+    kernel.v4l2loopback.enable = true;
 
     # Apple keyboard
     boot.extraModprobeConfig = ''
@@ -79,7 +82,7 @@
       wine.build = "wineWow";
     };
 
-    programs.chromium.enable = true;
+    programs.chromium.enable = false;
     
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
@@ -90,6 +93,7 @@
 
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
+    services.blueman.enable = true;
     
     services.synergy.server.enable = true;
     services.synergy.server.screenName = "mikus";
@@ -108,16 +112,10 @@
       temperature.night = 2700;
     };
 
-    # emacs kappa
-    services.emacs = {
-      enable = true;
-      defaultEditor = true;
-    };
-
     # Open ports in the firewall.
     # networking.firewall.enable = false;
-    networking.firewall.allowedTCPPorts = [ 20 21 631 8080 8000 24800 ]; 
-    networking.firewall.allowedUDPPorts = [ 20 21 631 8080 8000 24800 ]; 
+    networking.firewall.allowedTCPPorts = [ 20 21 631 3000 8080 8000 24800 9000 ]; 
+    networking.firewall.allowedUDPPorts = [ 20 21 631 3000 8080 8000 24800 9000 ]; 
     networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     
@@ -126,12 +124,19 @@
     services.printing.drivers = [ pkgs.brgenml1lpr pkgs.cnijfilter2 ];
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
+
+    hardware.sane.enable = true;
+    hardware.sane.extraBackends = [ pkgs.cnijfilter2 ];
     
     # Enable sound.
     sound.enable = true;
     dj.enable = true;
-    hardware.pulseaudio.enable = true;
-    hardware.pulseaudio.support32Bit = true;
+
+    hardware.pulseaudio = {
+      enable = true;
+      support32Bit = true;
+      extraModules = [ pkgs.pulseaudio-modules-bt ];
+    };
 
     hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
@@ -142,12 +147,20 @@
     services.xserver.displayManager.lightdm.enable = true;
     services.xserver.displayManager.lightdm.greeters.mini.enable = true;
     services.xserver.displayManager.lightdm.greeters.mini.user = "mikus";
-    services.xserver.layout = "en_US,pl";
-    services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
+    services.xserver.layout = "pl,en_US";
 
     services.xserver.windowManager.i3.enable = true;
     services.xserver.displayManager.defaultSession = "none+i3";
     programs.qt5ct.enable = true;
+
+    programs.x2goserver = {
+      enable = true;
+      superenicer.enable = true;
+    };
+
+    services.xserver.desktopManager = {
+      xterm.enable = false;
+    };
 
     services.xserver.wacomOne = {
 
@@ -158,31 +171,14 @@
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30
-
-      #Tab
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 23 = Super_L Super_L"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 255 = Tab"
-
-      #Enter to ctrl
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "remove Control = Control_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 254 = Return"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 36 = Control_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "add Control = Control_R"
-
-      #Backslash
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-      
-      ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
-
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
 
     services.xserver.videoDrivers = [ "nv" "nvidia" "vesa" ];
-    services.xserver.xrandrHeads = [ { output = "DVI-D-0"; primary = true; } { output = "HDMI-0"; primary = false; } ];
+    services.xserver.xrandrHeads = [ { output = "HDMI-0"; primary = true; } ];
     services.xserver.exportConfiguration = true;
     services.xserver.screenSection = ''
-      Option "metamodes" "DVI-D-0: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}, HDMI-0: nvidia-auto-select +1920+27 {ForceFullCompositionPipeline=On}"
+      Option "metamodes" "HDMI-0: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
     '';
 
     services.xserver.deviceSection = ''
@@ -193,7 +189,7 @@
     services.xserver.inputClassSections = [ ''
       Identifier "Mouse"
       MatchIsPointer "yes"
-      Option "ConstantDeceleration" "1.5"
+      Option "ConstantDeceleration" "1.55"
     ''
     ];
 
@@ -208,11 +204,6 @@
     # automatic mounting service. Included in udevil package
     services.devmon = {
       enable = true; 
-    };
-
-    # Window manager
-    services.xserver.desktopManager = {
-      xterm.enable = false;
     };
 
     services.compton = {
@@ -273,7 +264,7 @@
 
       # comment out for now...
       shell = pkgs.fish;
-      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" ];
+      extraGroups = [ "mikus" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "realtime" "jackaudio" "transmission" "scanner" "lp" ];
 
 			# For docker namespaces
       subUidRanges = [
@@ -297,6 +288,6 @@
     # compatible, in order to avoid breaking some software such as database
     # servers. You should change this only after NixOS release notes say you
     # should.
-    system.stateVersion = "19.03"; # Did you read the comment?
+    system.stateVersion = "20.09"; # Did you read the comment?
 
 }

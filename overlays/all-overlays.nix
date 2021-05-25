@@ -108,7 +108,7 @@ self: super:
   cadmus = super.libsForQt5.callPackage ./pkgs/cadmus { };
 
 
-  unityhub = super.callPackage ./pkgs/unityhub { };
+  # unityhub = super.callPackage ./pkgs/unityhub { };
 
   serenata = super.callPackage ./pkgs/php-packages/serenata { };
 
@@ -132,10 +132,24 @@ self: super:
   openfortigui = super.libsForQt5.callPackage ./pkgs/openfortigui { };
 
   dbeaver = super.dbeaver.overrideAttrs (old: rec {
-    version = "7.3.0";
+    version = "7.3.3";
     src = super.fetchurl {
       url = "https://dbeaver.io/files/${version}/dbeaver-ce-${version}-linux.gtk.x86_64.tar.gz";
-      sha256 = "0ynnaj0fdkl58my7aa53vabqnmnzki5ichishf2qvgkvzzdha496";
+      sha256 = "0yj96dgkgmfay7w9kv7xbrxkp0xv1ndrz5nq10mp6z2jds6dji9w";
+    };
+  });
+
+  gtkextra = super.callPackage ./pkgs/gtkextra { };
+
+  lepton-eda = super.callPackage ./pkgs/lepton-eda { };
+
+  
+  ardour = super.ardour.overrideAttrs (old: rec {
+    version = "6.7";
+    src = super.fetchgit {
+      url = "git://git.ardour.org/ardour/ardour.git";
+      rev = version;
+      sha256 = "19jc29fjwgvqbg3gnmy50mrz8mh5x4nwddglasvwx83nc87qwllx";
     };
   });
   

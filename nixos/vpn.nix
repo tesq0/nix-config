@@ -12,7 +12,7 @@ let
     ping -c 1 -I tun0 10.8.0.1 &> /dev/null
     code=$?
     if [ $code -ne 0 ]; then
-    systemctl restart openvpn-jazajuk.service
+    systemctl restart openvpn-best.service
     fi
   '';
 in
@@ -29,6 +29,14 @@ in
       updateResolvConf = true;
     };
     */
+    best = {
+      config = ''
+        config /root/nixos/openvpn/openvpn.conf
+        route-up ${pkgs.writeScript "openvpn-route-up" routeScript}
+      '';
+      autoStart = true;
+      updateResolvConf = true;
+    };
   };
   
   systemd.services.rovpnd = {

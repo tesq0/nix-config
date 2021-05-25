@@ -3,9 +3,5 @@
 {
   
   imports = [ ../../environment.nix ];
-
-  environment.variables = {
-    BROWSER="firefox";
-  };
-
+  
 }
