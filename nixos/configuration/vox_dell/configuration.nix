@@ -197,12 +197,12 @@ in
 
       # Enable CUPS to print documents.
       services.printing.enable = true;
-      # services.printing.drivers = [ ];
+      services.printing.drivers = [ pkgs.brgenml1lpr pkgs.cnijfilter2 ];
       services.avahi.enable = true;
       services.avahi.nssmdns = true;
       
-      # hardware.sane.enable = true;
-      # hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
+      hardware.sane.enable = true;
+      hardware.sane.extraBackends = [ pkgs.cnijfilter2 ];
 
       # Enable sound.
       sound.enable = true;
