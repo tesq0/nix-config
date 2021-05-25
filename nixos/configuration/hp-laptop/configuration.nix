@@ -149,32 +149,41 @@
     services.xserver.displayManager.lightdm.greeters.mini.enable = true;
     services.xserver.displayManager.lightdm.greeters.mini.user = "mikus";
     services.xserver.layout = "en_US,pl,it";
-    services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
+    # services.xserver.xkbOptions = "caps:swapescape, ctrl:swap_lalt_lctl_lwin";
 
     # services.xserver.wacomOne.enable = true;
 
+     nixpkgs.config.permittedInsecurePackages = [
+         "libav-11.12"
+     ];
+
     programs.qt5ct.enable = true;
+
+    services.xserver.wacomOne = {
+      enable = true; 
+      transformationMatrix = "1 0 0 0 1 0 0 0 1";
+    };
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30
-
-      #Tab
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 23 = Super_L Super_L"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 255 = Tab"
-
-      #Enter to ctrl
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "remove Control = Control_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 254 = Return"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 36 = Control_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "add Control = Control_R"
-
-      #Backslash
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
-      ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
-
-      ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
       ${pkgs.numlockx}/bin/numlockx on
     '';
+
+      # #Tab
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 23 = Super_L Super_L"
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 255 = Tab"
+
+      # #Enter to ctrl
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "remove Control = Control_R"
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 254 = Return"
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 36 = Control_R"
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "add Control = Control_R"
+
+      # #Backslash
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 51 = Super_R Super_R"
+      # ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 253 = backslash bar"
+
+      # ${pkgs.xcape}/bin/xcape -e "Super_L=Tab;Super_R=backslash;Control_R=Return"
 
     services.xserver.videoDrivers = [ "intel" ];
 
