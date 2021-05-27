@@ -185,8 +185,8 @@ in
       # 6001 - Websocket
       # 20, 21, 5000 - 5003 - ftp
       # 9000 xdebug
-      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9003 9000 ];
-      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9003 9000 ];
+      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9003 9000 24800 ];
+      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9003 9000 24800 ];
       networking.firewall.allowedTCPPortRanges = [ { from = 5000; to = 5003; } ];
       networking.firewall.allowedUDPPortRanges = [ { from = 5000; to = 5003; } ];
 
