@@ -4,8 +4,4 @@
   
   imports = [ ../../environment.nix ];
 
-  environment.variables = {
-    BROWSER="chromium-browser";
-  };
-
 }
