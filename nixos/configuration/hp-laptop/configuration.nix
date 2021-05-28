@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./environment.nix
+    ./dns.nix
     ../../base.nix
     ../../nix.nix
     ../../laptop.nix
