@@ -51,7 +51,7 @@
       enable = true;
       autoStart = true;
       screenName = "laptop";
-      serverAddress = "192.168.0.3";
+      serverAddress = "synergy-server.local";
     };
 
     services.locate = {
