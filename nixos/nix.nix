@@ -13,7 +13,7 @@
       experimental-features = nix-command flakes
     '';
     nixPath = [
-      "nixpkgs=/etc/nixos/nixpkgs"
+      "nixpkgs=<nixpkgs>"
       "nixpkgs-overlays=/etc/nixos/overlays"
       "nixos-config=/etc/nixos/configuration.nix"
     ];
