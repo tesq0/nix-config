@@ -35,8 +35,6 @@
       };
     };
 
-    boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-    
     services.vsftpd = {
       enable = true;
       anonymousUser = true;

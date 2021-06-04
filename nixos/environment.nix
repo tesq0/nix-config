@@ -76,14 +76,14 @@
 
   services.transmission.enable = true;
 
-  services.gnome3.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   # Fish Shell
   programs.fish = {
     enable = true;
   };
 
-  programs.droidcam.enable = true;
+  programs._droidcam.enable = true;
 
   environment.pathsToLink = [
     "/share/nix-direnv"

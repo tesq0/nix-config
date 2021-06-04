@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , fetchurl
 , autoPatchelfHook
 , unzip
@@ -39,13 +40,13 @@ stdenv.mkDerivation rec {
     chmod +x $binFile
     
     wrapProgram "$out/$binFile" \
-    --prefix LD_LIBRARY_PATH : "${stdenv.lib.makeLibraryPath propagatedBuildInputs}"
+    --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath propagatedBuildInputs}"
 
     ln -sf $out/$binFile $out/bin/$binFile
 
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Razor Language Server";
     homepage = "https://github.com/dotnet/aspnetcore-tooling/tree/master/src/Razor";
     platforms = platforms.linux;

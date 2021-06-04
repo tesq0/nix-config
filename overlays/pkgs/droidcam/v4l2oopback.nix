@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, kernel, kmod }:
+{ stdenv, lib, fetchFromGitHub, kernel, kmod }:
 
 stdenv.mkDerivation rec {
 
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     "KERNEL_DIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A kernel module to create V4L2 loopback devices for droidcam";
     homepage = "https://github.com/aramg/droidcam";
     license = licenses.gpl2;
