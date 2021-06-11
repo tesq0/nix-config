@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, autoPatchelfHook, wrapQtAppsHook, makeWrapper, unzip, libGL, xorg, fontconfig, freetype, libgpgerror, gtk3, cairo, gdk-pixbuf, qt5, readline, libpulseaudio }:
+{ stdenv, lib, fetchurl, autoPatchelfHook, wrapQtAppsHook, makeWrapper, unzip, libGL, xorg, fontconfig, freetype, libgpgerror, gtk3, cairo, gdk-pixbuf, qt5, readline, libpulseaudio }:
 
 let
   version = "0.0.1";
@@ -32,7 +32,7 @@ in stdenv.mkDerivation rec {
 
   dontStrip = true;
   
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "https://github.com/josh-richardson/cadmus";
     description = "Remove background noise from audio in real-time";
     longDescription = ''

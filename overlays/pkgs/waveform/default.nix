@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , fetchurl
 , alsaLib
 , curl
@@ -34,7 +35,7 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin
     cp -r ./usr $out
     patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) $out/usr/bin/Waveform11
-    patchelf --set-rpath ${ stdenv.lib.makeLibraryPath (stdenv.lib.concat propagatedBuildInputs [stdenv.cc.cc]) } $out/usr/bin/Waveform11
+    patchelf --set-rpath ${ lib.makeLibraryPath (lib.concat propagatedBuildInputs [stdenv.cc.cc]) } $out/usr/bin/Waveform11
     ln -sf $out/usr/bin/Waveform11 $out/bin/waveform
   '';
 

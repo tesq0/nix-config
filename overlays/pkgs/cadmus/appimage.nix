@@ -1,8 +1,8 @@
-{ stdenv, fetchurl, appimageTools }:
+{ stdenv, lib, fetchurl, appimageTools }:
 
 let
   version = "0.0.2";
-  desktopFile = stdenv.lib.readFile ./cadmus.desktop;
+  desktopFile = lib.readFile ./cadmus.desktop;
 in appimageTools.wrapType2 rec {
   name = "cadmus";
 
@@ -15,7 +15,7 @@ in appimageTools.wrapType2 rec {
 
   extraInstallCommands = "mkdir -p $out/share/applications && echo '${desktopFile}' > $out/share/applications/cadmus.desktop";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "https://github.com/josh-richardson/cadmus";
     description = "Remove background noise from audio in real-time";
     longDescription = ''

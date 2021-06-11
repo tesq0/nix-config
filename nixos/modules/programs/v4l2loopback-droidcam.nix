@@ -3,14 +3,14 @@
 with lib;
 
 let
-  cfg = config.programs.droidcam;
+  cfg = config.programs._droidcam;
   overlays = (import ../../../overlays/all-overlays.nix { }) pkgs;
   # grep -F "[Loopback" < /proc/asound/cards | awk '{print $1}'
   LOOPBACK_CARD_ID = "4";
 in
 {
   options = {
-    programs.droidcam = {
+    programs._droidcam = {
       enable = mkEnableOption "The GNU/Linux client is a combination of a Video4Linux2 device driver and an executable app that will transfer the stream from the phone to the driver.";
     };
   };
