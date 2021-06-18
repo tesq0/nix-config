@@ -17,6 +17,7 @@ in
     ../../nix.nix
     ../../laptop.nix
     ../../ssh.nix
+    ./dns.nix
     # ../vpn.nix
     # ../mount-drives.nix
     # ../syncthing.nix
@@ -51,10 +52,6 @@ in
 
     hardware.enableAllFirmware = true;
 
-    boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-
-    boot.kernelParams = [ "snd_hda_intel.dmic_detect=0" "snd-intel-dspcfg.dsp_driver=1" ];
-    
     services.vsftpd = {
       enable = true;
       anonymousUser = true;
@@ -66,12 +63,15 @@ in
       '';
     };
 
-
+    services.synergy.server = {
+      enable = true;
+      configFile = "/home/vox_miki/.synergy-server";
+    };
       services.synergy.client = {
        enable = true;
         autoStart = true;
         screenName = "laptop";
-        serverAddress = "10.0.0.4";
+        serverAddress = "192.168.50.165";
       };
 
       services.locate = {
@@ -85,9 +85,9 @@ in
       networking.networkmanager.packages = with pkgs; [ networkmanager_strongswan networkmanager-fortisslvpn ];
 
       # VPN
-      services.strongswan = {
-        enable = true;
-      };
+      # services.strongswan = {
+      #   enable = true;
+      # };
 
       # MUNIN
 
@@ -122,7 +122,7 @@ in
 
       programs.nm-applet.enable = true;
 
-      services.teamviewer.enable = true;
+      # services.teamviewer.enable = true;
 
       #Select internationalisation properties.
       i18n = {
@@ -151,7 +151,7 @@ in
 
       hardware.bluetooth.enable = true;
       hardware.bluetooth.powerOnBoot = true;
-      hardware.bluetooth.config = {
+      hardware.bluetooth.settings = {
         General = {
           Enable = "Source,Sink,Media,Socket";
         };
@@ -183,8 +183,8 @@ in
       # 6001 - Websocket
       # 20, 21, 5000 - 5003 - ftp
       # 9000 xdebug
-      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9000 ];
-      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9000 ];
+      networking.firewall.allowedTCPPorts = [ 3000 6001 8080 20 21 9003 9000 24800 ];
+      networking.firewall.allowedUDPPorts = [ 3000 6001 8080 20 21 9003 9000 24800 ];
       networking.firewall.allowedTCPPortRanges = [ { from = 5000; to = 5003; } ];
       networking.firewall.allowedUDPPortRanges = [ { from = 5000; to = 5003; } ];
 
@@ -195,16 +195,15 @@ in
 
       # Enable CUPS to print documents.
       services.printing.enable = true;
-      # services.printing.drivers = [ ];
+      services.printing.drivers = [ pkgs.brgenml1lpr pkgs.cnijfilter2 ];
       services.avahi.enable = true;
       services.avahi.nssmdns = true;
       
-      # hardware.sane.enable = true;
-      # hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
+      hardware.sane.enable = true;
+      hardware.sane.extraBackends = [ pkgs.cnijfilter2 ];
 
       # Enable sound.
       sound.enable = true;
-      # dj.enable = true;
 
       hardware.pulseaudio = {
         enable = true;
@@ -213,23 +212,45 @@ in
         package = pkgs.pulseaudioFull;
       };
 
-      nixpkgs.config.packageOverrides = pkgs: {
-        vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+      # hardware.pulseaudio.enable = false;
+
+      # services.pipewire = {
+      #   enable = true;
+      #   pulse.enable = true;
+        # media-session = {
+        #   config.bluez-monitor = {
+        #     properties = "{bluez5.codecs = [sbc]}";
+        #   };
+        # };
+
+      # };
+
+      # environment.etc."pipewire/media-session.d/bluez-monitor.conf".text = (builtins.readFile ./bluez-monitor.conf);
+
+      # services.ofono = {
+      #   enable = true;
+      # };
+
+      nixpkgs.config = {
+        packageOverrides = pkgs: {
+          vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+        };
+        permittedInsecurePackages = [
+          "libav-11.12"
+        ];
       };
 
       hardware.opengl = {
         enable = true;
+        driSupport = true;
       };
 
-      boot.initrd.kernelModules = [ "i965" ];
+      # boot.initrd.kernelModules = [ "i965" ];
 
-      kernel.v4l2loopback.enable = true;
+      # kernel.v4l2loopback.enable = true;
       
       hardware.opengl.extraPackages = with pkgs; [
-         vaapiIntel
-         vaapiVdpau
-         libvdpau-va-gl
-         intel-media-driver
+         intel-compute-runtime
       ];
 
       # Enable the X11 windowing system.

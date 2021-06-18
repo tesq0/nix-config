@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./environment.nix
+    ./dns.nix
     ../../base.nix
     ../../nix.nix
     ../../laptop.nix
@@ -34,8 +35,6 @@
       };
     };
 
-    boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-    
     services.vsftpd = {
       enable = true;
       anonymousUser = true;
@@ -51,7 +50,7 @@
       enable = true;
       autoStart = true;
       screenName = "laptop";
-      serverAddress = "192.168.0.3";
+      serverAddress = "synergy-server.local";
     };
 
     services.locate = {
@@ -152,7 +151,16 @@
 
     # services.xserver.wacomOne.enable = true;
 
+     nixpkgs.config.permittedInsecurePackages = [
+         "libav-11.12"
+     ];
+
     programs.qt5ct.enable = true;
+
+    services.xserver.wacomOne = {
+      enable = true; 
+      transformationMatrix = "1 0 0 0 1 0 0 0 1";
+    };
 
     services.xserver.displayManager.sessionCommands = ''
       ${pkgs.xlibs.xset}/bin/xset r rate 300 30

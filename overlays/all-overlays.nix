@@ -139,6 +139,10 @@ self: super:
     };
   });
 
+  dbeaver-ee = super.callPackage ./pkgs/dbeaver-ee {
+    jdk = super.jdk11;
+  };
+
   gtkextra = super.callPackage ./pkgs/gtkextra { };
 
   lepton-eda = super.callPackage ./pkgs/lepton-eda { };
