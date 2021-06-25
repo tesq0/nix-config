@@ -34,7 +34,7 @@
       };
     };
 
-    boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
+    # boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
 
     kernel.v4l2loopback.enable = true;
 
@@ -80,6 +80,9 @@
       allowUnfree = true;
       # firefox.enableAdobeFlash = true;
       wine.build = "wineWow";
+      permittedInsecurePackages = [
+        "libav-11.12"
+      ];
     };
 
     programs.chromium.enable = false;
@@ -135,7 +138,6 @@
     hardware.pulseaudio = {
       enable = true;
       support32Bit = true;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
     };
 
     hardware.opengl.enable = true;
@@ -231,7 +233,7 @@
     virtualisation.docker.enableNvidia = true;
 
 
-    virtualisation.anbox.enable = true;
+    # virtualisation.anbox.enable = true;
     
 
     programs.adb.enable = true;
