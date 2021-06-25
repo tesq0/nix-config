@@ -131,13 +131,17 @@ self: super:
 
   openfortigui = super.libsForQt5.callPackage ./pkgs/openfortigui { };
 
-  dbeaver = super.dbeaver.overrideAttrs (old: rec {
-    version = "7.3.3";
-    src = super.fetchurl {
-      url = "https://dbeaver.io/files/${version}/dbeaver-ce-${version}-linux.gtk.x86_64.tar.gz";
-      sha256 = "0yj96dgkgmfay7w9kv7xbrxkp0xv1ndrz5nq10mp6z2jds6dji9w";
-    };
-  });
+  # dbeaver = super.dbeaver.overrideAttrs (old: rec {
+  #   version = "21.1.0";
+  #   src = super.fetchurl {
+  #     url = "https://dbeaver.io/files/${version}/dbeaver-ce-${version}-linux.gtk.x86_64.tar.gz";
+  #     sha256 = "sha256-CB3HuHgWtEPVYom0z0H849Ls1hkqywGQyyRWaa0PQDY=";
+  #   };
+  # });
+
+  dbeaver = super.callPackage ./pkgs/dbeaver  {
+    jdk = super.jdk11;
+  };
 
   dbeaver-ee = super.callPackage ./pkgs/dbeaver-ee {
     jdk = super.jdk11;
