@@ -67,7 +67,7 @@ in
       enable = true;
       configFile = "/home/vox_miki/.synergy-server";
     };
-      services.synergy.client = {
+     services.synergy.client = {
        enable = true;
         autoStart = true;
         screenName = "laptop";
