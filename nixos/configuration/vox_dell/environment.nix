@@ -2,6 +2,7 @@
 
 let
   overlays = (import ../../../overlays/all-overlays.nix { }) pkgs;
+  pwd = builtins.toString ./.;
 in
 {
   
@@ -13,7 +14,7 @@ in
     # wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${overlays.openfortivpn}/bin/openfortivpn --use-syslog --persistent=3 -c /home/vox_miki/.vpn/vox.conf";
+      ExecStart = "vpn.sh";
       KillMode = "mixed";
       TimeoutStopSec= 2;
       RestartSec = 20;

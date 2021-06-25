@@ -17,12 +17,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  pname = "dbeaver-ee";
-  version = "21.1.0";
+  pname = "dbeaver";
+  version = "21.1.1";
 
   src = fetchurl {
-    url = "https://dbeaver.com/files/${version}/dbeaver-ee-${version}-linux.gtk.x86_64.tar.gz";
-    sha256 = "sha256-h9FGqAhGEapaHfwb2cQbb2j0EQ5EG7p72IruYpYrIv8=";
+    url = "https://dbeaver.io/files/${version}/dbeaver-ce-${version}-linux.gtk.x86_64.tar.gz";
+    sha256 = "sha256-ablux7F16l4hAXBtTgVd/kul8ytQQE6NHBNL3OJ13PE=";
   };
 
   nativeBuildInputs = [
@@ -45,10 +45,10 @@ stdenv.mkDerivation rec {
 
   desktopItems = [
     (makeDesktopItem {
-      name = "dbeaver-ee";
-      exec = "dbeaver-ee";
-      icon = "dbeaver-ee";
-      desktopName = "dbeaver EE";
+      name = "dbeaver-ce";
+      exec = "dbeaver";
+      icon = "dbeaver";
+      desktopName = "dbeaver-ce";
       comment = "SQL Integrated Development Environment";
       genericName = "SQL Integrated Development Environment";
       categories = "Development;";
@@ -58,21 +58,20 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/bin
     cp -r * $out/
-    mv $out/dbeaver $out/dbeaver-ee
-    makeWrapper $out/dbeaver-ee $out/bin/dbeaver-ee \
+    makeWrapper $out/dbeaver $out/bin/dbeaver \
         --prefix PATH : ${jdk}/bin \
         --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath ([ glib gtk3 libXtst ])} \
         --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
 
       mkdir -p $out/share/pixmaps
-      ln -s $out/icon.xpm $out/share/pixmaps/dbeaver-ee.xpm
+      ln -s $out/icon.xpm $out/share/pixmaps/dbeaver.xpm
   '';
 
   meta = with lib; {
-    homepage = "https://dbeaver.com/";
-    description = "Dbeaver Enterprise Edition";
+    homepage = "https://dbeaver.io/";
+    description = "Dbeaver Community Edition";
     longDescription = ''
-      Dbeaver Enterprise Edition
+      Dbeaver Community Edition
     '';
     license = licenses.asl20;
     platforms = [ "x86_64-linux" ];
