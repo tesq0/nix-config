@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://dbeaver.com/files/${version}/dbeaver-ee-${version}-linux.gtk.x86_64.tar.gz";
-    sha256 = "sha256-sD2JWv4R3rIdSiwooElrDUf9pP4r0RVr4T6V9b8lqTk";
+    sha256 = "sha256-h9FGqAhGEapaHfwb2cQbb2j0EQ5EG7p72IruYpYrIv8=";
   };
 
   nativeBuildInputs = [
