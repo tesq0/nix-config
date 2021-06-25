@@ -135,11 +135,6 @@
     sound.enable = true;
     dj.enable = true;
 
-    hardware.pulseaudio = {
-      enable = true;
-      support32Bit = true;
-    };
-
     hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
     hardware.opengl.driSupport32Bit = true;
