@@ -11,7 +11,7 @@ in
     enable = mkEnableOption "DJ Kernel modifications";
   };
 
-  imports = [ /home/mikus/.nix-defexpr/channels/musnix ];
+  imports = [ ./musnix ];
 
   config = mkIf cfg.enable {
 
