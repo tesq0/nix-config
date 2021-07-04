@@ -147,6 +147,10 @@ self: super:
     jdk = super.jdk11;
   };
 
+  jpdfbookmarks = super.callPackage ./pkgs/jpdfbookmarks {
+    jdk = super.jdk11;
+  };
+
   gtkextra = super.callPackage ./pkgs/gtkextra { };
 
   lepton-eda = super.callPackage ./pkgs/lepton-eda { };
