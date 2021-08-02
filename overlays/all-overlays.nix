@@ -147,17 +147,31 @@ self: super:
     jdk = super.jdk11;
   };
 
+  jpdfbookmarks = super.callPackage ./pkgs/jpdfbookmarks {
+    jdk = super.jdk11;
+  };
+
   gtkextra = super.callPackage ./pkgs/gtkextra { };
 
   lepton-eda = super.callPackage ./pkgs/lepton-eda { };
 
   
   ardour = super.ardour.overrideAttrs (old: rec {
-    version = "6.7";
+    version = "6.8";
     src = super.fetchgit {
       url = "git://git.ardour.org/ardour/ardour.git";
       rev = version;
-      sha256 = "19jc29fjwgvqbg3gnmy50mrz8mh5x4nwddglasvwx83nc87qwllx";
+      sha256 = "sha256-msTTNIFkCUf5TljtFbhEQMrxhYMz74K5fxnMvP5cp5s=";
+    };
+  });
+
+  hydrogen = super.hydrogen.overrideAttrs (old: rec {
+    version = "293cf9af271cc35dad48930be6f48f0c19d2c4d5";
+    src = super.fetchFromGitHub {
+      owner = "hydrogen-music";
+      repo = "hydrogen";
+      rev = version;
+      sha256 = "sha256-RgYZRyRZXLL+/h1RXFUw38xc9vyJguI5NutwN08A7i0=";
     };
   });
   
