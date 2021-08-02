@@ -84,5 +84,5 @@ with pkgs; [
 
     direnv
     nix-direnv
-
+    (xdg-utils.override { mimiSupport = true; })
 ]
