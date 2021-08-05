@@ -19,6 +19,8 @@
     application/x-xz: st -e atool --list
     application/zip: st -e atool --list
     inode/directory: st -e ranger
+    application/x-directory: st -e ranger
+    x-scheme-handler/: google-chrome-stable
   '';
 
   programs.emacs = {
