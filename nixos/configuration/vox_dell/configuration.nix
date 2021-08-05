@@ -67,25 +67,25 @@ in
       enable = true;
       configFile = "/home/vox_miki/.synergy-server";
     };
-     services.synergy.client = {
-       enable = true;
-        autoStart = true;
-        screenName = "laptop";
-        serverAddress = "192.168.50.165";
-      };
+    services.synergy.client = {
+      enable = true;
+      autoStart = true;
+      screenName = "laptop";
+      serverAddress = "192.168.50.165";
+    };
 
-      services.locate = {
-        enable = true;
-      };
+    services.locate = {
+      enable = true;
+    };
 
-      networking.hostName = "VOXMIKI"; # Define your hostname.
+    networking.hostName = "VOXMIKI"; # Define your hostname.
 
-      networking.networkmanager.enable = true;
-      networking.networkmanager.dhcp = "dhclient";
-      networking.networkmanager.packages = with pkgs; [ networkmanager_strongswan networkmanager-fortisslvpn ];
+    networking.networkmanager.enable = true;
+    networking.networkmanager.dhcp = "dhclient";
+    networking.networkmanager.packages = with pkgs; [ networkmanager_strongswan networkmanager-fortisslvpn ];
 
-      # VPN
-      # services.strongswan = {
+    # VPN
+    # services.strongswan = {
       #   enable = true;
       # };
 
@@ -100,22 +100,66 @@ in
       };
 
       services.munin-node.enable = true;
-      
+
       services.nginx = {
         enable = true;
+        httpConfig = "index index.html;";
         virtualHosts = {
-          "munin" = {
-            root = "/var/www/munin";
+          "web" = {
+            serverName = "web.this";
+            root = "/var/www/vox_miki";
             listen = [
-              { addr = "*";
-              port = 8888; }
+              {
+                addr = "localhost";
+                port = 8889;
+              }
             ];
             locations."/" = {
-             index = "index.html";
+              extraConfig = "autoindex = true;";
+            };
+          };
+          "munin" = {
+            serverName = "munin.this";
+            root = "/var/www/munin";
+            listen = [
+              {
+                addr = "localhost";
+                port = 8889;
+              }
+            ];
+            locations."/" = {
+              index = "index.html";
             };
           };
         };
       };
+
+      /*
+      services.traefik = {
+      enable = true;
+      staticConfigFile = ./traefik.yml;
+      group = "docker";
+      dynamicConfigOptions = {
+      http = {
+      routers = {
+      localNginx = {
+      rule = "HostRegexp(`{subdomain:[a-z]+}.this`)";
+      service = "localNginx";
+      };
+      };
+      services = {
+      localNginx = {
+      loadBalancer = {
+      servers = [{
+      url = "http://localhost:8889";
+      }];
+      };
+      };
+      };
+      };
+      };
+      };
+      */
 
       # networking.networkmanager.dns = "systemd-resolved";
       # services.resolved.enable = true;
@@ -215,184 +259,184 @@ in
       # hardware.pulseaudio.enable = false;
 
       # services.pipewire = {
-      #   enable = true;
-      #   pulse.enable = true;
+        #   enable = true;
+        #   pulse.enable = true;
         # media-session = {
-        #   config.bluez-monitor = {
-        #     properties = "{bluez5.codecs = [sbc]}";
-        #   };
-        # };
+          #   config.bluez-monitor = {
+            #     properties = "{bluez5.codecs = [sbc]}";
+            #   };
+            # };
 
-      # };
+            # };
 
-      # environment.etc."pipewire/media-session.d/bluez-monitor.conf".text = (builtins.readFile ./bluez-monitor.conf);
+            # environment.etc."pipewire/media-session.d/bluez-monitor.conf".text = (builtins.readFile ./bluez-monitor.conf);
 
-      # services.ofono = {
-      #   enable = true;
-      # };
+            # services.ofono = {
+              #   enable = true;
+              # };
 
-      nixpkgs.config = {
-        packageOverrides = pkgs: {
-          vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-        };
-        permittedInsecurePackages = [
-          "libav-11.12"
-        ];
-      };
+              nixpkgs.config = {
+                packageOverrides = pkgs: {
+                  vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+                };
+                permittedInsecurePackages = [
+                  "libav-11.12"
+                ];
+              };
 
-      hardware.opengl = {
-        enable = true;
-        driSupport = true;
-      };
+              hardware.opengl = {
+                enable = true;
+                driSupport = true;
+              };
 
-      # boot.initrd.kernelModules = [ "i965" ];
+              # boot.initrd.kernelModules = [ "i965" ];
 
-      # kernel.v4l2loopback.enable = true;
-      
-      hardware.opengl.extraPackages = with pkgs; [
-         intel-compute-runtime
-      ];
+              # kernel.v4l2loopback.enable = true;
+              
+              hardware.opengl.extraPackages = with pkgs; [
+                intel-compute-runtime
+              ];
 
-      # Enable the X11 windowing system.
-      services.xserver.enable = true;
-      services.xserver.displayManager.lightdm.enable = true;
-      services.xserver.displayManager.lightdm.greeters.mini.enable = true;
-      services.xserver.displayManager.lightdm.greeters.mini.user = "${user}";
-      services.xserver.layout = "pl,en_US";
+              # Enable the X11 windowing system.
+              services.xserver.enable = true;
+              services.xserver.displayManager.lightdm.enable = true;
+              services.xserver.displayManager.lightdm.greeters.mini.enable = true;
+              services.xserver.displayManager.lightdm.greeters.mini.user = "${user}";
+              services.xserver.layout = "pl,en_US";
 
-      services.xserver.wacomOne = {
-        enable = true;
-        transformationMatrix = "0.375 0 0.375 0 1 0 0 0 1";
-      };
+              services.xserver.wacomOne = {
+                enable = true;
+                transformationMatrix = "0.375 0 0.375 0 1 0 0 0 1";
+              };
 
-      programs.qt5ct.enable = true;
+              programs.qt5ct.enable = true;
 
-      services.xserver.displayManager.sessionCommands = ''
-        ${pkgs.xlibs.xset}/bin/xset r rate 300 30
-        ${pkgs.numlockx}/bin/numlockx on
-      '';
+              services.xserver.displayManager.sessionCommands = ''
+                ${pkgs.xlibs.xset}/bin/xset r rate 300 30
+                ${pkgs.numlockx}/bin/numlockx on
+              '';
 
-      services.xserver.videoDrivers = lib.mkDefault [ /*"displaylink"*/ "modesetting" ];
+              services.xserver.videoDrivers = lib.mkDefault [ /*"displaylink"*/ "modesetting" ];
 
-      services.xserver.monitorSection = ''
-        Option "DPMS" "true"
-      '';
+              services.xserver.monitorSection = ''
+                Option "DPMS" "true"
+              '';
 
-      services.xserver.deviceSection = ''
-        Option "TearFree" "true"
-      '';
+              services.xserver.deviceSection = ''
+                Option "TearFree" "true"
+              '';
 
-      services.xserver.extraConfig = ''
-        Section "Monitor"
-        Identifier  "eDP-1"
-        Option			"PreferredMode" "1920x1080"
-        Option			"Position" "0 0"
-        Option      "Primary" "true"
-        EndSection
-        Section "Monitor"
-        Identifier  "DP-1"
-        Option			"PreferredMode" "1920x1080"
-        Option			"RightOf" "eDP-1"
-        EndSection
-        Section "Monitor"
-        Identifier  "HDMI-1"
-        Option			"PreferredMode" "1280x1024"
-        Option			"RightOf" "DP-1"
-        EndSection
-      '';
+              services.xserver.extraConfig = ''
+                Section "Monitor"
+                Identifier  "eDP-1"
+                Option			"PreferredMode" "1920x1080"
+                Option			"Position" "0 0"
+                Option      "Primary" "true"
+                EndSection
+                Section "Monitor"
+                Identifier  "DP-1"
+                Option			"PreferredMode" "1920x1080"
+                Option			"RightOf" "eDP-1"
+                EndSection
+                Section "Monitor"
+                Identifier  "HDMI-1"
+                Option			"PreferredMode" "1280x1024"
+                Option			"RightOf" "DP-1"
+                EndSection
+              '';
 
-      services.xserver.exportConfiguration = true;
+              services.xserver.exportConfiguration = true;
 
-      services.xserver.inputClassSections = [ ''
-        Identifier "Mouse"
-        MatchIsPointer "yes"
-        Option "ConstantDeceleration" "1.55"
-      ''
-      ];
+              services.xserver.inputClassSections = [ ''
+                Identifier "Mouse"
+                MatchIsPointer "yes"
+                Option "ConstantDeceleration" "1.55"
+              ''
+              ];
 
-      # Make auto mounting work.
-      security.wrappers = {
-        udevil = {
-          source = "${pkgs.udevil}/bin/udevil";
-          owner = "root";
-        };
-      };
+              # Make auto mounting work.
+              security.wrappers = {
+                udevil = {
+                  source = "${pkgs.udevil}/bin/udevil";
+                  owner = "root";
+                };
+              };
 
-      # automatic mounting service. Included in udevil package
-      services.devmon = {
-        enable = true;
-      };
+              # automatic mounting service. Included in udevil package
+              services.devmon = {
+                enable = true;
+              };
 
-      # Window manager
-      services.xserver.windowManager.i3.enable = true;
+              # Window manager
+              services.xserver.windowManager.i3.enable = true;
 
-      services.xserver.displayManager = {
-        defaultSession = "none+i3";
-      };
+              services.xserver.displayManager = {
+                defaultSession = "none+i3";
+              };
 
-      services.compton = {
-        enable          = true;
-        fade            = true;
-        shadow          = true;
-        fadeDelta       = 3;
-        vSync           = true;
-        backend         = "glx";
-        shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
-      };
+              services.compton = {
+                enable          = true;
+                fade            = true;
+                shadow          = true;
+                fadeDelta       = 3;
+                vSync           = true;
+                backend         = "glx";
+                shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
+              };
 
-      services.logind.extraConfig = ''
-        HandlePowerKey=ignore
-        IdleAction=lock
-      '';
+              services.logind.extraConfig = ''
+                HandlePowerKey=ignore
+                IdleAction=lock
+              '';
 
-      # programs.xss-lock.enable = true;
-      # programs.xss-lock.lockerCommand = "/home/vox_miki/.scripts/i3cmds/lock";
+              # programs.xss-lock.enable = true;
+              # programs.xss-lock.lockerCommand = "/home/vox_miki/.scripts/i3cmds/lock";
 
-      virtualisation.docker.enable = true;
-      virtualisation.docker.liveRestore = false;
-      virtualisation.docker.enableOnBoot = false;
+              virtualisation.docker.enable = true;
+              virtualisation.docker.liveRestore = false;
+              virtualisation.docker.enableOnBoot = false;
 
-      virtualisation.virtualbox.host.enable = true;
-      users.extraGroups.vboxusers.members = [ "${user}" ];
+              virtualisation.virtualbox.host.enable = true;
+              users.extraGroups.vboxusers.members = [ "${user}" ];
 
-      # virtualisation.anbox.enable = true;
+              # virtualisation.anbox.enable = true;
 
-      programs.adb.enable = true;
+              programs.adb.enable = true;
 
-      fonts.fonts = with pkgs; [
-        noto-fonts
-        noto-fonts-cjk
-        noto-fonts-emoji
-        hack-font
-        montserrat
-      ];
+              fonts.fonts = with pkgs; [
+                noto-fonts
+                noto-fonts-cjk
+                noto-fonts-emoji
+                hack-font
+                montserrat
+              ];
 
-      # Define a user account. Don't forget to set a password with ‘passwd’.
+              # Define a user account. Don't forget to set a password with ‘passwd’.
 
-      users.groups = {
-        vox_miki = { gid = 1000; }; 
-        realtime = {};
-      };
+              users.groups = {
+                vox_miki = { gid = 1000; }; 
+                realtime = {};
+              };
 
-      users.users.vox_miki = {
-        isNormalUser = true;
-        home = "/home/${user}";
+              users.users.vox_miki = {
+                isNormalUser = true;
+                home = "/home/${user}";
 
-        # comment out for now...
-        shell = pkgs.fish;
-        extraGroups = [ "${user}" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" "lp" "scanner" ];
+                # comment out for now...
+                shell = pkgs.fish;
+                extraGroups = [ "${user}" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" "lp" "scanner" ];
 
-      };
+              };
 
-      # If your settings aren't being saved for some applications (gtk3 applications, firefox)
-      #, like the size of file selection windows, or the size of the save dialog, you will need to enable dconf.
-      programs.dconf.enable = true;
-      services.dbus.packages = [ pkgs.gnome3.dconf ];
+              # If your settings aren't being saved for some applications (gtk3 applications, firefox)
+              #, like the size of file selection windows, or the size of the save dialog, you will need to enable dconf.
+              programs.dconf.enable = true;
+              services.dbus.packages = [ pkgs.gnome3.dconf ];
 
-      # This value determines the NixOS release with which your system is to be
-      # compatible, in order to avoid breaking some software such as database
-      # servers. You should change this only after NixOS release notes say you
-      # should.
-      system.stateVersion = "20.09"; # Did you read the comment?
+              # This value determines the NixOS release with which your system is to be
+              # compatible, in order to avoid breaking some software such as database
+              # servers. You should change this only after NixOS release notes say you
+              # should.
+              system.stateVersion = "20.09"; # Did you read the comment?
 
 }
