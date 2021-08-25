@@ -201,17 +201,17 @@
     ];
 
     # Make auto mounting work.
-    security.wrappers = {
-      udevil = {
-        source = "${pkgs.udevil}/bin/udevil";
-        owner = "root";
-      };
-    };
+    # security.wrappers = {
+    #   udevil = {
+    #     source = "${pkgs.udevil}/bin/udevil";
+    #     owner = "root";
+    #   };
+    # };
 
     # automatic mounting service. Included in udevil package
-    services.devmon = {
-      enable = true;
-    };
+    # services.devmon = {
+    #   enable = true;
+    # };
 
     # Window manager
     services.xserver.windowManager.i3.enable = true;
