@@ -78,6 +78,10 @@ in
       enable = true;
     };
 
+    dj = {
+      enable = true;
+    };
+
     networking.hostName = "VOXMIKI"; # Define your hostname.
 
     networking.networkmanager.enable = true;
@@ -250,10 +254,7 @@ in
       sound.enable = true;
 
       hardware.pulseaudio = {
-        enable = true;
-        support32Bit = true;
         extraModules = [ pkgs.pulseaudio-modules-bt ];
-        package = pkgs.pulseaudioFull;
       };
 
       # hardware.pulseaudio.enable = false;
