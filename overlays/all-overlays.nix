@@ -2,7 +2,7 @@ self: super:
 {
   st = super.callPackage ./pkgs/st { };
   pgmodeler = super.libsForQt5.callPackage ./pkgs/pgmodeler { };
-  milton = super.callPackage ./pkgs/milton { };
+  # milton = super.callPackage ./pkgs/milton { };
 
   # Python
   # locust = super.python3Packages.callPackage ./pkgs/python-modules/locust { };

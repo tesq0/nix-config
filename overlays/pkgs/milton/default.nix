@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
 
   name = "milton";
 
-  src = /home/mikus/Documents/Projects/milton;
+  # src = /home/mikus/Documents/Projects/milton;
 
   # src = fetchFromGitHub {
   #   owner = "tesq0";
