@@ -6,11 +6,11 @@ buildPythonApplication rec {
 
   propagatedBuildInputs = [ colorama flask flask-cors requests unidecode SwSpotify beautifulsoup4 ];
   
-  src = /home/mikus/Projects/SwagLyrics-For-Spotify;
-  #   fetchPypi {
-  #   inherit pname version;
-  #   sha256 = "0vksm4drqsmkfyq337062k2mrr0yq52j267bfv695zx320f6ag2l";
-  # };
+  # src = /home/mikus/Projects/SwagLyrics-For-Spotify;
+  src = fetchPypi {
+    inherit pname version;
+    sha256 = "0vksm4drqsmkfyq337062k2mrr0yq52j267bfv695zx320f6ag2l";
+  };
   
   doCheck = false;
 
