@@ -90,7 +90,7 @@
       epkgs.ibuffer-vc
 
       epkgs.groovy-mode
-      # epkgs.lsp-java
+      epkgs.lsp-java
 
       # epkgs.dump-jump
       # epkgs.smart-jump
