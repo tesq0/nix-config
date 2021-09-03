@@ -163,7 +163,6 @@
     };
 
     services.xserver.displayManager.sessionCommands = ''
-      ${pkgs.xlibs.xset}/bin/xset r rate 300 30
       ${pkgs.numlockx}/bin/numlockx on
     '';
 

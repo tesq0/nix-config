@@ -23,6 +23,7 @@
     x-scheme-handler/: google-chrome-stable
   '';
 
+
   programs.emacs = {
     enable = true;
     package = pkgs.emacs27.overrideAttrs (old: rec {

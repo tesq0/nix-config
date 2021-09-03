@@ -167,7 +167,6 @@
     };
 
     services.xserver.displayManager.sessionCommands = ''
-      ${pkgs.xlibs.xset}/bin/xset r rate 300 30
       nvidia-settings --load-config-only --config /home/mikus/.nvidia-settings-rc
     '';
 
