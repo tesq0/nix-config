@@ -117,4 +117,9 @@
   programs.nix-index.enable = true;
   programs.nix-index.enableFishIntegration = true;
 
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+  # optional for nix flakes support
+  programs.direnv.nix-direnv.enableFlakes = true;
+
 }

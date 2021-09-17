@@ -82,7 +82,5 @@ with pkgs; [
     w3m
     atool
 
-    direnv
-    nix-direnv
     (xdg-utils.override { mimiSupport = true; })
 ]
