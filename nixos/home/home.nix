@@ -23,15 +23,17 @@
     x-scheme-handler/: google-chrome-stable
   '';
 
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs27.overrideAttrs (old: rec {
-      nativeComp = true;
-    });
+    package = pkgs.emacsGcc;
     extraPackages = epkgs: [
       epkgs.nix-mode
-      epkgs.magit
       epkgs.magit
 
       epkgs.company
