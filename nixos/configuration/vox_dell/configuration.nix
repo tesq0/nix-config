@@ -316,34 +316,34 @@ in
                 ${pkgs.numlockx}/bin/numlockx on
               '';
 
-              services.xserver.videoDrivers = lib.mkDefault [ /*"displaylink"*/ "modesetting" ];
+              services.xserver.videoDrivers = lib.mkDefault [ "displaylink" "modesetting" ];
 
-              services.xserver.monitorSection = ''
-                Option "DPMS" "true"
-              '';
+              # services.xserver.monitorSection = ''
+              #   Option "DPMS" "true"
+              # '';
 
-              services.xserver.deviceSection = ''
-                Option "TearFree" "true"
-              '';
+              # services.xserver.deviceSection = ''
+              #   Option "TearFree" "true"
+              # '';
 
-              services.xserver.extraConfig = ''
-                Section "Monitor"
-                Identifier  "eDP-1"
-                Option			"PreferredMode" "1920x1080"
-                Option			"Position" "0 0"
-                Option      "Primary" "true"
-                EndSection
-                Section "Monitor"
-                Identifier  "DP-1"
-                Option			"PreferredMode" "1920x1080"
-                Option			"RightOf" "eDP-1"
-                EndSection
-                Section "Monitor"
-                Identifier  "HDMI-1"
-                Option			"PreferredMode" "1280x1024"
-                Option			"RightOf" "DP-1"
-                EndSection
-              '';
+              # services.xserver.extraConfig = ''
+              #   Section "Monitor"
+              #   Identifier  "eDP-1"
+              #   Option			"PreferredMode" "1920x1080"
+              #   Option			"Position" "0 0"
+              #   Option      "Primary" "true"
+              #   EndSection
+              #   Section "Monitor"
+              #   Identifier  "DP-1"
+              #   Option			"PreferredMode" "1920x1080"
+              #   Option			"RightOf" "eDP-1"
+              #   EndSection
+              #   Section "Monitor"
+              #   Identifier  "HDMI-1"
+              #   Option			"PreferredMode" "1280x1024"
+              #   Option			"RightOf" "DP-1"
+              #   EndSection
+              # '';
 
               services.xserver.exportConfiguration = true;
 
@@ -375,7 +375,7 @@ in
               };
 
               services.compton = {
-                enable          = true;
+                enable          = false;
                 fade            = true;
                 shadow          = true;
                 fadeDelta       = 3;
