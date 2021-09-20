@@ -375,12 +375,11 @@ in
               };
 
               services.compton = {
-                enable          = false;
+                enable          = true;
                 fade            = true;
                 shadow          = true;
                 fadeDelta       = 3;
                 vSync           = true;
-                backend         = "glx";
                 shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
               };
 
