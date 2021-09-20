@@ -78,9 +78,9 @@ in
       enable = true;
     };
 
-    dj = {
-      enable = true;
-    };
+    # dj = {
+    #   enable = true;
+    # };
 
     networking.hostName = "VOXMIKI"; # Define your hostname.
 
@@ -197,15 +197,6 @@ in
 
       # List services that you want to enable:
 
-      hardware.bluetooth.enable = true;
-      hardware.bluetooth.powerOnBoot = true;
-      hardware.bluetooth.settings = {
-        General = {
-          Enable = "Source,Sink,Media,Socket";
-        };
-      };
-      services.blueman.enable = true;
-
       # for adaptive screen blue light
 
       location = {
@@ -254,188 +245,136 @@ in
       sound.enable = true;
 
       hardware.pulseaudio = {
+        enable = true;
         extraModules = [ pkgs.pulseaudio-modules-bt ];
+        package = pkgs.pulseaudioFull;
       };
 
-      # hardware.pulseaudio.enable = false;
+      hardware.bluetooth.enable = true;
+      hardware.bluetooth.powerOnBoot = true;
+      hardware.bluetooth.hsphfpd.enable = true;
+      services.blueman.enable = true;
 
-      # services.pipewire = {
-        #   enable = true;
-        #   pulse.enable = true;
-        # media-session = {
-          #   config.bluez-monitor = {
-            #     properties = "{bluez5.codecs = [sbc]}";
-            #   };
-            # };
+      nixpkgs.config = {
+        packageOverrides = pkgs: {
+          vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+        };
+        permittedInsecurePackages = [
+          "libav-11.12"
+        ];
+      };
 
-            # };
+      hardware.opengl = {
+        enable = true;
+        driSupport = true;
+      };
 
-            # environment.etc."pipewire/media-session.d/bluez-monitor.conf".text = (builtins.readFile ./bluez-monitor.conf);
+      # boot.initrd.kernelModules = [ "i965" ];
 
-            # services.ofono = {
-              #   enable = true;
-              # };
+      # kernel.v4l2loopback.enable = true;
+      
+      hardware.opengl.extraPackages = with pkgs; [
+        intel-compute-runtime
+      ];
 
-              nixpkgs.config = {
-                packageOverrides = pkgs: {
-                  vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-                };
-                permittedInsecurePackages = [
-                  "libav-11.12"
-                ];
-              };
+      # Enable the X11 windowing system.
+      services.xserver.enable = true;
+      services.xserver.displayManager.lightdm.enable = true;
+      services.xserver.displayManager.lightdm.greeters.mini.enable = true;
+      services.xserver.displayManager.lightdm.greeters.mini.user = "${user}";
+      services.xserver.layout = "pl,en_US";
 
-              hardware.opengl = {
-                enable = true;
-                driSupport = true;
-              };
+      services.xserver.wacomOne = {
+        enable = true;
+        transformationMatrix = "0.375 0 0.375 0 1 0 0 0 1";
+      };
 
-              # boot.initrd.kernelModules = [ "i965" ];
+      programs.qt5ct.enable = true;
 
-              # kernel.v4l2loopback.enable = true;
-              
-              hardware.opengl.extraPackages = with pkgs; [
-                intel-compute-runtime
-              ];
+      services.xserver.displayManager.sessionCommands = ''
+        ${pkgs.numlockx}/bin/numlockx on
+      '';
 
-              # Enable the X11 windowing system.
-              services.xserver.enable = true;
-              services.xserver.displayManager.lightdm.enable = true;
-              services.xserver.displayManager.lightdm.greeters.mini.enable = true;
-              services.xserver.displayManager.lightdm.greeters.mini.user = "${user}";
-              services.xserver.layout = "pl,en_US";
+      services.xserver.videoDrivers = lib.mkDefault [ "displaylink" "modesetting" ];
 
-              services.xserver.wacomOne = {
-                enable = true;
-                transformationMatrix = "0.375 0 0.375 0 1 0 0 0 1";
-              };
+      services.xserver.deviceSection = ''
+        Option "TearFree" "true"
+      '';
 
-              programs.qt5ct.enable = true;
+      services.xserver.exportConfiguration = true;
 
-              services.xserver.displayManager.sessionCommands = ''
-                ${pkgs.numlockx}/bin/numlockx on
-              '';
+      services.xserver.inputClassSections = [ ''
+        Identifier "Mouse"
+        MatchIsPointer "yes"
+        Option "ConstantDeceleration" "1.55"
+      ''
+      ];
 
-              services.xserver.videoDrivers = lib.mkDefault [ "displaylink" "modesetting" ];
+      # Window manager
+      services.xserver.windowManager.i3.enable = true;
 
-              # services.xserver.monitorSection = ''
-              #   Option "DPMS" "true"
-              # '';
+      services.xserver.displayManager = {
+        defaultSession = "none+i3";
+      };
 
-              # services.xserver.deviceSection = ''
-              #   Option "TearFree" "true"
-              # '';
+      services.compton = {
+        enable          = true;
+        fade            = true;
+        shadow          = true;
+        fadeDelta       = 3;
+        vSync           = true;
+        shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
+      };
 
-              # services.xserver.extraConfig = ''
-              #   Section "Monitor"
-              #   Identifier  "eDP-1"
-              #   Option			"PreferredMode" "1920x1080"
-              #   Option			"Position" "0 0"
-              #   Option      "Primary" "true"
-              #   EndSection
-              #   Section "Monitor"
-              #   Identifier  "DP-1"
-              #   Option			"PreferredMode" "1920x1080"
-              #   Option			"RightOf" "eDP-1"
-              #   EndSection
-              #   Section "Monitor"
-              #   Identifier  "HDMI-1"
-              #   Option			"PreferredMode" "1280x1024"
-              #   Option			"RightOf" "DP-1"
-              #   EndSection
-              # '';
+      services.logind.extraConfig = ''
+        HandlePowerKey=ignore
+        IdleAction=lock
+      '';
 
-              services.xserver.exportConfiguration = true;
+      # programs.xss-lock.enable = true;
+      # programs.xss-lock.lockerCommand = "/home/vox_miki/.scripts/i3cmds/lock";
 
-              services.xserver.inputClassSections = [ ''
-                Identifier "Mouse"
-                MatchIsPointer "yes"
-                Option "ConstantDeceleration" "1.55"
-              ''
-              ];
+      virtualisation.docker.enable = true;
+      virtualisation.docker.liveRestore = false;
+      virtualisation.docker.enableOnBoot = false;
 
-              # Make auto mounting work.
-              # security.wrappers = {
-              #   udevil = {
-              #     source = "${pkgs.udevil}/bin/udevil";
-              #     owner = "root";
-              #   };
-              # };
+      virtualisation.virtualbox.host.enable = true;
+      users.extraGroups.vboxusers.members = [ "${user}" ];
 
-              # automatic mounting service. Included in udevil package
-              # services.devmon = {
-              #   enable = true;
-              # };
+      # virtualisation.anbox.enable = true;
 
-              # Window manager
-              services.xserver.windowManager.i3.enable = true;
+      programs.adb.enable = true;
 
-              services.xserver.displayManager = {
-                defaultSession = "none+i3";
-              };
+      fonts.fonts = with pkgs; [
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        hack-font
+        montserrat
+      ];
 
-              services.compton = {
-                enable          = true;
-                fade            = true;
-                shadow          = true;
-                fadeDelta       = 3;
-                vSync           = true;
-                shadowExclude = [ "class_g = 'slop'" "class_g = 'locate-pointer'"];
-              };
+      # Define a user account. Don't forget to set a password with ‘passwd’.
 
-              services.logind.extraConfig = ''
-                HandlePowerKey=ignore
-                IdleAction=lock
-              '';
+      users.groups = {
+        vox_miki = { gid = 1000; }; 
+        realtime = {};
+      };
 
-              # programs.xss-lock.enable = true;
-              # programs.xss-lock.lockerCommand = "/home/vox_miki/.scripts/i3cmds/lock";
+      users.users.vox_miki = {
+        isNormalUser = true;
+        home = "/home/${user}";
 
-              virtualisation.docker.enable = true;
-              virtualisation.docker.liveRestore = false;
-              virtualisation.docker.enableOnBoot = false;
+        # comment out for now...
+        shell = pkgs.fish;
+        extraGroups = [ "${user}" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" "lp" "scanner" ];
 
-              virtualisation.virtualbox.host.enable = true;
-              users.extraGroups.vboxusers.members = [ "${user}" ];
+      };
 
-              # virtualisation.anbox.enable = true;
+      # If your settings aren't being saved for some applications (gtk3 applications, firefox)
+      #, like the size of file selection windows, or the size of the save dialog, you will need to enable dconf.
+      programs.dconf.enable = true;
+      services.dbus.packages = [ pkgs.gnome3.dconf ];
 
-              programs.adb.enable = true;
-
-              fonts.fonts = with pkgs; [
-                noto-fonts
-                noto-fonts-cjk
-                noto-fonts-emoji
-                hack-font
-                montserrat
-              ];
-
-              # Define a user account. Don't forget to set a password with ‘passwd’.
-
-              users.groups = {
-                vox_miki = { gid = 1000; }; 
-                realtime = {};
-              };
-
-              users.users.vox_miki = {
-                isNormalUser = true;
-                home = "/home/${user}";
-
-                # comment out for now...
-                shell = pkgs.fish;
-                extraGroups = [ "${user}" "wheel" "docker" "networkmanager" "adbusers" "plugdev" "wireshark" "audio" "video" "lp" "scanner" ];
-
-              };
-
-              # If your settings aren't being saved for some applications (gtk3 applications, firefox)
-              #, like the size of file selection windows, or the size of the save dialog, you will need to enable dconf.
-              programs.dconf.enable = true;
-              services.dbus.packages = [ pkgs.gnome3.dconf ];
-
-              # This value determines the NixOS release with which your system is to be
-              # compatible, in order to avoid breaking some software such as database
-              # servers. You should change this only after NixOS release notes say you
-              # should.
-              system.stateVersion = "20.09"; # Did you read the comment?
+      system.stateVersion = "21.05";
 
 }
