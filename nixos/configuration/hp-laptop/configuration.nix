@@ -15,9 +15,6 @@
     ../../laptop.nix
     ../../ssh.nix
     # ../vpn.nix
-    # ../mount-drives.nix
-    # ../syncthing.nix
-    # ../music.nix
     # ../remote-desktop.nix
     ];
 

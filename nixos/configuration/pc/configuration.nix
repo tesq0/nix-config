@@ -12,11 +12,9 @@
     ./hosts.nix
     ../../base.nix
     ../../nix.nix
-    ../../mount-drives.nix
+    ./mount-drives.nix
     ../../ssh.nix
-    # ../../syncthing.nix
     ../../vpn.nix
-    # ./music.nix
     # ./remote-desktop.nix
     ];
 
