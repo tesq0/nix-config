@@ -19,6 +19,8 @@ self: super:
 
   # flask-basicauth = super.python3Packages.callPackage ./pkgs/python-modules/flask-basicauth { };
 
+  airtest = super.python39Packages.callPackage ./pkgs/python-modules/airtest {};
+
   PyUserInput = super.python3Packages.callPackage ./pkgs/python-modules/PyUserInput { };
   
   setuptools-lint = super.python3Packages.callPackage ./pkgs/python-modules/setuptools-lint { };
@@ -38,6 +40,7 @@ self: super:
   passhole = super.python3Packages.callPackage ./pkgs/python-applications/passhole { };
 
   ueberzug = super.python3Packages.callPackage ./pkgs/python-applications/ueberzug {};
+
   
   # This version is bugged out
   # pykeepass = super.python3Packages.pykeepass.overrideAttrs (old: rec {
@@ -174,5 +177,7 @@ self: super:
       sha256 = "sha256-RgYZRyRZXLL+/h1RXFUw38xc9vyJguI5NutwN08A7i0=";
     };
   });
+
+  glad = super.callPackage ./pkgs/libs/glad {};
   
 }
