@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob globstar
+
+typeit=0
+if [[ $1 == "--type" ]]; then
+        typeit=1
+        shift
+fi
+
+passwords=$( lpass ls --format="%/as%/ag%an" | grep -v '.*\/$' )
+
+password=$(printf '%s\n' "${passwords[@]}" | dmenu "$@")
+
+[[ -n $password ]] || exit
+
+if [[ $typeit -eq 0 ]]; then
+        lpass show -c --password "$password" 2>/dev/null
+else
+    lpass show --password "$password" | { IFS= read -r pass; printf %s "$pass"; } | xdotool type --clearmodifiers --file -
+fi

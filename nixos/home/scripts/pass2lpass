@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+function helpMsg() {
+    echo "Usage: pass2lpass [path_to_file_or_directory] (without the [])";
+}
+
+function tolpass() {
+    file=$1;
+    username=$2;
+    if [ -n $(grep -e gpg $file) ]; then
+	echo "converting to $file lpass";
+	passw=$(gpg -dq $file)
+	echo -e "Username: $username\nPassword: $passw" | lpass add $( basename -s .gpg $file ) --non-interactive 
+    fi;
+}
+
+path=$1;
+is_dir=$([ -d "$path" ] &&  echo true);
+is_file=$([ -f "$path" ] && echo true);
+
+if [ ! $is_dir ] && [ ! $is_file ]; then 
+    helpMsg;
+    exit 1;
+fi;
+
+
+if $is_dir; then
+
+    for file in $(find $path -type f -regex '.*\.gpg'); do
+	tolpass $file;
+    done;
+
+else
+    
+    tolpass $path;
+
+fi;
+

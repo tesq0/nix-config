@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+current=$(setxkbmap -query | grep layout | awk '{ print $2 }')
+choices=("pl" "en_US")
+choice_str=""
+choice_count=0
+for item in ${choices[*]}; do
+    if [ ! "$item" == "$current" ]; then
+	if [ "$choice_str" == "" ]; then
+	    choice_str="$item"
+	else
+	    choice_str="$choice_str\\n$item"
+	fi
+	choice_count=$((choice_count + 1))
+    fi
+done
+
+if [ $choice_count == 1 ]; then
+    choice=$choice_str
+else
+    choice=$(printf "$choice_str" | dmenu -i -p "Select keyboard layout:")
+fi
+[ -z "$choice" ] && exit
+setxkbmap $choice
+fix_keyboard
+notify-send "Layout: $choice"

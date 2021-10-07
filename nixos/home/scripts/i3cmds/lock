@@ -1,0 +1,15 @@
+#!/run/current-system/sw/bin/bash
+
+echo -e "Lock-"$(date)"\n" > ~/.lock.log
+
+icon="$HOME/Pictures/lock.jpg"
+tmpbg='/tmp/screen.png'
+
+(( $# )) && { icon=$1; }
+
+rm "/tmp/screen.png"
+
+scrot "$tmpbg"
+convert "$tmpbg" -scale 10% -scale 1000% "$tmpbg"
+convert "$tmpbg" "$icon" -gravity SouthWest -composite -matte "$tmpbg"
+i3lock -u -i "$tmpbg"

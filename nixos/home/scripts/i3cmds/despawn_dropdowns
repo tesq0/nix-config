@@ -1,0 +1,14 @@
+#!/run/current-system/sw/bin/bash
+
+i3 "[instance=\"^dropdown_*\"] move scratchpad"
+
+files=$(fd .scratchpad.pid /tmp)
+
+for file in $files; do
+    pid=$(cat $file);
+    winId=$(wmctrl -lp | grep $pid | awk '{print $1}');
+    i3 "[id=\"$winId\"] move scratchpad";
+done
+
+fd '.scratchpad$' /tmp -x rm
+

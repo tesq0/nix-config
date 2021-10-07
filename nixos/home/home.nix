@@ -1,9 +1,18 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+let
+  pwd = builtins.toString ./.;
+in
 {
+
+  imports =
+    (if lib.pathExists "${pwd}/users/current.nix"
+    then [ ./users/current.nix ]
+    else []);
+    # // [ ./scripts.nix ];
+
   home.packages = [
     pkgs.htop
-    pkgs.fortune
   ];
 
   xdg.configFile."mimi/mime.conf".text = ''
@@ -25,7 +34,8 @@
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      # Emacs 28
+      url = https://github.com/nix-community/emacs-overlay/archive/4d85b6f92bc78b69a57994cf93e1f19ff2bbd243.tar.gz;
     }))
   ];
 

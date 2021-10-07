@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+pid="$(cat /tmp/autoclick.pid)"
+
+if [ -n "$pid" ]; then
+    kill -9 $pid
+    rm /tmp/autoclick.pid
+else
+
+    echo $$ > /tmp/autoclick.pid 
+    while true; do
+	xdotool mousedown 1
+	sleep 0.01
+	xdotool mouseup 1
+	sleep 0.01
+    done
+
+fi
+
+

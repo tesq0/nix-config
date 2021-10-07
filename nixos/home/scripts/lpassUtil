@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+function rmGroup() {
+    pws=$(lsGroup $1)
+    for pw in $pws; do
+	lpass rm $pw
+    done
+}
+
+function lsGroup() {
+    lpass ls $1 --format="%ai%" | grep -v '.*\/$'
+}
+
+function helpMsg() {
+    echo "Usage: lpassUtil [rmgroup, ...] args"
+}
+
+case $1 in
+    rmgroup)
+	rmGroup $2
+	;;
+    lsgroup)
+	lsGroup $2
+	;;
+    *)
+	helpMsg
+	;;
+esac
+

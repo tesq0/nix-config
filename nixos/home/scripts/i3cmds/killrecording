@@ -1,0 +1,8 @@
+#!/bin/sh
+
+kill -9 "$(cat /tmp/recordingpid)"
+rm -f /tmp/recordingpid
+
+# Update i3bar.
+echo "" > ~/.recordingicon
+# pkill -RTMIN+9 i3status
