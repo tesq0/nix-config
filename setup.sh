@@ -50,21 +50,22 @@ function nix() {
 
 function home() {
 
-    if [ -z "$(nix-channel --list | grep home-manager)" ]; then
+    cd $(dirname $0)
 
-	nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz home-manager
+    ln -sf $(pwd)/nixos/home/home.nix ~/.config/nixpkgs/home.nix
+
+    if [ -z "$(nix-channel --list | awk /home-manager/)" ]; then
+        echo "Adding home-manager channel"
+	nix-channel --add 'https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz' home-manager
 	nix-channel --update
 
     fi
 
     if [ -z "$(command -v home-manager)" ]; then
+	echo "install home-manager"
 	nix-shell '<home-manager>' -A install
     fi
 
-    cd $(dirname $0)
-
-    ln -sf $(pwd)/nixos/home/home.nix ~/.config/nixpkgs/home.nix
-    
 }
 
 function dotfiles() {

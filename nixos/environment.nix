@@ -2,12 +2,6 @@
 
 {
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wgt
-
-  environment.systemPackages = (import ./packages.nix pkgs);
-
-  programs.wireshark.enable = true;
   
   environment.variables = {
     TERMINAL="st";
@@ -30,8 +24,6 @@
     w32="WINEARCH=win32 WINEPREFIX=$HOME/.wine32";
     winetricks32="env WINEARCH=win32 WINEPREFIX=$HOME/.wine32 winetricks";
 
-    # Util
-    sdn="sudo shutdown now";
     mkd="mkdir -pv";
     crep="grep --color=always";
     la="ls -al";
@@ -74,15 +66,11 @@
     export PATH="$HOME/.npm-global/bin:$PATH"
   '';
 
-  services.transmission.enable = true;
-
-  services.gnome.gnome-keyring.enable = true;
+  # services.gnome.gnome-keyring.enable = true;
 
   # Fish Shell
   programs.fish = {
     enable = true;
   };
-
-  programs._droidcam.enable = true;
 
 }

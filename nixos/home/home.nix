@@ -115,6 +115,23 @@ in
       epkgs.lsp-ui
       epkgs.dap-mode
 
+      epkgs.benchmark-init
+
+      (epkgs.trivialBuild rec {
+        pname = "evil-magit";
+        version = "b5b6ad45130fc04a9fe30c803933e0451bdeace7";
+        packageRequires = [
+          epkgs.evil
+          epkgs.magit
+        ];
+        src = pkgs.fetchFromGitHub {
+          owner = "tesq0";
+          repo = "evil-magit";
+          rev = "${version}";
+          hash = "sha256-DKCIQLh6ACkvfjZmd04DE+ViFAVgKz9mqJ6PDNiOIq8=";
+        };
+      })
+
     ];
   };
 

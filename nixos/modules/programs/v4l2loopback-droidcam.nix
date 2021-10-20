@@ -20,9 +20,9 @@ in
     boot.extraModulePackages = [ overlays.v4l2loopback-droidcam ];
     boot.kernelModules = [ "videodev" "v4l2loopback_dc" "snd-aloop" ];
     boot.extraModprobeConfig = ''
-      # options v4l2loopback_dc width=1920 height=1080
+      options v4l2loopback_dc width=1920 height=1080
       # options v4l2loopback_dc width=1280 height=720
-      options v4l2loopback_dc width=640 height=480
+      # options v4l2loopback_dc width=640 height=480
       options snd-aloop index=${LOOPBACK_CARD_ID}
     '';
 

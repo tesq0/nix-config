@@ -26,7 +26,6 @@ with pkgs; [
 
     # Disk
     ntfs3g
-    gparted
     
     # Utils
     p7zip
@@ -43,12 +42,10 @@ with pkgs; [
     libnotify
     lxappearance
     jmtpfs
-    lxappearance
     pamixer
     patchelf
     youtube-dl
     killall
-    irony-server
     tree
     scrot
     imagemagick
@@ -67,8 +64,6 @@ with pkgs; [
     # Multimedia
     feh
     qrencode
-    mpv
-    vlc
 
     # Applications
     st
@@ -82,5 +77,5 @@ with pkgs; [
     w3m
     atool
 
-    (xdg-utils.override { mimiSupport = true; })
+    # (xdg-utils.override { mimiSupport = true; })
 ]
