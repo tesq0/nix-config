@@ -115,6 +115,10 @@ in
       epkgs.lsp-ui
       epkgs.dap-mode
 
+      epkgs.projectile
+
+      epkgs.helm-projectile
+
       epkgs.benchmark-init
 
       (epkgs.trivialBuild rec {
