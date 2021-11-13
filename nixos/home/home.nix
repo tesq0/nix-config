@@ -15,6 +15,12 @@ in
     pkgs.htop
   ];
 
+  home.file.".vimrc".source = ./files/vimrc;
+
+  home.file.".lesskey".source = ./files/lesskey;
+
+  home.file.".inputrc".source = ./files/inputrc;
+
   xdg.configFile."mimi/mime.conf".text = ''
     text/: emacsclient -n
     application/pdf: zathura
@@ -47,6 +53,7 @@ in
     enable = true;
     package = pkgs.emacsGcc;
     extraPackages = epkgs: [
+      epkgs.use-package
       epkgs.nix-mode
       epkgs.magit
 
@@ -56,18 +63,25 @@ in
 
       # epkgs.arduino-mode
       # epkgs.company-arduino
-
+      epkgs.shackle
+      epkgs.ivy
+      epkgs.fzf
+      epkgs.rg
       epkgs.nasm-mode
       epkgs.x86-lookup
 
+      epkgs.doom-themes
       epkgs.cider
       epkgs.flycheck-clojure
 
       epkgs.omnisharp
 
+      epkgs.smartparens
+      epkgs.evil-smartparens
       epkgs.dart-mode
       epkgs.flutter
 
+      epkgs.smart-jump
       # epkgs.dictionary
       epkgs.google-translate
 
@@ -77,8 +91,11 @@ in
 
       epkgs.eldoc
 
+      epkgs.exec-path-from-shell
+
       epkgs.undo-tree
       epkgs.evil
+      epkgs.evil-mc
       epkgs.avy
       epkgs.evil-surround
       epkgs.evil-nerd-commenter
@@ -93,6 +110,7 @@ in
       epkgs.gdscript-mode
 
       epkgs.helm
+      epkgs.helm-company
       epkgs.helm-xref
 
       # epkgs.hideshow
@@ -177,6 +195,11 @@ in
     extraConfig = ''
       set -g mouse on
     '';
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = (if lib.pathExists "${pwd}/matchBlocks.nix" then (import ./matchBlocks.nix) else {}); 
   };
 
 }
