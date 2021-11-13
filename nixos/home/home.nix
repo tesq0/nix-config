@@ -32,6 +32,10 @@ in
     x-scheme-handler/: google-chrome-stable
   '';
 
+  # xdg.configFile."nix/nix.conf".text = ''
+  #   experimental-features = nix-command flakes
+  # '';
+
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       # Emacs 28
@@ -83,6 +87,7 @@ in
 
       epkgs.flycheck
 
+      epkgs.benchmark-init
       epkgs.general
 
       epkgs.gdscript-mode
@@ -121,6 +126,20 @@ in
 
       epkgs.benchmark-init
 
+      epkgs.which-key
+
+      epkgs.yasnippet
+
+      epkgs.yasnippet-snippets
+      
+      epkgs.rainbow-mode
+
+      epkgs.rainbow-delimiters
+
+      epkgs.editorconfig
+
+      epkgs.indium
+
       (epkgs.trivialBuild rec {
         pname = "evil-magit";
         version = "b5b6ad45130fc04a9fe30c803933e0451bdeace7";
@@ -139,9 +158,9 @@ in
     ];
   };
 
-  services.emacs = {
-    enable = true;
-  };
+  #services.emacs = {
+  #  enable = true;
+  #};
 
   programs.home-manager.enable = true;
 
@@ -152,5 +171,12 @@ in
   programs.direnv.nix-direnv.enable = true;
   # optional for nix flakes support
   programs.direnv.nix-direnv.enableFlakes = true;
+
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set -g mouse on
+    '';
+  };
 
 }

@@ -52,6 +52,8 @@ function home() {
 
     cd $(dirname $0)
 
+    mkdir -p ~/.config/nixpkgs
+
     ln -sf $(pwd)/nixos/home/home.nix ~/.config/nixpkgs/home.nix
 
     if [ -z "$(nix-channel --list | awk /home-manager/)" ]; then
