@@ -56,6 +56,7 @@ in
       epkgs.use-package
       epkgs.nix-mode
       epkgs.magit
+      epkgs.git-gutter
 
       epkgs.company
       # epkgs.company-etags
@@ -76,6 +77,8 @@ in
 
       epkgs.omnisharp
 
+      epkgs.add-node-modules-path
+
       epkgs.smartparens
       epkgs.evil-smartparens
       epkgs.dart-mode
@@ -92,6 +95,10 @@ in
       epkgs.eldoc
 
       epkgs.exec-path-from-shell
+
+      epkgs.web-mode
+
+      epkgs.emmet-mode
 
       epkgs.undo-tree
       epkgs.evil
