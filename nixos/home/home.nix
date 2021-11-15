@@ -113,6 +113,8 @@ in
       epkgs.helm-company
       epkgs.helm-xref
 
+      epkgs.direnv
+
       # epkgs.hideshow
 
       # epkgs.hippie-expand
