@@ -22,8 +22,6 @@ with pkgs; [
     xdotool
     dragon-drop
 
-    glxinfo
-
     # Disk
     ntfs3g
     
@@ -57,7 +55,7 @@ with pkgs; [
     isync
 
 		# Tags
-    python36Packages.pygments
+    pythonPackages.pygments
     global
     ctags
 
@@ -73,6 +71,7 @@ with pkgs; [
     htop
     pass
     llpp
+    ranger
     # ueberzug
     w3m
     atool

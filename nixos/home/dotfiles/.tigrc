@@ -1,0 +1,17 @@
+set horizontal-scroll = 10%
+
+# Keybindings
+bind generic K none
+
+bind generic j scroll-left
+bind generic ; scroll-right
+bind generic k next
+bind generic l previous
+bind generic L view-log
+bind generic <Ctrl-k> scroll-line-down
+bind generic <Ctrl-l> scroll-line-up
+bind generic g move-first-line
+bind generic G move-last-line
+bind main G move-last-line
+
+bind main <Ctrl-g> :toggle commit-title-graph

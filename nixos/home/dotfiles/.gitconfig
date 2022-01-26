@@ -1,0 +1,23 @@
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	autocrlf = false
+	editor = emacsclient
+	filemode = false
+[user]
+	name = Mikolaj Galkowski
+	email = mikolaj.galkowski@gmail.com
+	signingkey = C0F8BF25A38AE6AB8D87A16BCDF2D07930E9F849
+[cola]
+	spellcheck = false
+[diff-so-fancy]
+	markEmptyLines = false
+	changeHunkIndicators = true
+	stripLeadingSymbols = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[gui]
+editor = emacsclient
+

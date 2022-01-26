@@ -1,0 +1,15 @@
+# You can add comments to these files with #
+h	~/
+d	~/Documents
+D	~/Downloads
+m	~/Music
+p	~/Projects
+i	~/Pictures
+v	~/Videos/recordings
+s	~/screenshoots
+cf	~/.config
+m /run/media/mikus
+M	/media
+lt /media/STORAGE/Literature/Technical
+le /media/STORAGE/Literature/Entertainment
+

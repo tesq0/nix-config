@@ -8,18 +8,12 @@ in
   imports =
     (if lib.pathExists "${pwd}/users/current.nix"
     then [ ./users/current.nix ]
-    else []);
-    # // [ ./scripts.nix ];
+    else [])
+    ++ [ ./buildDotfiles.nix ];
 
   home.packages = [
     pkgs.htop
   ];
-
-  home.file.".vimrc".source = ./files/vimrc;
-
-  home.file.".lesskey".source = ./files/lesskey;
-
-  home.file.".inputrc".source = ./files/inputrc;
 
   xdg.configFile."mimi/mime.conf".text = ''
     text/: emacsclient -n
@@ -45,7 +39,7 @@ in
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       # Emacs 28
-      url = https://github.com/nix-community/emacs-overlay/archive/4d85b6f92bc78b69a57994cf93e1f19ff2bbd243.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/4dab9845b372f4cc335a6009b0766c5165ef7c93.tar.gz;
     }))
   ];
 
@@ -209,6 +203,16 @@ in
   programs.ssh = {
     enable = true;
     matchBlocks = (if lib.pathExists "${pwd}/matchBlocks.nix" then (import ./matchBlocks.nix) else {}); 
+  };
+
+  xresources.properties = {
+    "Xcursor.theme" = "Adwaita";
+    "Xft.autohint" = 0;
+    "Xft.lcdfilter" = "lcddefault";
+    "Xft.hintstyle" = "hintslight";
+    "Xft.hinting" = 1;
+    "Xft.antialias" = 1;
+    "Xft.rgba" = "rgb";
   };
 
 }

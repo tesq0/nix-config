@@ -58,7 +58,7 @@ function home() {
 
     if [ -z "$(nix-channel --list | awk /home-manager/)" ]; then
         echo "Adding home-manager channel"
-	nix-channel --add 'https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz' home-manager
+	nix-channel --add 'https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz' home-manager
 	nix-channel --update
 
     fi
@@ -70,21 +70,9 @@ function home() {
 
 }
 
-function dotfiles() {
-    if [ ! -e "$HOME/.homesick/repos/homeshick" ]; then
-	echo "Installing homehsick"
-	git clone --depth=1 https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-	homeshick="$HOME/.homesick/repos/homeshick/bin/homeshick"
-	$homeshick clone git@github.com:tesq0/dotfiles.git
-    else
-	echo "Homeshick already installed, skipping..."
-    fi
-}
-
 function all() {
     nix-packages
     nix
-    dotfiles
     home
 }
 
@@ -94,9 +82,6 @@ case $1 in
 	;;
     nix)
 	nix
-	;;
-    dotfiles)
-	dotfiles
 	;;
     home)
 	home
