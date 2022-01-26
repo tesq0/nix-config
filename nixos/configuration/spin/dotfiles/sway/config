@@ -1,5 +1,3 @@
-# vim: filetype=i3
-
 ###---Basic Definitions---###
 focus_follows_mouse yes
 hide_edge_borders both
@@ -16,22 +14,17 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 set $mod Mod4
 
 set $term $TERMINAL
-set $video_pulse --no-startup-id bash ~/.config/Scripts/screencast_pulse.sh
-set $video --no-startup-id bash ~/.config/Scripts/video.sh
-set $stoprec --no-startup-id killall ffmpeg & killall screenkey
-set $browser google-chrome-stable
 set $file-manager ranger
+set $browser google-chrome-stable 
 floating_modifier Mod4
 hide_edge_borders smart
 
 ###---Starting External Scripts---###
-# exec_always --no-startup-id ~/.config/polybar/launch.sh
-# exec --no-startup-id skypeforlinux
-# exec --no-startup-id goldendict &
-exec --no-startup-id dunst &
+
+exec --no-startup-id mako &
+exec --no-startup-id waybar &
 exec --no-startup-id qjackctl &
-exec --no-startup-id ~/.scripts/monitor-notifications ~/.notify.log &
-# exec --no-startup-id i3-unity-fix &
+exec --no-startup-id monitor-notifications ~/.notify.log &
 
 ##For mpc:
 set $pause --no-startup-id mpc toggle
@@ -47,8 +40,7 @@ set $volup --no-startup-id mpc volume +5
 set $voldown --no-startup-id mpc volume -5
 
 # Scree outputs
-set $primary "DVI-D-0"
-set $secondary "HDMI-0"
+set $primary "eDP-1"
 
 #For PULSEAUDIO/PAMIXER
 set $inc --no-startup-id pamixer -i 2
@@ -58,9 +50,6 @@ set $bigdec --no-startup-id pamixer --allow-boost -d 15
 set $mute --no-startup-id pamixer --allow-boost -t
 set $micmute --no-startup-id pamixer --allow-boost -t
 set $truemute --no-startup-id pamixer -m
-set $screencast  --no-startup-id bash ~/.config/Scripts/screencast_pulse.sh
-set $audio --no-startup-id bash ~/.config/Scripts/audio_pulse.sh
-
 
 
 ###---Dropdown/Scratchpad Windows---###
@@ -207,9 +196,9 @@ for_window [instance="Godot_Editor" class="Godot"] floating disable
 ###---Basic Bindings---###
 
 bindsym $mod+Control+d exec --no-startup-id goldendict
-bindsym $mod+F6 exec --no-startup-id ~/.scripts/i3cmds/spawn slack Slack
+bindsym $mod+F6 exec --no-startup-id i3cmds/spawn slack Slack
 bindsym $mod+F7 exec --no-startup-id keepassxc
-bindsym $mod+F8 exec --no-startup-id ~/.scripts/i3cmds/spawn signal-desktop Signal
+bindsym $mod+F8 exec --no-startup-id i3cmds/spawn signal-desktop Signal
 
 bindsym $mod+Return			exec --no-startup-id $term
 bindsym $mod+Control+Return		exec --no-startup-id $term -e tmux
@@ -217,17 +206,14 @@ bindsym $mod+Control+Return		exec --no-startup-id $term -e tmux
 bindsym $mod+Control+space	floating toggle
 bindsym $mod+space		focus mode_toggle
 
-bindsym $mod+Control+Escape		exec i3-msg exit
+bindsym $mod+Control+Escape		exec swaymsg exit
 
 ###---Letter Key Bindings---###
 bindsym $mod+q			kill
-bindsym --release $mod+Control+q	exec --no-startup-id xkill
 
 bindsym $mod+t	layout toggle tabbed split
 bindsym $mod+b		exec --no-startup-id $browser
 bindsym $mod+Control+b		exec --no-startup-id $browser --private-window
-
-bindsym $mod+d	exec --no-startup-id bash ~/.scripts/i3cmds/ddspawn term file-manager $file-manager
 
 bindsym $mod+e		exec --no-startup-id bash -c "emacs"
 ##+Control
@@ -294,8 +280,8 @@ bindsym $mod+Next			focus child
 
 bindsym $mod+Control+a		exec --no-startup-id pavucontrol
 
-bindsym $mod+x			exec rofi -show run
-bindsym $mod+w			exec rofi -show window
+bindsym $mod+x			exec wofi --show run
+bindsym $mod+w			exec wofi --show window
 
 bindsym --release $mod+z	exec --no-startup-id xkill
 
@@ -481,26 +467,11 @@ bindsym XF86AudioRaiseVolume	exec $inc
 bindsym $mod+plus	exec $inc
 bindsym $mod+minus exec $dec
 
-##bindsym XF86PowerOff		exec sudo shutdown -h now
-#bindsym XF86Copy		exec
-#bindsym XF86Open		exec
-#bindsym XF86Paste		exec
-#bindsym XF86Cut		exec
-#bindsym XF86MenuKB		exec
 bindsym XF86Calculator	exec qalculate
-##bindsym XF86Sleep		exec sudo zzz
-#bindsym XF86WakeUp		exec
 bindsym XF86Explorer		exec $term -e ranger
-#bindsym XF86Send		exec
-#bindsym XF86Xfer		exec
 bindsym XF86WWW			exec --no-startup-id $browser
-#bindsym XF86DOS		exec
-#bindsym XF86RotateWindows	exec
-#bindsym XF86TaskPane		exec
-#bindsym XF86Favorites		exec
 bindsym XF86MyComputer		exec $term -e ranger
-#bindsym XF86Back		exec
-#bindsym XF86Forward		exec
+
 bindsym XF86Eject		exec sudo umount -R /mnt
 bindsym XF86AudioNext		exec $next
 bindsym XF86AudioPlay		exec $pause
@@ -509,73 +480,20 @@ bindsym XF86AudioStop		exec $pause
 bindsym XF86AudioRecord		exec $audio
 bindsym XF86AudioRewind		exec $lilbak
 bindsym XF86AudioForward	exec $lilfor
-#bindsym XF86Phone		exec
-#bindsym XF86Tools		exec
 
-##bindsym XF86Reload		restart
-#bindsym XF86ScrollUp		exec
-#bindsym XF86ScrollDown		exec
-#bindsym XF86New		exec
-#bindsym XF86LaunchA		exec
-#bindsym XF86LaunchB		exec
-#bindsym XF86Launch2		exec
-#bindsym XF86Launch3		exec
-#bindsym XF86Launch4		exec
-#bindsym XF86Launch5		exec
-#bindsym XF86Launch6		exec
-#bindsym XF86Launch7		exec
-#bindsym XF86Launch8		exec
-#bindsym XF86Launch9		exec
 bindsym XF86AudioMicMute	exec $micmute
-#bindsym XF86TouchpadToggle	exec
 bindsym XF86TouchpadOn		exec --no-startup-id exec synclient TouchpadOff=0
 bindsym XF86TouchpadOff		exec --no-startup-id exec synclient TouchpadOff=1
-bindsym $mod+Control+grave exec --no-startup-id ~/.scripts/i3cmds/lock
-bindsym XF86Close		kill
-#bindsym XF86Go			exec
-#bindsym XF86Finance		exec
-#bindsym XF86Game		exec
+
+bindsym $mod+Control+grave exec --no-startup-id swaylock
+
 bindsym XF86MonBrightnessDown	exec --no-startup-id light -U 15
 bindsym XF86MonBrightnessUp	exec --no-startup-id light -A 15
-bindsym XF86AudioMedia		exec $music
-##bindsym XF86Display		exec --no-startup-id arandr
-#bindsym XF86KbdLightOnOff	exec
 bindsym XF86KbdBrightnessDown	exec --no-startup-id light -U 15
 bindsym XF86KbdBrightnessUp	exec --no-startup-id light -A 15
-#bindsym XF86Reply		exec
-#bindsym XF86Save		exec
-bindsym XF86Documents		exec $term -e ranger ~/Documents
-#bindsym XF86Battery		exec
-#bindsym XF86Bluetooth		exec
-bindsym XF86WLAN		exec --no-startup-id sudo sv restart NetworkManager
-
 # colors
 set $bg-color						 #FFF
 set $inactive-bg-color   #2f343f
 set $text-color          #2d2d2d
 set $indicator					 #7f6fff
 set $urgent-bg-color     #E53935
-
-
-# window colors
-#                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          $indicator
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-				status_command i3status -c /home/mikus/.config/i3/i3status.conf
-				position			 bottom
-				tray_output $primary
-
-	 colors {
-			 background #000000
-			 statusline #ffffff
-
-			 focused_workspace  #ffffff #285577
-			 active_workspace   #ffffff #333333
-			 inactive_workspace #888888 #222222
-			 urgent_workspace   #ffffff #900000
-	 }
-
-}

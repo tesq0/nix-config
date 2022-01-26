@@ -2,7 +2,7 @@
 
 {
   
-  imports = [ ../../environment.nix ];
+  imports = [ ../../common/environment.nix ];
 
   config = {
     environment.systemPackages = (import ../../packages.nix pkgs);

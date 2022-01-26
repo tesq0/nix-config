@@ -10,12 +10,11 @@
     ./hardware-configuration.nix
     ./environment.nix
     ./hosts.nix
+    ./mount-drives.nix
     ../../base.nix
     ../../nix.nix
-    ./mount-drives.nix
-    ../../ssh.nix
-    ../../vpn.nix
-    # ./remote-desktop.nix
+    ../../common/ssh.nix
+    ../../common/vpn.nix
     ];
 
     # Use the GRUB 2 boot loader.

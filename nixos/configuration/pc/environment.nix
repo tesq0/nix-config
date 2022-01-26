@@ -2,6 +2,6 @@
 
 {
   
-  imports = [ ../../environment.nix ];
+  imports = [ ../../common/environment.nix ];
   
 }

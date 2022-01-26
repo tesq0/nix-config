@@ -9,9 +9,10 @@
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./environment.nix
+    ./sway.nix
     ../../base.nix
     ../../nix.nix
-    ../../ssh.nix
+    ../../common/ssh.nix
     ];
 
     boot.loader.efi = {
@@ -40,7 +41,6 @@
     programs.nm-applet.enable = true;
 
     console.font = "Lat2-Terminus16";
-    console.useXkbConfig = true;
     
     #Select internationalisation properties.
     i18n = {
@@ -86,15 +86,6 @@
     networking.firewall.allowedTCPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     networking.firewall.allowedUDPPortRanges = [ { from = 19000; to = 19003; } { from = 5000; to = 5003; } ];
     
-    # Enable CUPS to print documents.
-    # services.printing.enable = true;
-    # services.printing.drivers = [ pkgs.brgenml1lpr pkgs.cnijfilter2 ];
-    # services.avahi.enable = true;
-    # services.avahi.nssmdns = true;
-
-    # hardware.sane.enable = true;
-    # hardware.sane.extraBackends = [ pkgs.cnijfilter2 ];
-    
     # Enable sound.
     sound.enable = true;
     dj.enable = true;
@@ -103,42 +94,7 @@
     hardware.opengl.driSupport = true;
     hardware.opengl.driSupport32Bit = true;
 
-    # Enable the X11 windowing system.
-    services.xserver.enable = true;
-    services.xserver.displayManager.lightdm.enable = true;
-    services.xserver.displayManager.lightdm.greeters.mini.enable = true;
-    services.xserver.displayManager.lightdm.greeters.mini.user = "mikus";
-    services.xserver.layout = "pl,en_US";
-
-    services.xserver.windowManager.i3.enable = true;
-    services.xserver.displayManager.defaultSession = "none+i3";
     programs.qt5ct.enable = true;
-
-    services.xserver.desktopManager = {
-      xterm.enable = false;
-    };
-
-    services.xserver.videoDrivers = [ "modesetting" "intel" ];
-    
-    services.xserver.inputClassSections = [ ''
-      Identifier "Mouse"
-      MatchIsPointer "yes"
-      Option "ConstantDeceleration" "1.55"
-    ''
-    ];
-
-    services.compton = {
-      enable          = true;
-      fade            = true;
-      shadow          = true;
-      fadeDelta       = 3;
-      shadowExclude = [ "class_g = 'slop'" "name = 'cpt_frame_window'"];
-    };
-
-		services.logind.extraConfig = ''
-      HandlePowerKey=ignore
-      IdleAction=lock
-    '';
 
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = false;

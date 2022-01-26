@@ -8,20 +8,6 @@ with pkgs; [
     numix-icon-theme
     numix-gtk-theme
 
-    # x11 utils
-    xsel
-    xclip
-    xorg.xwininfo
-    xorg.xdpyinfo
-    xorg.xev
-    wmctrl
-    xorg.xmodmap
-    xcape
-    dunst
-    gksu
-    xdotool
-    dragon-drop
-
     # Disk
     ntfs3g
     
@@ -34,7 +20,6 @@ with pkgs; [
     git
     git-lfs
     wget
-    udevil
     redshift
     cifs-utils
     libnotify
@@ -45,12 +30,9 @@ with pkgs; [
     youtube-dl
     killall
     tree
-    scrot
     imagemagick
     poppler_utils
     dos2unix
-    maim
-    slop
     nox
     isync
 
@@ -60,21 +42,13 @@ with pkgs; [
     ctags
 
     # Multimedia
-    feh
     qrencode
 
     # Applications
-    st
-    mu
-    rofi-unwrapped
-    mypaint
     htop
-    pass
     llpp
-    ranger
-    # ueberzug
     w3m
     atool
 
-    # (xdg-utils.override { mimiSupport = true; })
+    (xdg-utils.override { mimiSupport = true; })
 ]
