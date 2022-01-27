@@ -1,46 +1,51 @@
-###---Basic Definitions---###
-focus_follows_mouse yes
-hide_edge_borders both
-for_window [class="^.*"] border pixel 1
+xwayland disable
 
-# only works with the gaps mod
-# gaps inner 10
-# smart_gaps on
-# gaps outer 10
+input * {
+    xkb_layout "us,pl,no"
+}
+
+input type:keyboard {
+    repeat_delay 300
+    repeat_rate 30
+}
+
+input type:mouse {
+    pointer_accel 0.4
+}
+
+input type:touchpad {
+    tap enabled
+}
 
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-#font pango:Hack 11
+
+focus_follows_mouse yes
+
+hide_edge_borders both
+
+for_window [class="^.*"] border pixel 1
 
 set $mod Mod4
 
 set $term $TERMINAL
+
 set $file-manager ranger
+
 set $browser google-chrome-stable 
+
 floating_modifier Mod4
-hide_edge_borders smart
+
+default_border pixel 2
 
 ###---Starting External Scripts---###
 
 exec --no-startup-id mako &
-exec --no-startup-id waybar &
-exec --no-startup-id qjackctl &
 exec --no-startup-id monitor-notifications ~/.notify.log &
-
-##For mpc:
-set $pause --no-startup-id mpc toggle
-set $trupause --no-startup-id mpc pause
-set $next --no-startup-id mpc next
-set $prev --no-startup-id mpc prev
-set $lilfor --no-startup-id mpc seek +10
-set $bigfor --no-startup-id mpc seek +120
-set $lilbak --no-startup-id mpc seek -10
-set $bigbak --no-startup-id mpc seek -120
-set $beg --no-startup-id mpc seek 0%
-set $volup --no-startup-id mpc volume +5
-set $voldown --no-startup-id mpc volume -5
 
 # Scree outputs
 set $primary "eDP-1"
+
+output eDP-1 scale 1.5
 
 #For PULSEAUDIO/PAMIXER
 set $inc --no-startup-id pamixer -i 2
@@ -50,7 +55,6 @@ set $bigdec --no-startup-id pamixer --allow-boost -d 15
 set $mute --no-startup-id pamixer --allow-boost -t
 set $micmute --no-startup-id pamixer --allow-boost -t
 set $truemute --no-startup-id pamixer -m
-
 
 ###---Dropdown/Scratchpad Windows---###
 # General dropdown window traits. The order can matter.
@@ -67,14 +71,6 @@ for_window [instance="^dropdown_audiomixer"] resize set 800 600
 for_window [instance="^dropdown_music"] resize set 800 600
 
 for_window [instance="^dropdown_*"] move position center
-
-for_window [class="locate-pointer"] floating enable, border pixel 0
-
-# emacs
-# for_window [class="Emacs" title="Helm"] floating enable, border pixel 0, move position center
-
-##dialog windows
-
 
 for_window [window_type="dialog"] floating enable, move position center
 
@@ -171,16 +167,12 @@ for_window [class="kronometer"] floating enable
 #STEAM
 for_window [title="Steam Guard"] floating enable, move position center
 
-#DIA
-# for_window [title="Dia" window_role="toolbox_window"] floating enable, move position 1727 72
-# for_window [title="Dia" window_role="toolbox_window"] resize set 170 955
 #XEV
 for_window [title="Event Tester"] border pixel, floating enable resize set 300 200, move position mouse
 
 #FLORENCE
 
 for_window [window_type="normal" class="Florence" title="florence"] floating enable, resize set 720 300,move position mouse
-#for_window [window_type="normal" class="Florence" title="florence"] floating enable, resize set 720 480,move position mouse
 
 #POPUP windows
 
@@ -196,26 +188,26 @@ for_window [instance="Godot_Editor" class="Godot"] floating disable
 ###---Basic Bindings---###
 
 bindsym $mod+Control+d exec --no-startup-id goldendict
-bindsym $mod+F6 exec --no-startup-id i3cmds/spawn slack Slack
+bindsym $mod+F6 exec --no-startup-id spawn slack Slack
 bindsym $mod+F7 exec --no-startup-id keepassxc
-bindsym $mod+F8 exec --no-startup-id i3cmds/spawn signal-desktop Signal
+bindsym $mod+F8 exec --no-startup-id spawn signal-desktop Signal
 
-bindsym $mod+Return			exec --no-startup-id $term
-bindsym $mod+Control+Return		exec --no-startup-id $term -e tmux
+bindsym $mod+Return exec --no-startup-id $term
+bindsym $mod+Control+Return exec --no-startup-id $term -e tmux
 
-bindsym $mod+Control+space	floating toggle
-bindsym $mod+space		focus mode_toggle
+bindsym $mod+Control+space floating toggle
+bindsym $mod+space focus mode_toggle
 
-bindsym $mod+Control+Escape		exec swaymsg exit
+bindsym $mod+Control+Escape exec swaymsg exit
 
 ###---Letter Key Bindings---###
-bindsym $mod+q			kill
+bindsym $mod+q kill
 
-bindsym $mod+t	layout toggle tabbed split
-bindsym $mod+b		exec --no-startup-id $browser
-bindsym $mod+Control+b		exec --no-startup-id $browser --private-window
+bindsym $mod+t layout toggle tabbed split
+bindsym $mod+b exec --no-startup-id $browser
+bindsym $mod+Control+b exec --no-startup-id $browser --private-window
 
-bindsym $mod+e		exec --no-startup-id bash -c "emacs"
+bindsym $mod+e exec --no-startup-id bash -c "emacs"
 ##+Control
 
 bindsym $mod+s sticky toggle
@@ -225,45 +217,40 @@ bindsym $mod+r mode "$resize_mode"
 
 mode "$resize_mode" {
 
-bindsym i resize grow width 5 px or 1 ppt, resize grow height 5px or 1 ppt
-bindsym d resize shrink width 5 px or 1 ppt, resize shrink height 5px or 1 ppt
-bindsym Shift+w	resize grow width 5 px or 1 ppt
-bindsym w	resize shrink width 5 px or 1 ppt
-bindsym Shift+h	resize grow height 5 px or 1 ppt
-bindsym h	resize shrink height 5 px or 1 ppt
-bindsym Escape mode "default"
-bindsym Return mode "default"
-bindsym Space mode "default"
-bindsym $mod+Mod2 mode "default"
+  bindsym i resize grow width 5 px or 1 ppt, resize grow height 5px or 1 ppt
+  bindsym d resize shrink width 5 px or 1 ppt, resize shrink height 5px or 1 ppt
+  bindsym Shift+w	resize grow width 5 px or 1 ppt
+  bindsym w	resize shrink width 5 px or 1 ppt
+  bindsym Shift+h	resize grow height 5 px or 1 ppt
+  bindsym h	resize shrink height 5 px or 1 ppt
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Space mode "default"
+  bindsym $mod+Mod2 mode "default"
 
 }
 
-bindsym $mod+Control+r		restart
+bindsym $mod+Control+r		reload
 
-bindsym $mod+a			focus output $primary, exec --no-startup-id bash ~/.scripts/i3cmds/spawn pavucontrol audio-control
+# bindsym $mod+a			focus output $primary, exec --no-startup-id bash spawn pavucontrol audio-control
 
-bindsym $mod+i			focus output $primary, exec --no-startup-id bash ~/.scripts/i3cmds/ddspawn term sys-monitor -e htop
+# bindsym $mod+i			focus output $primary, exec --no-startup-id bash ddspawn term sys-monitor -e htop
 
-bindsym $mod+g			focus output $primary, exec --no-startup-id bash ~/.scripts/i3cmds/ddspawn term git -e "bash -c 'cd ~/Documents/Projects/mieszkaniobot/ && fish'"
+# bindsym $mod+u			focus output $primary, exec --no-startup-id bash ddspawn term term -e tmux
 
-bindsym $mod+u			focus output $primary, exec --no-startup-id bash ~/.scripts/i3cmds/ddspawn term term -e tmux
+# bindsym $mod+m			focus output $primary, exec --no-startup-id bash ddspawn emacs mail -e "(mu4e)"
+# bindsym $mod+m			focus output $primary, exec --no-startup-id spawn thunderbird Mail
 
-# bindsym $mod+m			focus output $primary, exec --no-startup-id bash ~/.scripts/i3cmds/ddspawn emacs mail -e "(mu4e)"
-bindsym $mod+m			focus output $primary, exec --no-startup-id ~/.scripts/i3cmds/spawn thunderbird Mail
-bindsym XF86Mail		focus output $primary, exec --no-startup-id ~/.scripts/i3cmds/spawn thunderbird Mail
-
-bindsym $mod+n			focus output $primary, exec --no-startup-id bash ~/.scripts/i3cmds/ddspawn emacs todo ~/Documents/Notes/todo.org
-
-bindsym $mod+BackSpace exec --no-startup-id bash ~/.scripts/i3cmds/pop_dropdown
-bindsym $mod+Control+BackSpace exec --no-startup-id bash ~/.scripts/i3cmds/despawn_dropdowns
+bindsym $mod+BackSpace exec --no-startup-id bash pop_dropdown
+bindsym $mod+Control+BackSpace exec --no-startup-id bash despawn_dropdowns
 
 bindsym $mod+Control+plus resize grow width 20 px, resize grow height 20px, move left 10, move up 10
 bindsym $mod+Control+minus resize shrink width 20 px, resize shrink height 20px, move right 10, move down 10
-bindsym $mod+Control+comma		move container to output $primary, focus output primary
+bindsym $mod+Control+comma move container to output $primary, focus output $primary
 
-bindsym $mod+c exec --no-startup-id ~/.scripts/i3cmds/showclip
-bindsym $mod+Control+c exec --no-startup-id ~/.scripts/autoclick
-bindsym --whole-window $mod+button2 exec --no-startup-id ~/.scripts/autoclick
+bindsym $mod+c exec --no-startup-id showclip
+bindsym $mod+Control+c exec --no-startup-id autoclick
+bindsym --whole-window $mod+button2 exec --no-startup-id autoclick
 
 bindsym $mod+p exec "passmenu --type"
 bindsym $mod+Control+p exec "passmenu"
@@ -314,8 +301,8 @@ bindsym $mod+h			split h
 ###---Workspace Bindings---###
 bindsym $mod+Home		workspace $ws1
 bindsym $mod+Shift+Home		move container to workspace $ws1
-bindsym $mod+End		workspace $ws10
-bindsym $mod+Shift+End		move container to workspace $ws10
+bindsym $mod+End		workspace $ws0
+bindsym $mod+Shift+End		move container to workspace $ws0
 bindsym $mod+Shift+Prior	move container to workspace prev
 bindsym $mod+Shift+Next		move container to workspace next
 bindsym $mod+Tab		workspace back_and_forth
@@ -353,18 +340,18 @@ set $ws6 "6: EDITING_R"
 set $ws7 "7: RESEARCH_R"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10"
+set $ws0 "10"
 
-workspace $ws1 output $primary
-workspace $ws2 output $primary
-workspace $ws3 output $primary
-workspace $ws4 output $primary
-workspace $ws5 output $primary
-workspace $ws6 output $secondary
-workspace $ws7 output $secondary
-workspace $ws8 output $secondary
-workspace $ws9 output $secondary
-workspace $ws10 output $secondary
+# workspace $ws1 output $primary
+# workspace $ws2 output $primary
+# workspace $ws3 output $primary
+# workspace $ws4 output $primary
+# workspace $ws5 output $primary
+# workspace $ws6 output $secondary
+# workspace $ws7 output $secondary
+# workspace $ws8 output $secondary
+# workspace $ws9 output $secondary
+# workspace $ws0 output $secondary
 
 # switch to workspace
 bindsym $mod+1		workspace $ws1
@@ -376,7 +363,7 @@ bindsym $mod+6		workspace $ws6
 bindsym $mod+7		workspace $ws7
 bindsym $mod+8		workspace $ws8
 bindsym $mod+9		workspace $ws9
-bindsym $mod+0		workspace $ws10
+bindsym $mod+0		workspace $ws0
 
 bindsym $mod+Mod2+KP_1		workspace $ws1
 bindsym $mod+Mod2+KP_2		workspace $ws2
@@ -387,7 +374,7 @@ bindsym $mod+Mod2+KP_6		workspace $ws6
 bindsym $mod+Mod2+KP_7		workspace $ws7
 bindsym $mod+Mod2+KP_8		workspace $ws8
 bindsym $mod+Mod2+KP_9		workspace $ws9
-bindsym $mod+Mod2+KP_0		workspace $ws10
+bindsym $mod+Mod2+KP_0		workspace $ws0
 
 
 # move focused container to workspace
@@ -400,13 +387,9 @@ bindsym $mod+Control+6	move container to workspace $ws6, workspace $ws6
 bindsym $mod+Control+7	move container to workspace $ws7, workspace $ws7
 bindsym $mod+Control+8	move container to workspace $ws8, workspace $ws8
 bindsym $mod+Control+9	move container to workspace $ws9, workspace $ws9
-bindsym $mod+Control+0	move container to workspace $ws10, workspace $ws10
+bindsym $mod+Control+0	move container to workspace $ws0, workspace $ws0
 
-# for_window [class="obs"] floating enable, resize set 1280 720, sticky enable
-# for_window [class="obs"] move position center, move workspace $ws7
-for_window [class="obs"] move workspace $ws7
 for_window [window_role="GtkFileChooserDialog"] resize shrink height 10 px
-
 
 ###---Function Buttons---###
 #bindsym F1		nop
@@ -439,16 +422,15 @@ for_window [class="(?i)qalculate.*"] floating enable, move position center
 #With shift, it takes one only of the given window.
 bindsym Print	exec --no-startup-id scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/screenshoots/'
 bindsym Shift+Print	exec --no-startup-id scrot -u '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/screenshoots/'
-bindsym --release $mod+F1 exec --no-startup-id ~/.scripts/clipboard-as-qrcode
-bindsym --release $mod+F2 exec --no-startup-id ~/.scripts/i3cmds/grab-screenshot
-bindsym --release $mod+F3 exec --no-startup-id ~/.scripts/i3cmds/dmenurecord
-bindsym --release $mod+F4 exec --no-startup-id ~/.scripts/i3cmds/killrecording
+bindsym --release $mod+F1 exec --no-startup-id clipboard-as-qrcode
+bindsym --release $mod+F2 exec --no-startup-id grab-screenshot
+bindsym --release $mod+F3 exec --no-startup-id dmenurecord
+bindsym --release $mod+F4 exec --no-startup-id killrecording
 
-bindsym --release $mod+F9 exec --no-startup-id ~/.scripts/i3cmds/dmenumount
-bindsym --release $mod+F10 exec --no-startup-id ~/.scripts/i3cmds/dmenuunmount
+bindsym --release $mod+F9 exec --no-startup-id dmenumount
+bindsym --release $mod+F10 exec --no-startup-id dmenuunmount
 
-bindsym --release $mod+F12 exec --no-startup-id ~/.scripts/i3cmds/dmenu_kblayout
-
+bindsym --release $mod+F12 exec --no-startup-id dmenu_kblayout
 
 #For recording audio/video or stop recording. Also screenkey for visual typing.
 bindsym XF86Launch7		exec $video
@@ -497,3 +479,8 @@ set $inactive-bg-color   #2f343f
 set $text-color          #2d2d2d
 set $indicator					 #7f6fff
 set $urgent-bg-color     #E53935
+
+bar {
+  swaybar_command waybar
+}
+

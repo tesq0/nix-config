@@ -23,7 +23,6 @@ with pkgs; [
     redshift
     cifs-utils
     libnotify
-    lxappearance
     jmtpfs
     pamixer
     patchelf

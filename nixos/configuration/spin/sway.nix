@@ -6,13 +6,28 @@
       extraPackages = with pkgs; [
         swaylock # lockscreen
         swayidle
-        # xwayland
         waybar # status bar
         mako # notification daemon
         kanshi # autorandr
         wofi
         alacritty
       ];
+      extraSessionCommands = ''
+        export TERMINAL=alacritty
+        # SDL:
+        export SDL_VIDEODRIVER=wayland
+        # QT (needs qt5.qtwayland in systemPackages):
+        export QT_QPA_PLATFORM=wayland-egl
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+
+        # Fix for some Java AWT applications (e.g. Android Studio),
+        # use this if they aren't displayed properly:
+        export _JAVA_AWT_WM_NONREPARENTING=1
+
+        export XCURSOR_SIZE=24
+        export XCURSOR_THEME=Adwaita
+        export SWAY_CURSOR_THEME=Adwaita
+      '';
     };
 
     environment = {
@@ -45,7 +60,12 @@
       gtk-engine-murrine
       gtk_engines
       gsettings-desktop-schemas
+      qt5.qtwayland
       lxappearance
+
+      wl-clipboard
+
+      brightnessctl
     ];
 
     systemd.user.targets.sway-session = {

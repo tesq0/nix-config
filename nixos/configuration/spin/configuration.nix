@@ -28,6 +28,15 @@
       enableCryptodisk = true;  
     };
 
+    boot.initrd.kernelModules = [ "i915" ];
+
+    hardware.opengl.extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+
     boot.initrd.luks.devices = {
       root = {
         device = "/dev/disk/by-uuid/1793a79f-a296-4560-96f8-aa8799aedca6";
@@ -65,8 +74,6 @@
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
     services.blueman.enable = true;
-
-    # for adaptive screen blue light
 
     location = {
       latitude = 53.4275432;

@@ -26,4 +26,6 @@ with pkgs; [
 
     # Applications
     rofi-unwrapped
+
+    lxappearance
 ]
