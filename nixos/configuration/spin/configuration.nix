@@ -47,7 +47,7 @@
     networking.hostName = "mikusNix"; # Define your hostname.
     networking.networkmanager.enable = true;
     
-    programs.nm-applet.enable = true;
+    # programs.nm-applet.enable = true;
 
     console.font = "Lat2-Terminus16";
     

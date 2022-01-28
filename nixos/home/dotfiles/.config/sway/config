@@ -1,4 +1,4 @@
-xwayland disable
+# xwayland disable
 
 input * {
     xkb_layout "us,pl,no"
@@ -17,7 +17,9 @@ input type:touchpad {
     tap enabled
 }
 
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# seat seat0 xcursor_theme Bibata_Classic 24
+
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 
 focus_follows_mouse yes
 
@@ -38,6 +40,8 @@ floating_modifier Mod4
 default_border pixel 2
 
 ###---Starting External Scripts---###
+
+exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
 
 exec --no-startup-id mako &
 exec --no-startup-id monitor-notifications ~/.notify.log &
@@ -105,7 +109,7 @@ no_focus [ window_type="normal" class="Slack" ]
 for_window [class="qTox"] floating enable, sticky enable, resize set 1220 720, move position center
 
 #Signal
-for_window [class="Signal"] floating enable, sticky enable, resize set 1220 720, move position center
+# for_window [class="Signal"] floating enable, sticky enable, resize set 1220 720, move position center
 
 for_window [instance="Mail"] floating enable, sticky enable, resize set 1220 720, move position center
 for_window [class="Daily"] floating enable, sticky enable, resize set 1220 720, move position center
@@ -188,9 +192,8 @@ for_window [instance="Godot_Editor" class="Godot"] floating disable
 ###---Basic Bindings---###
 
 bindsym $mod+Control+d exec --no-startup-id goldendict
-bindsym $mod+F6 exec --no-startup-id spawn slack Slack
 bindsym $mod+F7 exec --no-startup-id keepassxc
-bindsym $mod+F8 exec --no-startup-id spawn signal-desktop Signal
+bindsym $mod+F8 exec --no-startup-id signal-desktop
 
 bindsym $mod+Return exec --no-startup-id $term
 bindsym $mod+Control+Return exec --no-startup-id $term -e tmux
@@ -260,15 +263,15 @@ bindsym $mod+comma		focus output $primary
 
 bindsym $mod+Control+period	move container to output $secondary, focus output $secondary
 
-bindsym $mod+period			focus output $secondary
+bindsym $mod+period		focus output $secondary
 
-bindsym $mod+Prior			focus parent
-bindsym $mod+Next			focus child
+bindsym $mod+Prior		focus parent
+bindsym $mod+Next		focus child
 
 bindsym $mod+Control+a		exec --no-startup-id pavucontrol
 
 bindsym $mod+x			exec wofi --show run
-bindsym $mod+w			exec wofi --show window
+bindsym $mod+w			exec wofi-switch-window
 
 bindsym --release $mod+z	exec --no-startup-id xkill
 
@@ -317,18 +320,17 @@ bindsym --whole-window $mod+Control+button5 workspace next
 bindsym --whole-window $mod+button4 focus left
 bindsym --whole-window $mod+button5 focus right
 
-
-bindsym $mod+Control+bracketleft	move container to workspace prev, workspace prev
-bindsym $mod+Control+bracketright	move container to workspace next, workspace next
+bindsym $mod+Control+bracketleft move container to workspace prev, workspace prev
+bindsym $mod+Control+bracketright move container to workspace next, workspace next
 
 #bindsym $mod+Shift+XF86Back
-bindsym $mod+XF86Forward	workspace next
+bindsym $mod+XF86Forward workspace next
 #bindsym $mod+Shift+XF86Forward
 #bindsym $mod+semicolon		workspace next
-bindsym $mod+apostrophe		split horizontal ;; exec $term
-bindsym $mod+slash		split vertical ;; exec $term
-bindsym $mod+Control+slash	kill
-bindsym $mod+backslash		workspace back_and_forth
+bindsym $mod+apostrophe split horizontal ;; exec $term
+bindsym $mod+slash split vertical ;; exec $term
+bindsym $mod+Control+slash kill
+bindsym $mod+backslash workspace back_and_forth
 
 
 set $ws1 "1"
@@ -354,27 +356,27 @@ set $ws0 "10"
 # workspace $ws0 output $secondary
 
 # switch to workspace
-bindsym $mod+1		workspace $ws1
-bindsym $mod+2		workspace $ws2
-bindsym $mod+3		workspace $ws3
-bindsym $mod+4		workspace $ws4
-bindsym $mod+5		workspace $ws5
-bindsym $mod+6		workspace $ws6
-bindsym $mod+7		workspace $ws7
-bindsym $mod+8		workspace $ws8
-bindsym $mod+9		workspace $ws9
-bindsym $mod+0		workspace $ws0
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws0
 
-bindsym $mod+Mod2+KP_1		workspace $ws1
-bindsym $mod+Mod2+KP_2		workspace $ws2
-bindsym $mod+Mod2+KP_3		workspace $ws3
-bindsym $mod+Mod2+KP_4		workspace $ws4
-bindsym $mod+Mod2+KP_5		workspace $ws5
-bindsym $mod+Mod2+KP_6		workspace $ws6
-bindsym $mod+Mod2+KP_7		workspace $ws7
-bindsym $mod+Mod2+KP_8		workspace $ws8
-bindsym $mod+Mod2+KP_9		workspace $ws9
-bindsym $mod+Mod2+KP_0		workspace $ws0
+bindsym $mod+Mod2+KP_1 workspace $ws1
+bindsym $mod+Mod2+KP_2 workspace $ws2
+bindsym $mod+Mod2+KP_3 workspace $ws3
+bindsym $mod+Mod2+KP_4 workspace $ws4
+bindsym $mod+Mod2+KP_5 workspace $ws5
+bindsym $mod+Mod2+KP_6 workspace $ws6
+bindsym $mod+Mod2+KP_7 workspace $ws7
+bindsym $mod+Mod2+KP_8 workspace $ws8
+bindsym $mod+Mod2+KP_9 workspace $ws9
+bindsym $mod+Mod2+KP_0 workspace $ws0
 
 
 # move focused container to workspace
@@ -404,24 +406,23 @@ for_window [window_role="GtkFileChooserDialog"] resize shrink height 10 px
 #bindsym F10
 bindsym F11		fullscreen toggle
 
-
 ###---Arrow Keys---###
-bindsym $mod+Left		focus left
-bindsym $mod+Down		focus down
-bindsym $mod+Up			focus up
-bindsym $mod+Right		focus right
-bindsym $mod+Control+Left		move left
-bindsym $mod+Control+Down		move down
-bindsym $mod+Control+Up		move up
-bindsym $mod+Control+Right	move right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+bindsym $mod+Control+Left move left
+bindsym $mod+Control+Down move down
+bindsym $mod+Control+Up move up
+bindsym $mod+Control+Right move right
 
 for_window [title="clipqr"] floating enable, move position center
 for_window [class="(?i)qalculate.*"] floating enable, move position center
 
 #Print screen takes a screenshot.
 #With shift, it takes one only of the given window.
-bindsym Print	exec --no-startup-id scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/screenshoots/'
-bindsym Shift+Print	exec --no-startup-id scrot -u '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/screenshoots/'
+bindsym Print exec --no-startup-id scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/screenshoots/'
+bindsym Shift+Print exec --no-startup-id scrot -u '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/screenshoots/'
 bindsym --release $mod+F1 exec --no-startup-id clipboard-as-qrcode
 bindsym --release $mod+F2 exec --no-startup-id grab-screenshot
 bindsym --release $mod+F3 exec --no-startup-id dmenurecord
@@ -433,10 +434,10 @@ bindsym --release $mod+F10 exec --no-startup-id dmenuunmount
 bindsym --release $mod+F12 exec --no-startup-id dmenu_kblayout
 
 #For recording audio/video or stop recording. Also screenkey for visual typing.
-bindsym XF86Launch7		exec $video
-bindsym XF86Launch8		exec $video_pulse
-bindsym XF86Launch9		exec $stoprec
-bindsym $mod+Delete	exec $stoprec
+bindsym XF86Launch7 exec $video
+bindsym XF86Launch8 exec $video_pulse
+bindsym XF86Launch9 exec $stoprec
+bindsym $mod+Delete exec $stoprec
 
 
 
@@ -469,10 +470,10 @@ bindsym XF86TouchpadOff		exec --no-startup-id exec synclient TouchpadOff=1
 
 bindsym $mod+Control+grave exec --no-startup-id swaylock
 
-bindsym XF86MonBrightnessDown	exec --no-startup-id light -U 15
-bindsym XF86MonBrightnessUp	exec --no-startup-id light -A 15
-bindsym XF86KbdBrightnessDown	exec --no-startup-id light -U 15
-bindsym XF86KbdBrightnessUp	exec --no-startup-id light -A 15
+bindsym XF86MonBrightnessDown	exec --no-startup-id brightnessctl s 15%-
+bindsym XF86MonBrightnessUp	exec --no-startup-id brightnessctl s +15%
+bindsym XF86KbdBrightnessUp	exec --no-startup-id brightnessctl s +15%
+bindsym XF86KbdBrightnessDown	exec --no-startup-id brightnessctl s 15%-
 # colors
 set $bg-color						 #FFF
 set $inactive-bg-color   #2f343f

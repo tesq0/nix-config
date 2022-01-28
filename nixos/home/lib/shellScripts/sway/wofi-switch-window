@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+switch_window() {
+    read -r name
+    id=$(echo "$name" | awk -F ':' '{print $1}')
+    swaymsg "[con_id=$id]" focus
+}
+
+transform() {
+    jq  -r '.nodes[].nodes[] | if .nodes then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[]) | ((.id | tostring) + ": " + (.name | ascii_downcase))'
+}
+
+swaymsg -t get_tree | transform | wofi --show dmenu | switch_window

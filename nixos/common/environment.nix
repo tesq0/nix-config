@@ -66,11 +66,7 @@
     environment.extraInit = ''
       # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load SVG files (important for icons)
       export GDK_PIXBUF_MODULE_FILE="$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)"
-      export PATH="$(du $HOME/.scripts/ | cut -f2 | tr '\n' ':')$PATH"
-      export PATH="$HOME/.npm-global/bin:$PATH"
     '';
-
-    # services.gnome.gnome-keyring.enable = true;
 
     # Fish Shell
     programs.fish = {

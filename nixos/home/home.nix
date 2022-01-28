@@ -1,7 +1,8 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, ... }@args:
 
 let
   pwd = builtins.toString ./.;
+  _lib = (import ./lib/all.nix args);
 in
 {
 
@@ -66,13 +67,20 @@ in
   };
 
   xresources.properties = {
-    "Xcursor.theme" = "Adwaita";
     "Xft.autohint" = 0;
     "Xft.lcdfilter" = "lcddefault";
     "Xft.hintstyle" = "hintslight";
     "Xft.hinting" = 1;
     "Xft.antialias" = 1;
     "Xft.rgba" = "rgb";
+  };
+
+  home.sessionPath = _lib.dirPathsRecursive "${pwd}/lib/shellScripts"
+  ++ ["$HOME/.npm-global/bin"];
+
+  programs.fish = {
+    enable = true;   
+    shellInit = builtins.readFile ./fish/config.fish;
   };
 
 }

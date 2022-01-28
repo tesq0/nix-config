@@ -23,20 +23,7 @@
         # Fix for some Java AWT applications (e.g. Android Studio),
         # use this if they aren't displayed properly:
         export _JAVA_AWT_WM_NONREPARENTING=1
-
-        export XCURSOR_SIZE=24
-        export XCURSOR_THEME=Adwaita
-        export SWAY_CURSOR_THEME=Adwaita
       '';
-    };
-
-    environment = {
-      etc = {
-        # Put config files in /etc. Note that you also can put these in ~/.config, but then you can't manage them with NixOS anymore!
-        "sway/config".source = ./dotfiles/sway/config;
-        "xdg/waybar/config".source = ./dotfiles/waybar/config;
-        "xdg/waybar/style.css".source = ./dotfiles/waybar/style.css;
-      };
     };
 
     # Here we but a shell script into path, which lets us start sway.service (after importing the environment of the login shell).
@@ -100,8 +87,6 @@
       enable = true;
       package = pkgs.redshift-wlr;
     };
-
-    programs.waybar.enable = true;
 
     systemd.user.services.kanshi = {
       description = "Kanshi output autoconfig ";
