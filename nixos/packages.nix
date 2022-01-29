@@ -49,5 +49,6 @@ with pkgs; [
     w3m
     atool
 
+    file
     (xdg-utils.override { mimiSupport = true; })
 ]
