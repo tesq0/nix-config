@@ -24,10 +24,10 @@ in
     chromeWayland
   ];
 
-  # home.file.".config/fish/conf.d/sway.fish".text = ''
-  #   set TTY1 (tty)
-  #   [ "$TTY1" = "/dev/tty1" ] && exec sway
-  # '';
+  home.file.".config/fish/conf.d/sway.fish".text = ''
+    set TTY1 (tty)
+    [ "$TTY1" = "/dev/tty1" ] && exec sway
+  '';
 
   wayland.windowManager.sway = {
     enable = true;
