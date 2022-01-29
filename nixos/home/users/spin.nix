@@ -36,6 +36,7 @@ in
     extraSessionCommands = ''
       export TERMINAL="alacritty";
       export PATH="$PATH''${PATH:+:}"
+      export MOZ_ENABLE_WAYLAND=1
     '';
     config = {
       modifier = "Mod4";
