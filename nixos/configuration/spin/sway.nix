@@ -43,15 +43,9 @@
           '';
         }
       )
-
-      gtk-engine-murrine
-      gtk_engines
-      gsettings-desktop-schemas
       qt5.qtwayland
       lxappearance
-
       wl-clipboard
-
       brightnessctl
     ];
 
