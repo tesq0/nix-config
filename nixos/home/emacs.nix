@@ -49,6 +49,8 @@
       epkgs.exec-path-from-shell
 
       epkgs.web-mode
+      epkgs.typescript-mode
+      epkgs.php-mode
 
       epkgs.emmet-mode
 
