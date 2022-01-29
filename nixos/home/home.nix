@@ -14,6 +14,7 @@ in
 
   home.packages = [
     pkgs.htop
+    pkgs.xdragon
   ];
 
   xdg.configFile."mimi/mime.conf".text = ''
