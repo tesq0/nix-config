@@ -47,6 +47,7 @@
       lxappearance
       wl-clipboard
       brightnessctl
+      xdg-desktop-portal-wlr
     ];
 
     systemd.user.targets.sway-session = {
