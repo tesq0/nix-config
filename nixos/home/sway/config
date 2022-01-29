@@ -10,7 +10,7 @@ input type:keyboard {
 }
 
 input type:mouse {
-    accel_profile adaptive
+    accel_profile flat
     pointer_accel 0
 }
 
@@ -82,8 +82,9 @@ for_window [instance="dragon"] sticky enable
 for_window [class="Impactor"] floating enable, move position center
 
 #MUSIC
-for_window [instance="qjackctl"] floating enable, move position center
-for_window [class="Qjackctl"] floating enable, move position center
+for_window [instance="qjackctl"] floating enable, resize set 600 150, move position center
+for_window [class="QjackCtl" title="^Setup.*"] resize set 800 600
+for_window [class="QjackCtl" title="^Graph.*"] resize set 1280 720
 for_window [class="JAMENDO"] floating enable, resize set 800 600, move position center, move scratchpad
 for_window [class="Spotify"] move to workspace $ws8
 
@@ -192,6 +193,8 @@ bindsym $mod+Control+d exec --no-startup-id goldendict
 bindsym $mod+F7 exec --no-startup-id keepassxc
 bindsym $mod+F8 exec --no-startup-id signal-desktop
 
+bindsym $mod+question exec sway-prop
+
 bindsym $mod+Return exec --no-startup-id $term
 bindsym $mod+Control+Return exec --no-startup-id $term -e tmux
 
@@ -231,6 +234,8 @@ mode "$resize_mode" {
 }
 
 bindsym $mod+Control+r		reload
+
+bindsym $mod+equal exec sway-select-scratchpad 1
 
 # bindsym $mod+a			focus output $primary, exec --no-startup-id bash spawn pavucontrol audio-control
 
@@ -412,6 +417,8 @@ bindsym $mod+Control+Left move left
 bindsym $mod+Control+Down move down
 bindsym $mod+Control+Up move up
 bindsym $mod+Control+Right move right
+
+for_window [class="floating"] floating enable, move position center
 
 for_window [title="clipqr"] floating enable, move position center
 for_window [class="(?i)qalculate.*"] floating enable, move position center
