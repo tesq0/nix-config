@@ -8,18 +8,6 @@
       nix-doc
     ];
 
-    environment.variables = {
-      TERMINAL="st";
-      TERM="xterm-256color";
-      MAIL="thunderbird";
-    };
-
-    environment.sessionVariables = {
-      XDG_CURRENT_DESKTOP="GNOME";
-      QT_SELECT="5";
-      GTK_IM_MODULE="";
-    };
-
     environment.shellAliases = {
 
       # Wine
@@ -62,11 +50,6 @@
       r=''ranger --choosedir=$HOME/.rangerdir; cd (cat $HOME/.rangerdir)'';
       
     };
-
-    environment.extraInit = ''
-      # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load SVG files (important for icons)
-      export GDK_PIXBUF_MODULE_FILE="$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)"
-    '';
 
     # Fish Shell
     programs.fish = {

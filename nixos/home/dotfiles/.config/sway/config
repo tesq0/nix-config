@@ -10,7 +10,8 @@ input type:keyboard {
 }
 
 input type:mouse {
-    pointer_accel 0.4
+    accel_profile adaptive
+    pointer_accel 0
 }
 
 input type:touchpad {
