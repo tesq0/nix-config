@@ -20,6 +20,11 @@
       efiSysMountPoint = "/boot/efi";
     };
 
+    services.logind.extraConfig = ''
+      # don’t shutdown when power button is short-pressed
+      HandlePowerKey=ignore
+    '';
+
     boot.loader.grub = {
       enable = true;
       version = 2;
