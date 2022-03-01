@@ -62,6 +62,32 @@ in
     };
   };
 
+  services.kanshi = {
+    enable = true;
+    profiles = {
+      docked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          {
+            criteria = "DP-2";
+          }
+        ];
+      };
+      undocked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            scale = 1.5;
+            status = "enable";
+          }
+        ];
+      };
+    };
+  };
+
   xsession = {
     pointerCursor = {
       package = pkgs.bibata-cursors;
