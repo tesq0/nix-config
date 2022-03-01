@@ -44,9 +44,7 @@ exec --no-startup-id mako &
 exec --no-startup-id monitor-notifications ~/.notify.log &
 
 # Scree outputs
-set $primary "eDP-1"
-
-output eDP-1 scale 1.5
+set $primary $OUTPUT_PRIMARY
 
 #For PULSEAUDIO/PAMIXER
 set $inc --no-startup-id pamixer -i 2
@@ -86,7 +84,7 @@ for_window [instance="qjackctl"] floating enable, resize set 600 150, move posit
 for_window [class="QjackCtl" title="^Setup.*"] resize set 800 600
 for_window [class="QjackCtl" title="^Graph.*"] resize set 1280 720
 for_window [class="JAMENDO"] floating enable, resize set 800 600, move position center, move scratchpad
-for_window [class="Spotify"] move to workspace $ws8
+# for_window [class="Spotify"] move to workspace $ws8
 
 #MPV twitch
 for_window [class="mpv" title=".*twitch\.tv.*"] floating enable, sticky enable, resize set 480 273, move position 1440 785, border pixel 0
@@ -128,7 +126,7 @@ for_window [window_type="normal" class="kmag"] floating enable, move position ce
 
 for_window [window_type="normal" class="Skype" title="Skype"] floating enable, resize set 1220 720, move position center
 #KEE
-for_window [window_type="normal" instance="keepassxc"] floating enable, resize set 1280 720, move position center
+for_window [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 1280 720, move position center
 
 #DISCORD
 for_window [window_type="normal" class="discord" title="Discord"] floating enable, resize set 1220 720, move position center
