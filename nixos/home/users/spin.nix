@@ -1,13 +1,14 @@
 { pkgs, lib, config, ... }:
 
 let
+  localPkgs = import /home/mikus/Projects/nixpkgs {};
   chromeWayland = pkgs.writeTextFile {
     name = "chrome";
     destination = "/bin/google-chrome-stable";
     executable = true;
     text = ''
       #! ${pkgs.bash}/bin/bash
-      ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
+      ${localPkgs.google-chrome}/bin/google-chrome-stable --enable-features=VaapiVideoDecoder --ozone-platform-hint=auto $@
     '';
   };
   mkEmacs = (import ../emacs.nix {inherit pkgs lib;});
@@ -27,6 +28,13 @@ in
   home.file.".config/fish/conf.d/sway.fish".text = ''
     set TTY1 (tty)
     [ "$TTY1" = "/dev/tty1" ] && exec sway
+  '';
+
+  home.file.".config/mpv/mpv.conf".text = ''
+    hwdec=auto-safe
+    vo=gpu
+    profile=gpu-hq
+    gpu-context=wayland
   '';
 
   wayland.windowManager.sway = {

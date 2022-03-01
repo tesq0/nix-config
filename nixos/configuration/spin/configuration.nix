@@ -33,14 +33,7 @@
       enableCryptodisk = true;  
     };
 
-    boot.initrd.kernelModules = [ "i915" ];
-
-    hardware.opengl.extraPackages = with pkgs; [
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-      intel-media-driver
-    ];
+    # boot.initrd.kernelModules = [ "i915" ];
 
     boot.initrd.luks.devices = {
       root = {
@@ -102,9 +95,21 @@
     sound.enable = true;
     dj.enable = true;
 
-    hardware.opengl.enable = true;
-    hardware.opengl.driSupport = true;
-    hardware.opengl.driSupport32Bit = true;
+    # nixpkgs.config.packageOverrides = pkgs: {
+    #   vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+    # };
+
+    hardware.opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];     
+    };
 
     programs.qt5ct.enable = true;
 
