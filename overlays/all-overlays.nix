@@ -179,5 +179,9 @@ self: super:
   });
 
   glad = super.callPackage ./pkgs/libs/glad {};
+
+  tor-browser-bundle-bin = super.tor-browser-bundle-bin.override {
+    useHardenedMalloc = false;
+  };
   
 }
