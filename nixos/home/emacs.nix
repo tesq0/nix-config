@@ -111,6 +111,8 @@
 
       epkgs.yasnippet
 
+      epkgs.yaml-mode
+
       epkgs.yasnippet-snippets
       
       epkgs.rainbow-mode
